@@ -7,9 +7,8 @@ namespace DatingService.Domain.Auth
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
-        public DateTime DateOfBirth { get; set; }
-
         public string FullName => $"{FirstName} {LastName}";
+        public DateTime DateOfBirth { get; set; }
 
         public Guid GenderId { get; set; }
     }
