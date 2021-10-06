@@ -2,23 +2,23 @@
 using DatingService.Service.Interfaces;
 using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using MimeKit;
 using System;
 using System.Threading.Tasks;
 
 namespace DatingService.Service.Services
 {
-    public class EmailService : IEmailService
+    public class EmailSender : IEmailSender
     {
         private readonly EmailOptions _emailOptions;
         private readonly SmtpOptions _smtpOptions;
-        private readonly ILogger<EmailService> _logger;
+        private readonly ILogger<EmailSender> _logger;
 
-
-        public EmailService(EmailOptions emailOptions, SmtpOptions smtpOptions, ILogger<EmailService> logger)
+        public EmailSender(IOptions<EmailOptions> emailOptions, IOptions<SmtpOptions> smtpOptions, ILogger<EmailSender> logger)
         {
-            _emailOptions = emailOptions ?? throw new ArgumentNullException(nameof(emailOptions));
-            _smtpOptions = smtpOptions ?? throw new ArgumentNullException(nameof(smtpOptions));
+            _emailOptions = emailOptions.Value ?? throw new ArgumentNullException(nameof(emailOptions));
+            _smtpOptions = smtpOptions.Value ?? throw new ArgumentNullException(nameof(smtpOptions));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 

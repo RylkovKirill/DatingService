@@ -2,7 +2,7 @@
 
 namespace DatingService.Service.Interfaces
 {
-    public interface IEmailService
+    public interface IEmailSender
     {
         Task SendAsync(string name, string email, string subject, string htmlMessage);
     }

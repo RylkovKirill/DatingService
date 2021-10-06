@@ -1,6 +1,8 @@
 ﻿using System;
 using DatingService.Domain.Auth;
 using DatingService.Persistence;
+using DatingService.Service.Interfaces;
+using DatingService.Service.Services;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
