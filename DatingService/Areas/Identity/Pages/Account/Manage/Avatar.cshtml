@@ -1,0 +1,32 @@
+﻿@page
+@model AvatarModel
+@{
+    ViewData["Title"] = "Avatar";
+    ViewData["ActivePage"] = ManageNavPages.Avatar;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        @if (Model.AvatarPath != null)
+        {
+            <div class="form-group">
+                <img class="rounded-circle w-100" alt="avatar" src="~/@Model.AvatarPath" />
+            </div>
+        }
+        <form id="avatar-form" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <div class="custom-file">
+                    <input type="file" name="file" class="custom-file-input" id="inputGroup">
+                    <label class="custom-file-label" for="inputGroup">Choose file</label>
+                </div>
+            </div>
+            <button id="update-avatar-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

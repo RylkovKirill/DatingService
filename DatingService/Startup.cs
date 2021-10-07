@@ -28,9 +28,9 @@ namespace DatingService
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<AvatarOptions>(Configuration.GetSection(nameof(AvatarOptions)));
             services.Configure<EmailOptions>(Configuration.GetSection(nameof(EmailOptions)));
             services.Configure<SmtpOptions>(Configuration.GetSection(nameof(SmtpOptions)));
 
@@ -46,14 +46,14 @@ namespace DatingService
             services.AddAuthentication()
                     .AddGoogle(options =>
                     {
-                        IConfigurationSection googleAuthNSection =
-                            Configuration.GetSection("Authentication:Google");
-
+                        IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
                         options.ClientId = googleAuthNSection["ClientId"];
                         options.ClientSecret = googleAuthNSection["ClientSecret"];
                     });
-            
-            services.AddScoped<IEmailSender, EmailSender>();
+
+            services.AddSingleton<IFileService, FileService>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.AddTransient<IAvatarRepository, AvatarRepository>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

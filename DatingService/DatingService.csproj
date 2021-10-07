@@ -21,4 +21,8 @@
     <ProjectReference Include="..\DatingService.Infrastructure\DatingService.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\Files\Images\Avatars\" />
+  </ItemGroup>
+
 </Project>

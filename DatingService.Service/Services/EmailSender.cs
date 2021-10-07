@@ -17,9 +17,9 @@ namespace DatingService.Service.Services
 
         public EmailSender(IOptions<EmailOptions> emailOptions, IOptions<SmtpOptions> smtpOptions, ILogger<EmailSender> logger)
         {
-            _emailOptions = emailOptions.Value ?? throw new ArgumentNullException(nameof(emailOptions));
-            _smtpOptions = smtpOptions.Value ?? throw new ArgumentNullException(nameof(smtpOptions));
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _emailOptions = emailOptions.Value;
+            _smtpOptions = smtpOptions.Value;
+            _logger = logger;
         }
 
         public async Task SendAsync(string name, string email, string subject, string htmlMessage)

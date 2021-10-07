@@ -1,13 +1,13 @@
-﻿using System;
+﻿using DatingService.Domain.Auth;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Domain.Entities
 {
-    public class Gender
+    public class Gender : BaseEntity<Guid>
     {
         public string Name { get; set; }
+
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

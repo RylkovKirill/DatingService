@@ -2,10 +2,10 @@
 
 namespace DatingService.Domain
 {
-    public class BaseEntity<T>
+    public abstract class BaseEntity<T>
     {
         public T Id { get; set; }
-        public DateTime DateCreated { get; set; }
-        public DateTime DateUpdated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
+        public DateTime DateUpdated { get; set; } = DateTime.UtcNow;
     }
 }
