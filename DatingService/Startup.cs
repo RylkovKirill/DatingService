@@ -3,8 +3,11 @@ using DatingService.Domain.Options;
 using DatingService.Persistence;
 using DatingService.Service.Interfaces;
 using DatingService.Service.Services;
+using JavaScriptEngineSwitcher.ChakraCore;
+using JavaScriptEngineSwitcher.Extensions.MsDependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -12,6 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using React.AspNet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,17 +47,21 @@ namespace DatingService
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
-            services.AddAuthentication()
+            /*services.AddAuthentication()
                     .AddGoogle(options =>
                     {
                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
                         options.ClientId = googleAuthNSection["ClientId"];
                         options.ClientSecret = googleAuthNSection["ClientSecret"];
-                    });
+                    });*/
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddTransient<IAvatarRepository, AvatarRepository>();
+            services.AddMemoryCache();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddReact();
+            services.AddJsEngineSwitcher(options => options.DefaultEngineName = ChakraCoreJsEngine.EngineName).AddChakraCore();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -69,6 +77,8 @@ namespace DatingService
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseReact(config => { });
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
