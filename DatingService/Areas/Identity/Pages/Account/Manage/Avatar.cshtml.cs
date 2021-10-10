@@ -84,9 +84,17 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             var path = Path.Combine(_environment.WebRootPath, _avatarOptions.Path, fileName);
             _fileService.Save(file, path);
 
-            user.Avatar = _avatarRepository.GetByUserId(user.Id);
-            user.Avatar.Name = user.UserName;
-            user.Avatar.Path = fileName;
+            var avatar = _avatarRepository.GetByUserId(user.Id);
+            if (avatar == null)
+            {
+                avatar = new Avatar();
+            }
+
+            avatar.Name = user.UserName;
+            avatar.Path = fileName;
+            avatar.UserId = user.Id;
+
+            user.Avatar = avatar;
 
             var updateAvatarResult = await _userManager.UpdateAsync(user);
             if (!updateAvatarResult.Succeeded)
