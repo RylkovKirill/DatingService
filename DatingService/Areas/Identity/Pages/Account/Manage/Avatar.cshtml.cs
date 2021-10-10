@@ -84,8 +84,7 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             var path = Path.Combine(_environment.WebRootPath, _avatarOptions.Path, fileName);
             _fileService.Save(file, path);
 
-            user.Avatar = new Avatar() { UserId = user.Id};
-
+            user.Avatar = _avatarRepository.GetByUserId(user.Id);
             user.Avatar.Name = user.UserName;
             user.Avatar.Path = fileName;
 
