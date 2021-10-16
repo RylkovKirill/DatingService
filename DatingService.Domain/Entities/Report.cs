@@ -8,7 +8,6 @@ namespace DatingService.Domain.Entities
 {
     public class Report : BaseEntity<Guid>
     {
-
         public Guid ReportCategoryId { get; set; }
     }
 }

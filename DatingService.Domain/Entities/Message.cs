@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DatingService.Domain.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,8 @@ namespace DatingService.Domain.Entities
 
         public Guid PostId { get; set; }
         public Guid UserId { get; set; }
+
+        public Post Post { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

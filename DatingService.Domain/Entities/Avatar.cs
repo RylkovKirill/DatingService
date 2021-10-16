@@ -3,9 +3,10 @@ using System;
 
 namespace DatingService.Domain.Entities
 {
-    public class Avatar : File
+    public class Avatar : FileEntity<Guid>
     {
         public Guid UserId { get; set; }
+
         public ApplicationUser User { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace DatingService.Persistence.Configs
             builder.Property(u => u.DateOfBirth).IsRequired();
 
             builder.HasOne(u => u.Avatar).WithOne(a => a.User).HasForeignKey<ApplicationUser>(u => u.AvatarId).OnDelete(DeleteBehavior.Cascade);
-            builder.HasOne(u => u.Gender).WithMany(g => g.Users).HasForeignKey(u => u.GenderId).OnDelete(DeleteBehavior.SetNull);
+            builder.HasOne(u => u.Gender).WithMany(g => g.Users).HasForeignKey(u => u.GenderId);
         }
     }
 }
