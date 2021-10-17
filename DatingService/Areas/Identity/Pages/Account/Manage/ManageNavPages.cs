@@ -12,6 +12,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
 
         public static string Avatar => "Avatar";
 
+        public static string Location => "Location";
+
         public static string Email => "Email";
 
         public static string ChangePassword => "ChangePassword";
@@ -29,6 +31,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
         public static string IndexNavClass(ViewContext viewContext) => PageNavClass(viewContext, Index);
 
         public static string AvatarNavClass(ViewContext viewContext) => PageNavClass(viewContext, Avatar);
+
+        public static string LocationNavClass(ViewContext viewContext) => PageNavClass(viewContext, Location);
 
         public static string EmailNavClass(ViewContext viewContext) => PageNavClass(viewContext, Email);
 

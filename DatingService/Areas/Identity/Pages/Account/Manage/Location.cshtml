@@ -1,0 +1,41 @@
+﻿@page
+@model DatingService.Areas.Identity.Pages.Account.Manage.LocationModel
+@{
+    ViewData["Title"] = "Location";
+    ViewData["ActivePage"] = ManageNavPages.Location;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+    <div class="col-md-6">
+        <button id="get-location-button" class="btn btn-primary">Get location</button>
+        <form id="location-form" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Input.Latitude" class="control-label"></label>
+                <input id="latitude-input" asp-for="Input.Latitude" class="form-control" readonly/>
+                <span asp-validation-for="Input.Latitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Longitude" class="control-label"></label>
+                <input id="longitude-input" asp-for="Input.Longitude" class="form-control" readonly/>
+                <span asp-validation-for="Input.Longitude" class="text-danger"></span>
+            </div>
+            <button id="update-location-button" type="submit" class="btn btn-primary">Save</button>
+        </form>
+    </div>
+</div>
+<script>
+    document.getElementById("get-location-button").onclick = function () {
+        navigator.geolocation.getCurrentPosition(setPosition);
+    };
+    
+    function setPosition(position) {
+        document.getElementById("longitude-input").value = position.coords.longitude;
+        document.getElementById("latitude-input").value = position.coords.latitude;
+    }
+</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
