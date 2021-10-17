@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Map";
+}
+
+
+<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=a01fbf67-31e9-40de-ab68-f0b1aed8b42e" type="text/javascript"></script>
+<script>
+    var myMap
+    ymaps.ready(init);
+    function init() {
+        myMap = new ymaps.Map("map", {
+            center: [53.90033, 27.55998],
+            zoom: 4
+        }, {
+            searchControlProvider: 'yandex#search'
+        });
+    }
+</script>
+<style>
+    html, body, #map {
+        width: 100%;
+        height: 600px;
+        padding: 0;
+        margin: 0;
+    }
+</style>
+<div id="map">
+</div>
