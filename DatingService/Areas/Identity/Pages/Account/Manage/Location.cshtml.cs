@@ -28,18 +28,18 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
         public class InputModel
         {
             [Display(Name = "Latitude")]
-            public double Latitude { get; set; }
+            public double? Latitude { get; set; }
 
             [Display(Name = "Longitude")]
-            public double Longitude { get; set; }
+            public double? Longitude { get; set; }
         }
 
         private void Load(ApplicationUser user)
         {
             Input = new InputModel
             {
-                Latitude = user.Latitude.Value,
-                Longitude = user.Longitude.Value
+                Latitude = user.Latitude,
+                Longitude = user.Longitude
             };
         }
 
