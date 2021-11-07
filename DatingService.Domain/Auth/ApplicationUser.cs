@@ -20,7 +20,14 @@ namespace DatingService.Domain.Auth
 
         public Avatar Avatar { get; set; }
         public Gender Gender { get; set; }
+
         public ICollection<Post> Posts { get; set; }
         public ICollection<Comment> Comments { get; set; }
+
+        public ICollection<Chat> Chats { get; set; }
+        public ICollection<Message> Messages { get; set; }
+
+        public ICollection<Request> SentRequests { get; set; }
+        public ICollection<Request> ReceivedRequests { get; set; }
     }
 }

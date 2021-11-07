@@ -1,4 +1,5 @@
-﻿using DatingService.Domain.Entities;
+﻿using DatingService.Domain.Auth;
+using DatingService.Domain.Entities;
 using DatingService.Persistence;
 using DatingService.Service.Interfaces;
 using System;

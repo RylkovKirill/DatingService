@@ -1,7 +1,6 @@
-﻿using DatingService.Domain.Auth;
-using System;
+﻿using System;
 
-namespace DatingService.Domain.Entities
+namespace DatingService.Domain.Auth
 {
     public class Avatar : FileEntity<Guid>
     {

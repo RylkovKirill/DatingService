@@ -1,20 +1,16 @@
 ﻿using DatingService.Domain.Auth;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Domain.Entities
 {
-    public class Message
+    public class Message : BaseEntity<Guid>
     {
+        public Guid UserId { get; set; }
+        public Guid ChatId { get; set; }
+         
         public string Content { get; set; }
 
-        public Guid PostId { get; set; }
-        public Guid UserId { get; set; }
-
-        public Post Post { get; set; }
         public ApplicationUser User { get; set; }
+        public Chat Chat { get; set; }
     }
 }

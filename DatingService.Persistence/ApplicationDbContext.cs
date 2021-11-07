@@ -17,6 +17,9 @@ namespace DatingService.Persistence
         public DbSet<Image> Images { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
+        public DbSet<Chat> Chats { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<Request> Requests { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
@@ -31,6 +34,9 @@ namespace DatingService.Persistence
             builder.ApplyConfiguration(new PostConfig());
             builder.ApplyConfiguration(new ImageConfig());
             builder.ApplyConfiguration(new CommentConfig());
+            builder.ApplyConfiguration(new ChatConfig());
+            builder.ApplyConfiguration(new MessageConfig());
+            builder.ApplyConfiguration(new RequestConfig());
 
             base.OnModelCreating(builder);
         }

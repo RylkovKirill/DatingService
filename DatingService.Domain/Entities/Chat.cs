@@ -1,12 +1,12 @@
-﻿using System;
+﻿using DatingService.Domain.Auth;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Domain.Entities
 {
     public class Chat : BaseEntity<Guid>
     {
+        public ICollection<Message> Messages { get; set; }
+        public ICollection<ApplicationUser> Users { get; set; }
     }
 }

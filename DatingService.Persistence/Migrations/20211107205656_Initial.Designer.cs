@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatingService.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20211017103641_AddUserCoordinates")]
-    partial class AddUserCoordinates
+    [Migration("20211107205656_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,21 @@ namespace DatingService.Persistence.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("ApplicationUserChat", b =>
+                {
+                    b.Property<Guid>("ChatsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("ChatsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ApplicationUserChat");
+                });
 
             modelBuilder.Entity("DatingService.Domain.Auth.ApplicationUser", b =>
                 {
@@ -118,7 +133,7 @@ namespace DatingService.Persistence.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("DatingService.Domain.Entities.Avatar", b =>
+            modelBuilder.Entity("DatingService.Domain.Auth.Avatar", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,6 +164,23 @@ namespace DatingService.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Avatars");
+                });
+
+            modelBuilder.Entity("DatingService.Domain.Entities.Chat", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("DatingService.Domain.Entities.Comment", b =>
@@ -241,6 +273,38 @@ namespace DatingService.Persistence.Migrations
                     b.ToTable("Images");
                 });
 
+            modelBuilder.Entity("DatingService.Domain.Entities.Message", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ChatId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1024)
+                        .HasColumnType("nvarchar(1024)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ChatId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Messages");
+                });
+
             modelBuilder.Entity("DatingService.Domain.Entities.Post", b =>
                 {
                     b.Property<Guid>("Id")
@@ -286,6 +350,36 @@ namespace DatingService.Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Posts");
+                });
+
+            modelBuilder.Entity("DatingService.Domain.Entities.Request", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RequestStatus")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SenderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReceiverId");
+
+                    b.HasIndex("SenderId");
+
+                    b.ToTable("Requests");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
@@ -421,9 +515,24 @@ namespace DatingService.Persistence.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("ApplicationUserChat", b =>
+                {
+                    b.HasOne("DatingService.Domain.Entities.Chat", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatingService.Domain.Auth.ApplicationUser", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DatingService.Domain.Auth.ApplicationUser", b =>
                 {
-                    b.HasOne("DatingService.Domain.Entities.Avatar", "Avatar")
+                    b.HasOne("DatingService.Domain.Auth.Avatar", "Avatar")
                         .WithOne("User")
                         .HasForeignKey("DatingService.Domain.Auth.ApplicationUser", "AvatarId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -456,6 +565,25 @@ namespace DatingService.Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("DatingService.Domain.Entities.Message", b =>
+                {
+                    b.HasOne("DatingService.Domain.Entities.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DatingService.Domain.Auth.ApplicationUser", "User")
+                        .WithMany("Messages")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("DatingService.Domain.Entities.Post", b =>
                 {
                     b.HasOne("DatingService.Domain.Auth.ApplicationUser", null)
@@ -474,6 +602,25 @@ namespace DatingService.Persistence.Migrations
                     b.Navigation("Image");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DatingService.Domain.Entities.Request", b =>
+                {
+                    b.HasOne("DatingService.Domain.Auth.ApplicationUser", "Receiver")
+                        .WithMany("ReceivedRequests")
+                        .HasForeignKey("ReceiverId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("DatingService.Domain.Auth.ApplicationUser", "Sender")
+                        .WithMany("SentRequests")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Receiver");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
@@ -531,12 +678,23 @@ namespace DatingService.Persistence.Migrations
                 {
                     b.Navigation("Comments");
 
+                    b.Navigation("Messages");
+
                     b.Navigation("Posts");
+
+                    b.Navigation("ReceivedRequests");
+
+                    b.Navigation("SentRequests");
                 });
 
-            modelBuilder.Entity("DatingService.Domain.Entities.Avatar", b =>
+            modelBuilder.Entity("DatingService.Domain.Auth.Avatar", b =>
                 {
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("DatingService.Domain.Entities.Chat", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("DatingService.Domain.Entities.Gender", b =>
