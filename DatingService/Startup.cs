@@ -45,12 +45,12 @@ namespace DatingService
             services.AddControllersWithViews();
 
             services.AddAuthentication()
-                    .AddGoogle(options =>
+                   /* .AddGoogle(options =>
                     {
                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
                         options.ClientId = googleAuthNSection["ClientId"];
                         options.ClientSecret = googleAuthNSection["ClientSecret"];
-                    });
+                    })*/;
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
