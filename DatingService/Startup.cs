@@ -84,9 +84,15 @@ namespace DatingService
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapAreaControllerRoute(
+                    name: "admin",
+                    areaName: "Admin",
+                    pattern: "Admin/{controller=Users}/{action=List}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                
                 endpoints.MapRazorPages();
             });
         }
