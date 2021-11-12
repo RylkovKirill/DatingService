@@ -1,6 +1,8 @@
 using DatingService.Domain.Auth;
 using DatingService.Domain.Options;
+using DatingService.Hubs;
 using DatingService.Persistence;
+using DatingService.Service;
 using DatingService.Service.Interfaces;
 using DatingService.Service.Services;
 using Microsoft.AspNetCore.Builder;
@@ -45,16 +47,28 @@ namespace DatingService
             services.AddControllersWithViews();
 
             services.AddAuthentication()
-                   /* .AddGoogle(options =>
+                    .AddGoogle(options =>
                     {
                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
                         options.ClientId = googleAuthNSection["ClientId"];
                         options.ClientSecret = googleAuthNSection["ClientSecret"];
-                    })*/;
+                    });
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddTransient<IAvatarRepository, AvatarRepository>();
+            services.AddScoped(typeof(Service.IRepository<>), typeof(Repository<>));
+            services.AddScoped<IMessageService, MessageService>();
+            services.AddScoped<IChatService, ChatService>();
+            services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IAvatarRepository, AvatarRepository>();
+
+            services.AddControllersWithViews();
+            services.AddRazorPages();
+            services.AddSignalR(hubOptions =>
+            {
+                hubOptions.EnableDetailedErrors = true;
+                hubOptions.KeepAliveInterval = TimeSpan.FromSeconds(15);
+            });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -94,6 +108,7 @@ namespace DatingService
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 
                 endpoints.MapRazorPages();
+                endpoints.MapHub<MessagesHub>("/messages");
             });
         }
     }

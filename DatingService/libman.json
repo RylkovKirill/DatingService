@@ -9,6 +9,10 @@
         "css/all.min.css",
         "js/all.min.js"
       ]
+    },
+    {
+      "library": "signalr.js@2.4.2",
+      "destination": "wwwroot/lib/signalr.js/"
     }
   ]
 }

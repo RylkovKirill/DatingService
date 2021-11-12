@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
 using DatingService.Persistence.Configs;
+using DatingService.Persistence.Seeds;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,8 @@ namespace DatingService.Persistence
             builder.ApplyConfiguration(new ChatConfig());
             builder.ApplyConfiguration(new MessageConfig());
             builder.ApplyConfiguration(new RequestConfig());
+
+            builder.Seed();
 
             base.OnModelCreating(builder);
         }
