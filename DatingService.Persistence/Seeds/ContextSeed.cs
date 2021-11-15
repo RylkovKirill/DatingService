@@ -1,4 +1,5 @@
 ﻿using DatingService.Domain.Auth;
+using DatingService.Domain.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -14,8 +15,9 @@ namespace DatingService.Persistence.Seeds
         public static void Seed(this ModelBuilder modelBuilder)
         {
             CreateRoles(modelBuilder);
-
+            CreateGenders(modelBuilder);
             CreateBasicUsers(modelBuilder);
+            
 
             MapUserRole(modelBuilder);
         }
@@ -25,10 +27,15 @@ namespace DatingService.Persistence.Seeds
             List<IdentityRole<Guid>> roles = DefaultRoles.IdentityRoleList();
             modelBuilder.Entity<IdentityRole<Guid>>().HasData(roles);
         }
+        private static void CreateGenders(ModelBuilder modelBuilder)
+        {
+            List<Gender> genders = DefaultGenders.IdentityGenderList();
+            modelBuilder.Entity<Gender>().HasData(genders);
+        }
 
         private static void CreateBasicUsers(ModelBuilder modelBuilder)
         {
-            List<ApplicationUser> users = DefaultUser.IdentityBasicUserList();
+            List<ApplicationUser> users = DefaultUsers.IdentityBasicUserList();
             modelBuilder.Entity<ApplicationUser>().HasData(users);
         }
 
