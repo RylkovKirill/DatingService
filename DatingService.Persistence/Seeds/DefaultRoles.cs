@@ -13,11 +13,7 @@ namespace DatingService.Persistence.Seeds
         {
             return new List<IdentityRole<Guid>>()
             {
-                new IdentityRole<Guid>
-                {
-                    Id = Guid.Parse("4aa56c08-1cfc-46a5-a14c-d9ee66b22a04"),
-                    Name = "SuperAdmin"
-                },
+                
                 new IdentityRole<Guid>
                 {
                     Id = Guid.Parse("67397b47-b0e9-4e15-8b82-57c0884af92c"),

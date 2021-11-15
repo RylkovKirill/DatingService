@@ -15,8 +15,8 @@ namespace DatingService.Persistence.Seeds
             {
                 new IdentityUserRole<Guid>
                 {
-                    RoleId = Guid.Parse("4aa56c08-1cfc-46a5-a14c-d9ee66b22a04"),
-                    UserId = Guid.Parse("8e034e7e-7424-4dea-94b7-0ce34a160bef")
+                    RoleId = Guid.Parse("67397b47-b0e9-4e15-8b82-57c0884af92c"),
+                    UserId = Guid.Parse("c6dd1e20-cce1-4299-be0c-862a2b681039")
                 }
             };
         }
