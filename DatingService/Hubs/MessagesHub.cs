@@ -30,20 +30,21 @@ namespace DatingService.Hubs
         {
             await Groups.RemoveFromGroupAsync(Context.ConnectionId, groupName);
         }
-
-        public async Task SendComment(string postId, string content)
+         
+        public async Task SendMessage(string chatId, string content)
         {
             var user = await _userManager.GetUserAsync(Context.User);
 
             Message message = new Message
             {
-                ChatId = Guid.Parse(postId),
+                ChatId = Guid.Parse(chatId),
+                UserId = user.Id,
                 User = user,
                 Content = content
             };
 
             _messageService.Add(message);
-            await Clients.Group(postId).SendAsync("Send", user.UserName, message.Content, message.DateCreated.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
+            await Clients.Group(chatId).SendAsync("Send", user.UserName, message.Content, message.DateCreated.Subtract(new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds);
         }
     }
 }

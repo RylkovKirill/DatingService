@@ -35,14 +35,14 @@ function AddComment(userName, content, postedDate) {
 
 function AddToGroup() {
     document.getElementById("send").disabled = false;
-    var postId = document.getElementById("postId").value;
-    messageConnection.invoke("AddToGroup", postId)
+    var chatId = document.getElementById("chatId").value;
+    messageConnection.invoke("AddToGroup", chatId)
 }
 
 function SendComment(event) {
-    var postId = document.getElementById("postId").value;
+    var chatId = document.getElementById("chatId").value;
     var content = document.getElementById("content").value;
-    messageConnection.invoke("SendComment", postId, content);
+    messageConnection.invoke("SendMessage", chatId, content);
     //$("#comments").load("dialogsList/", function () {
     //    $(".box:last").addClass('box_right');
     //})

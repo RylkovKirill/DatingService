@@ -1,5 +1,4 @@
 ﻿@model Chat
-@inject TimeZoneService timeZoneService
 @inject UserManager<ApplicationUser> userManager
 
 <div id="comments">
@@ -12,7 +11,7 @@
                 <div class="card text-white bg-info mb-3 w-100">
                     <div class="card-body">
                         <h5 class="card-title">@message.Content</h5>
-                        <p class="card-text text-right"><small class="text">@timeZoneService.GetLocalDateTime(message.DateCreated)</small></p>
+                        <p class="card-text text-right"><small class="text">message.DateCreated</small></p>
                     </div>
                 </div>
             </div>
@@ -20,7 +19,7 @@
     }
 </div>
 <form>
-    <input type="hidden" asp-for="@Model.Id" class="form-control" id="postId" />
+    <input type="hidden" asp-for="@Model.Id" class="form-control" id="chatId" />
     <div class="form-group">
         <textarea class="form-control" placeholder="Комментарий" rows="5" id="content"></textarea>
     </div>
@@ -78,5 +77,5 @@
     var objDiv = document.getElementById("comments");
     objDiv.scrollTop = objDiv.scrollHeight;
 </script>
-<script src="~/lib/signalr.js/jquery.signalR.min.js"></script>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
 <script src="~/js/sendMessages.js"></script>

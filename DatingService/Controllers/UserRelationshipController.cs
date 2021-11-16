@@ -5,6 +5,7 @@ using DatingService.Infrastructure.ViewModels;
 using DatingService.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,7 +55,7 @@ namespace DatingService.Controllers
         {
 
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var users = _userManager.Users.Where(u => u != user).ToList();
+            var users = _userManager.Users.Where(u => u != user).Include(u => u.Gender).ToList();
             var count = users.Count();
             var items = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 

@@ -1,4 +1,4 @@
-﻿@addTagHelper *, Blog
+﻿@addTagHelper *, DatingService
 @model UsersViewModel
 @inject DatingService.Service.Interfaces.IRequestService _requestService
 <head>
@@ -7,6 +7,9 @@
 <body>
     <div>
         Пользователей онлайн : <span id="onlineUsersCount"></span>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="Users"></page-link>
     </div>
     <table class="table" id="userList">
         <thead>
@@ -17,12 +20,11 @@
                 var path = item.Avatar?.Path;
                 @if (path == null)
                 {
-                    path = "725ea59d-e71a-4b79-a71a-08d989ae0cb8.jpg";
+                    path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
                 }
                 <tr>
                     <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true"></td>
-                    <td>Ofline</td>
-                    <td>@item.Email</td>
+                    <td>@item.FullName</td>
                     @if (_requestService.UserInFriendsList(Model.Friends.AsQueryable(), item))
                     {
                         <td>
@@ -39,9 +41,6 @@
             }
         </tbody>
     </table>
-    <div>
-        <page-link page-model="Model.PageViewModel" page-action="Users"></page-link>
-    </div>
 </body>
 @*<style>
         .btn {
