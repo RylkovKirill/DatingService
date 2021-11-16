@@ -1,13 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatingService.Domain.Auth;
+using System;
 
 namespace DatingService.Domain.Entities
 {
     public class Report : BaseEntity<Guid>
     {
+        //public string Content { get; set; }
+
         public Guid ReportCategoryId { get; set; }
+        //public Guid UserId { get; set; }
+
+        //public ReportCategory Category { get; set; }
+        //public ApplicationUser User { get; set; }
     }
 }
