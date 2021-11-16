@@ -74,6 +74,12 @@ namespace DatingService.Service.Services
                 .Select(r => r.Sender));
         }
 
+        public IQueryable<ApplicationUser> GetPotentialFriends(IQueryable<ApplicationUser> users, IQueryable<ApplicationUser> friends)
+        {
+            return users.Except(friends);
+        }
+
+
         public bool UserInFriendsList(IQueryable<ApplicationUser> friends, ApplicationUser user)
         {
             return friends.Contains(user);
