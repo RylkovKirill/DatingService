@@ -1,6 +1,25 @@
 ﻿@addTagHelper *, DatingService
 @model FriendsViewModel
+@inject UserManager<ApplicationUser> _userManager
+@inject IChatService _chatService
+@functions{
+    public async Task<Guid> GetChatId(Guid userId)
+    {
+        var user1 = await _userManager.GetUserAsync(@User);
+        var user2 = _userManager.FindByIdAsync(userId.ToString()).Result;
+        var chat = _chatService.Get(user1, user2);
+        if (chat == default)
+        {
+            chat = new Chat()
+            {
+                Users = new List<ApplicationUser> { user1, user2 }
+            };
+            _chatService.Update(chat);
+        }
+        return chat.Id;
+    }
 
+}
 <head>
     <title>@ViewData["Title"] - Пользователи</title>
 </head>
@@ -27,7 +46,7 @@
                     <td>Ofline</td>
                     <td>@item.Email</td>
                     <td>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="Chat" asp-route-userId="@item.Id">Написать сообщение</a>
+                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@GetChatId(item.Id).Result">Написать сообщение</a>
                         <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
                     </td>
                 </tr>

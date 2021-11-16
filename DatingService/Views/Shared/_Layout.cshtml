@@ -19,17 +19,16 @@
                         <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Index">Friends</a>
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="List">Chats</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-dark" asp-area="" asp-controller="Blog" asp-action="Index">Blog</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Друзья</a>
+                        <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Friends</a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-area="" asp-controller="UserRelationship" asp-action="Friends">Список друзей</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="UserRelationship" asp-action="Users">Поиск друзей</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="UserRelationship" asp-action="Requests">Заявки</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="List">Список друзей</a>
+                            <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="Requests">Заявки</a>
                         </div>
                     </li>
                     <li class="nav-item">

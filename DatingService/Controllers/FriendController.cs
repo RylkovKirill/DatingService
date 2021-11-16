@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace DatingService.Controllers
 {
-    public class UserRelationshipController : Controller
+    public class FriendController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRequestService _requestService;
@@ -21,7 +21,7 @@ namespace DatingService.Controllers
         private readonly IMessageService _messageService;
         private int pageSize = 10;
 
-        public UserRelationshipController(UserManager<ApplicationUser> userManager, IRequestService requestService, IChatService chatService, IMessageService messageService)
+        public FriendController(UserManager<ApplicationUser> userManager, IRequestService requestService, IChatService chatService, IMessageService messageService)
         {
             _userManager = userManager;
             _requestService = requestService;
@@ -29,7 +29,7 @@ namespace DatingService.Controllers
             _messageService = messageService;
         }
 
-        public async Task<IActionResult> FriendsAsync(int page = 1)
+        public async Task<IActionResult> ListAsync(int page = 1)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var friends = _requestService.GetUserFriends(user).ToList();

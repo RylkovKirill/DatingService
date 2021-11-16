@@ -1,0 +1,44 @@
+﻿@addTagHelper *, DatingService
+@model ChatListViewModel
+
+<head>
+    <title>@ViewData["Title"] - Пользователи</title>
+</head>
+<body>
+    <div>
+        Друзей онлайн : <span id="onlineUsersCount"></span>
+    </div>
+    <div>
+        <page-link page-model="Model.PageViewModel" page-action="List"></page-link>
+    </div>
+    <table class="table" id="userList">
+        <thead>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Chats)
+            {
+                <tr>
+                    <td>
+                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@item.Id">Написать сообщение</a>
+                    </td>
+                </tr>
+
+            }
+        </tbody>
+    </table>
+</body>
+@*<style>
+        .btn {
+            background-color: transparent; /* Blue background */
+            border: none; /* Remove borders */
+            color: royalblue; /* White text */
+            padding: 12px 16px; /* Some padding */
+            font-size: 16px; /* Set a font size */
+            cursor: pointer; /* Mouse pointer on hover */
+        }
+            /* Darker background on mouse-over */
+            .btn:hover {
+                background-color: transparent;
+                color: blue;
+            }
+    </style>*@
