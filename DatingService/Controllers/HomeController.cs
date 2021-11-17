@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 namespace DatingService.Controllers
 {
     [Authorize]
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -35,6 +36,7 @@ namespace DatingService.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var users = _userManager.Users;
             var friends = _requestService.GetUserFriends(user);
+            ViewBag.senderId = user.Id;
             return View(_requestService.GetPotentialFriends(users, friends));
         }
 
@@ -48,5 +50,6 @@ namespace DatingService.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
     }
 }

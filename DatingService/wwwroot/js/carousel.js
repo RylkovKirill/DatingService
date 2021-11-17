@@ -1,10 +1,12 @@
 ﻿class Carousel {
     constructor(element, dislike, like) {
         this.board = element;
-        console.log(this.board)
+        console.log(this.board);
         this.dislikeButton = dislike;
         this.likeButton = like;
-
+        this.senderInput = document.getElementById("senderId");
+        var senderId = this.senderInput.value;
+        console.log(senderId);
 
         // handle getures
         this.handle();
@@ -14,6 +16,8 @@
     handle() {
         // list all cards
         this.cards = this.board.querySelectorAll('.rec-card');
+
+
 
         // get top card
         this.topCard = this.cards[this.cards.length - 1];
@@ -135,6 +139,11 @@
 
             if (successful) {
                 // throw card in the chosen direction
+                
+                console.log(this.topCard);
+                console.log(receiverId[receiverId.length - 1].value);
+               
+                console.log(this.board);
                 this.topCard.style.transform = `translateX(${posX}px) translateY(${posY}px) rotate(${deg}deg)`;
                 if (posX > 0) this.swipeRight();
                 else this.swipeLeft();
