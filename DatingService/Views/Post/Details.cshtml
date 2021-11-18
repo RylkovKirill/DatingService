@@ -1,60 +1,48 @@
-﻿@model DatingService.Domain.Entities.Post
-
+﻿@model Post
+@inject UserManager<ApplicationUser> userManager
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = @Model.Title;
 }
-
-<h1>Details</h1>
-
-<div>
-    <h4>Post</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Content)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Content)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.IsPublished)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.IsPublished)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Image)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Image.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.User)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.User.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateCreated)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateUpdated)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateUpdated)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+<body>
+    <header>
+        <h1>@Model.Title</h1>
+    </header>
+    <div>
+        @if (Model.Image?.Path != null)
+        {
+            <img class="card-img-top" src="~/Files/Images/Posts/@Model.Image?.Path" alt="">
+        }
+    <div class="my-4">
+        @Html.Raw(Model.Content)
+    </div>
+    </div>
+    <form>
+        <input type="hidden" asp-for="@Model.Id" class="form-control" id="postId" />
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Комментарий" rows="5" id="content"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Отправить" id="send" />
+        </div>
+    </form>
+    <div id="comments">
+        @if (ViewBag.Comments != null)
+        {
+            @foreach (Comment comment in ViewBag.Comments)
+            {
+                <div class="card border-dark mb-3 w-50">
+                    <div class="card-header">
+                        @*<p class="card-text">@userManager.GetUserNameAsync(userManager.FindByIdAsync(comment.UserId.ToString()).Result).Result</p>*@
+                        <p class="card-text">@comment.User.UserName</p>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">@comment.Content</p>
+                        <p class="card-text text-right"><small class="text-muted">@comment.DateUpdated</small></p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="~/js/sendComments.js"></script>
+</body>

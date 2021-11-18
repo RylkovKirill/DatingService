@@ -57,25 +57,28 @@ namespace DatingService.Controllers
             return View(_postService.GetAll(user));
         }
 
-        //// GET: Blog/Details/5
-        //public async Task<IActionResult> Details(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        public async Task<IActionResult> DetailsAsync(Guid id)
+        {
+            var post = _postService.Get(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
 
-        //    var post = await _context.Posts
-        //        .Include(p => p.Image)
-        //        .Include(p => p.User)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (post == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var comments = _commentService.GetAll(post).ToList();
+            foreach (Comment comment in comments)
+            {
+                comment.User = await _userManager.FindByIdAsync(comment.UserId.ToString());
+            }
 
-        //    return View(post);
-        //}
+            ViewBag.Comments = comments;
+            return View(post);
+        }
 
         // GET: Blog/Create
         public IActionResult Create()
