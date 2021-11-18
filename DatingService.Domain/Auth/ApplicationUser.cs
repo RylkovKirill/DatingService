@@ -29,5 +29,8 @@ namespace DatingService.Domain.Auth
 
         public ICollection<Request> SentRequests { get; set; }
         public ICollection<Request> ReceivedRequests { get; set; }
+
+        public ICollection<Report> SentReports { get; set; }
+        public ICollection<Report> ReceivedReports { get; set; }
     }
 }

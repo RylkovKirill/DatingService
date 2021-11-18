@@ -38,6 +38,7 @@ namespace DatingService.Persistence
             builder.ApplyConfiguration(new ChatConfig());
             builder.ApplyConfiguration(new MessageConfig());
             builder.ApplyConfiguration(new RequestConfig());
+            builder.ApplyConfiguration(new ReportConfig());
 
             builder.Seed();
 

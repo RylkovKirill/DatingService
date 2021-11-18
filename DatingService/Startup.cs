@@ -64,6 +64,8 @@ namespace DatingService
             services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAvatarRepository, AvatarRepository>();
             services.AddTransient<IPostService, PostService>();
+            services.AddTransient<IReportCategoryService, ReportCategoryService>();
+            services.AddTransient<IReportService, ReportService>();
             services.AddTransient<ICommentService, CommentService>();
 
             services.AddControllersWithViews();

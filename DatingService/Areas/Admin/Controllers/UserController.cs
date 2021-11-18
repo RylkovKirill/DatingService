@@ -17,11 +17,15 @@ namespace DatingService.Areas.Admin.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly IReportService _reportService;
 
-        public UserController(UserManager<ApplicationUser> userManager, IEmailSender emailSender)
+        public UserController(UserManager<ApplicationUser> userManager,
+                              IEmailSender emailSender,
+                              IReportService reportService)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _reportService = reportService;
         }
 
         [Route("[area]")]
@@ -141,7 +145,7 @@ namespace DatingService.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByIdAsync(Id.ToString());
-                await _emailSender.SendAsync(user.FullName, user.Email,  subject, htmlMessage);
+                await _emailSender.SendAsync(user.FullName, user.Email, subject, htmlMessage);
                 return RedirectToAction(nameof(List));
             }
             return View();
@@ -150,6 +154,14 @@ namespace DatingService.Areas.Admin.Controllers
         private bool ApplicationUserExists(Guid id)
         {
             return _userManager.Users.Any(e => e.Id == id);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Lock(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            user.SentReports = await _reportService.GetAll(user).ToListAsync();
+            return View(user);
         }
     }
 }

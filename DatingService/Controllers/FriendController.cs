@@ -5,6 +5,7 @@ using DatingService.Infrastructure.ViewModels;
 using DatingService.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,14 +20,26 @@ namespace DatingService.Controllers
         private readonly IRequestService _requestService;
         private readonly IChatService _chatService;
         private readonly IMessageService _messageService;
+        private readonly IPostService _postService;
+        private readonly IReportService _reportService;
+        private readonly IReportCategoryService _reportCategoryService;
         private int pageSize = 10;
 
-        public FriendController(UserManager<ApplicationUser> userManager, IRequestService requestService, IChatService chatService, IMessageService messageService)
+        public FriendController(UserManager<ApplicationUser> userManager,
+                                IRequestService requestService,
+                                IChatService chatService,
+                                IMessageService messageService,
+                                IPostService postService,
+                                IReportService reportService,
+                                 IReportCategoryService reportCategoryService)
         {
             _userManager = userManager;
             _requestService = requestService;
             _chatService = chatService;
             _messageService = messageService;
+            _postService = postService;
+            _reportService = reportService;
+            _reportCategoryService = reportCategoryService;
         }
 
         public async Task<IActionResult> ListAsync(int page = 1)
@@ -51,6 +64,17 @@ namespace DatingService.Controllers
             return View(friendsViewModel);
         }
 
+        public async Task<IActionResult> DetailsAsync(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.Posts = await _postService.GetAll(user).ToListAsync();
+            return View(user);
+        }
+
         public async Task<IActionResult> UsersAsync(int page = 1)
         {
 
@@ -59,7 +83,7 @@ namespace DatingService.Controllers
             var count = users.Count();
             var items = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            var pageViewModel = new PageViewModel(count, page, pageSize);
             var usersViewModel = new UsersViewModel()
             {
                 Users = items,
@@ -124,6 +148,40 @@ namespace DatingService.Controllers
             }
             chat.Messages = _messageService.GetAll(chat).ToList();
             return View(chat);
+        }
+
+        [HttpGet]
+        public IActionResult CreateReport(Guid userId)
+        {
+            var report = new Report
+            {
+                ReceiverId = userId
+            };
+
+            ViewBag.ReportCategories = new SelectList(_reportCategoryService.GetAll(), "Id", "Name");
+
+            return View(report);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateReport(Report report)
+        {
+            //var post = _postService.Get(id);
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            report.SenderId = user.Id;
+            //var report = _reportService.Get(user, post);
+
+            //if (report == null)
+            //{
+            //    report = new Report
+            //    {
+            //        Post = post,
+            //        User = user,
+            //    };
+            //}
+            //report.CategoryId = reportCategoryId;
+
+            _reportService.Add(report);
+            return RedirectToAction("List");
         }
     }
 }

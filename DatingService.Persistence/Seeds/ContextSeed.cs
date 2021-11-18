@@ -4,9 +4,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Persistence.Seeds
 {
@@ -17,9 +14,14 @@ namespace DatingService.Persistence.Seeds
             CreateRoles(modelBuilder);
             CreateGenders(modelBuilder);
             CreateBasicUsers(modelBuilder);
-            
-
+            CreateReportCategories(modelBuilder);
             MapUserRole(modelBuilder);
+        }
+
+        private static void CreateReportCategories(ModelBuilder modelBuilder)
+        {
+            List<ReportCategory> roles = DefaultReportCategory.ReportCategoryList();
+            modelBuilder.Entity<ReportCategory>().HasData(roles);
         }
 
         private static void CreateRoles(ModelBuilder modelBuilder)

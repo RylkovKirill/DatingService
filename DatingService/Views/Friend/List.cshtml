@@ -44,10 +44,12 @@
                 <tr>
                     <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true"></td>
                     <td>Ofline</td>
-                    <td>@item.Email</td>
+                    <td>@item.FullName</td>
                     <td>
+                        <a type="button" class="btn btn-primary" asp-controller="Friend" asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@GetChatId(item.Id).Result">Написать сообщение</a>
                         <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
+                        <a type="button" class="btn btn-danger" asp-controller="Friend" asp-action="CreateReport" asp-route-userId="@item.Id">Report</a>
                     </td>
                 </tr>
 
