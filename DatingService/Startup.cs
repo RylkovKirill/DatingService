@@ -34,6 +34,7 @@ namespace DatingService
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<AvatarOptions>(Configuration.GetSection(nameof(AvatarOptions)));
+            services.Configure<PostOptions>(Configuration.GetSection(nameof(PostOptions)));
             services.Configure<EmailOptions>(Configuration.GetSection(nameof(EmailOptions)));
             services.Configure<SmtpOptions>(Configuration.GetSection(nameof(SmtpOptions)));
 
@@ -47,12 +48,12 @@ namespace DatingService
             services.AddControllersWithViews();
 
             services.AddAuthentication()
-                   /* .AddGoogle(options =>
-                    {
-                        IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-                        options.ClientId = googleAuthNSection["ClientId"];
-                        options.ClientSecret = googleAuthNSection["ClientSecret"];
-                    })*/;
+                    /* .AddGoogle(options =>
+                     {
+                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
+                         options.ClientId = googleAuthNSection["ClientId"];
+                         options.ClientSecret = googleAuthNSection["ClientSecret"];
+                     })*/;
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
@@ -60,7 +61,10 @@ namespace DatingService
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IRequestService, RequestService>();
+            services.AddScoped<IImageService, ImageService>();
             services.AddScoped<IAvatarRepository, AvatarRepository>();
+            services.AddTransient<IPostService, PostService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -106,9 +110,11 @@ namespace DatingService
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                
+
                 endpoints.MapRazorPages();
+                endpoints.MapHub<CommentsHub>("/comments");
                 endpoints.MapHub<MessagesHub>("/messages");
+                endpoints.MapHub<UsersHub>("/users");
             });
         }
     }
