@@ -139,11 +139,30 @@
 
             if (successful) {
                 // throw card in the chosen direction
-                
+
                 console.log(this.topCard);
+                console.log(receiverId);
                 console.log(receiverId[receiverId.length - 1].value);
-               
+
                 console.log(this.board);
+                console.log(senderId);
+                const item = {
+                    receiverId: receiverId[receiverId.length - 1].value,
+                    senderId: senderId.value
+                };
+                console.log(item);
+                console.log(senderId);
+                const uri = 'api/api';
+                fetch(uri, {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(item)
+                }).then(response => response.json())
+                    .catch(error => console.error(error));
+            
                 this.topCard.style.transform = `translateX(${posX}px) translateY(${posY}px) rotate(${deg}deg)`;
                 if (posX > 0) this.swipeRight();
                 else this.swipeLeft();
@@ -211,6 +230,7 @@ function forcedSwipeRight() {
     cards = board.querySelectorAll('.rec-card');
     console.log("left");
     console.log(cards);
+    
 
     // get top card
     topCard = cards[cards.length - 1];
