@@ -73,7 +73,13 @@ namespace DatingService.Service.Services
                 .Union(_repository.GetAll().Where(r => r.Receiver.Equals(user) && r.RequestStatus == RequestStatus.Accepted)
                 .Select(r => r.Sender));
         }
-
+        public IQueryable<ApplicationUser> GetUserRequests(ApplicationUser user)
+        {
+            return _repository.GetAll().Where(r => r.Sender.Equals(user))
+                .Select(r => r.Receiver)
+                .Union(_repository.GetAll().Where(r => r.Receiver.Equals(user))
+                .Select(r => r.Sender));
+        }
         public IQueryable<ApplicationUser> GetPotentialFriends(IQueryable<ApplicationUser> users, IQueryable<ApplicationUser> friends)
         {
             return users.Except(friends);

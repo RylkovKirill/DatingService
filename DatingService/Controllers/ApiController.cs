@@ -30,15 +30,10 @@ namespace DatingService.Controllers
         {
             
             _requestService.Add(request);
-
             return Ok(request);
         }
 
-        public class RequestApi
-        {
-            public string receiverId { get; set; }
-            public string senderId { get; set; }
-        }
+        
     }
     
     

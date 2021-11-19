@@ -36,8 +36,9 @@ namespace DatingService.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var users = _userManager.Users;
             var friends = _requestService.GetUserFriends(user);
+            var requests = _requestService.GetUserRequests(user);
             ViewBag.senderId = user.Id;
-            return View(_requestService.GetPotentialFriends(users, friends));
+            return View(_requestService.GetPotentialFriends(users, requests));
         }
 
         public IActionResult Privacy()

@@ -20,6 +20,7 @@ namespace DatingService.Service.Interfaces
         void Update(Request request);
         void Remove(Guid id);
         IQueryable<ApplicationUser> GetUserFriends(ApplicationUser user);
+        IQueryable<ApplicationUser> GetUserRequests(ApplicationUser user);
         IQueryable<ApplicationUser> GetPotentialFriends(IQueryable<ApplicationUser> users, IQueryable<ApplicationUser> friends);
         bool UserInFriendsList(IQueryable<ApplicationUser> friends, ApplicationUser user);
         bool IsRequestExistence(ApplicationUser user1, ApplicationUser user2);
