@@ -147,8 +147,8 @@
                 console.log(this.board);
                 console.log(senderId);
                 const item = {
-                    receiverId: receiverId[receiverId.length - 1].value,
-                    senderId: senderId.value
+                    ReceiverId: receiverId[receiverId.length - 1].value,
+                    SenderId: senderId.value
                 };
                 console.log(item);
                 console.log(senderId);

@@ -26,11 +26,9 @@ namespace DatingService.Controllers
             return "das" + id;
         }
         [HttpPost]
-        public async Task<ActionResult<Request>> Post(RequestApi requestApi)
+        public async Task<ActionResult<Request>> Post(Request request)
         {
-            Request request = new Request();
-            request.ReceiverId = Guid.Parse(requestApi.receiverId);
-            request.SenderId = Guid.Parse(requestApi.senderId);
+            
             _requestService.Add(request);
 
             return Ok(request);
