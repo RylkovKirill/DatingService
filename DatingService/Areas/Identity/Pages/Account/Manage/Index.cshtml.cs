@@ -53,6 +53,9 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            [DataType(DataType.Text)]
+            [Display(Name = "Description")]
+            public string Description { get; set; }
 
         }
 
@@ -68,7 +71,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 DateOfBirth = user.DateOfBirth,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Description = user.Description
             };
         }
 

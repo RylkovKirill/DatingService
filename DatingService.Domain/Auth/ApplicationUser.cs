@@ -14,6 +14,7 @@ namespace DatingService.Domain.Auth
         public double? Longitude { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
+        public string Description { get; set; }
 
         public Guid? AvatarId { get; set; }
         public Guid? GenderId { get; set; }
@@ -32,5 +33,6 @@ namespace DatingService.Domain.Auth
 
         public ICollection<Report> SentReports { get; set; }
         public ICollection<Report> ReceivedReports { get; set; }
+        
     }
 }
