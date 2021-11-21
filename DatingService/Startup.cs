@@ -67,6 +67,7 @@ namespace DatingService
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
             services.AddTransient<IReportService, ReportService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IBraintreeService, BraintreeService>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
