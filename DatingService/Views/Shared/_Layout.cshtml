@@ -1,52 +1,80 @@
 ﻿@{
+    ViewData["Title"] = "DS";
     Layout = "~/Views/Shared/_BaseLayout.cshtml";
 }
 
-<header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-        <div class="container">
-            @*<a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DatingService</a>*@
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="List">Chats</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Friends</a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="List">Friends List</a>
-                            <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="Requests">Requests</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Blog</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
-                    </li>
-                </ul>
-                <partial name="_LoginPartial" />
-            </div>
-        </div>
-    </nav>
-</header>
-<div class="container">
-    <main role="main" class="pb-3">
-        @RenderBody()
-    </main>
-</div>
+<div class="wrapper">
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2021 - DatingService - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    <nav id="sidebar">
+
+        <div class="sidebar-header">
+            <i class="fas fa-angry"></i>
+            <span>@ViewData["Title"]</span>
+        </div>
+        <ul class="components">
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="List">Chats</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Friends</a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="List">Friends List</a>
+                    <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="Requests">Requests</a>
+                </div>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Blog</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Map" asp-action="Index">Map</a>
+            </li>
+        </ul>
+        @if (User.IsInRole("Admin"))
+        {
+            <ul class="components">
+                <li>
+                    <a asp-area="Admin" asp-controller="CourseList" asp-action="Index"><i class="fas fa-list"></i> Course List</a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="CourseGroups" asp-action="Index"><i class="fas fa-list"></i> Course Groups</a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="TrainerList" asp-action="Index"><i class="fas fa-list"></i> Trainer List</a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="TrainerGroups" asp-action="Index"><i class="fas fa-users"></i> Trainer Groups</a>
+                </li>
+                <li>
+                    <a asp-area="Admin" asp-controller="Users" asp-action="Index"><i class="fas fa-user-edit"></i> Users</a>
+                </li>
+                <li>
+                    <a asp-area="" asp-controller="React" asp-action="Index"><i class="fas fa-list"></i> Course Groups (React)</a>
+                </li>
+            </ul>
+        }
+    </nav>
+
+    <div class="w-100">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <button type="button" class="btn btn-info" onclick="changeMenu()">
+                    <i class="fas fa-align-left"></i>
+                </button>
+                <ul class="nav navbar-nav ml-auto">
+                    <partial name="_LoginPartial" />
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="main">
+            @RenderBody()
+        </main>
+
     </div>
-</footer>
+</div>
 
 @await RenderSectionAsync("Scripts", required: false)
