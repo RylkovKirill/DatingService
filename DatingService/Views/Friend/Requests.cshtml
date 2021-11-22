@@ -19,8 +19,8 @@
                     @*<td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/images/profiles/@path" data-holder-rendered="true"></td>*@
                     <td>@item.SenderId</td>
                     <td>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@true">Принять</a>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">Отклонить</a>
+                        <a type="button" class="btn btn-primary" asp-controller="Friend" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@true">Принять</a>
+                        <a type="button" class="btn btn-primary" asp-controller="Friend" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">Отклонить</a>
                     </td>
                 </tr>
 

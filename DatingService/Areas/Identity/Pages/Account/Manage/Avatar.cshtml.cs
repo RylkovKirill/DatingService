@@ -25,8 +25,7 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             IFileService fileService,
             IOptions<AvatarOptions> avatarOptions,
             IWebHostEnvironment environment,
-            IAvatarRepository avatarRepository
-            )
+            IAvatarRepository avatarRepository)
         {
             _userManager = userManager;
             _avatarOptions = avatarOptions.Value;

@@ -10,11 +10,11 @@ namespace DatingService.Domain.Auth
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
+        public int PostCount { get; set; }
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
-        public string Description { get; set; }
 
         public Guid? AvatarId { get; set; }
         public Guid? GenderId { get; set; }
@@ -33,6 +33,6 @@ namespace DatingService.Domain.Auth
 
         public ICollection<Report> SentReports { get; set; }
         public ICollection<Report> ReceivedReports { get; set; }
-        
+
     }
 }

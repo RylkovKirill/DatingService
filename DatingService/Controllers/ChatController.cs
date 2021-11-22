@@ -17,9 +17,10 @@ namespace DatingService.Controllers
         private readonly IChatService _chatService;
         private readonly IMessageService _messageService;
 
-        public ChatController(UserManager<ApplicationUser> userManager,
-                              IChatService chatService,
-                              IMessageService messageService)
+        public ChatController(
+            UserManager<ApplicationUser> userManager,
+            IChatService chatService,
+            IMessageService messageService)
         {
             _userManager = userManager;
             _chatService = chatService;
