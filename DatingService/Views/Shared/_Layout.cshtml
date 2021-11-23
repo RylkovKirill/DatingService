@@ -8,22 +8,28 @@
     <nav id="sidebar">
 
         <div class="sidebar-header">
-            <i class="fas fa-angry"></i>
+            <i class="fas fa-kiss-wink-heart"></i>
             <span>@ViewData["Title"]</span>
         </div>
         <ul class="components">
+
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Chat" asp-action="List">Chats</a>
             </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-dark" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" asp-area="" asp-controller="" asp-action="">Friends</a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="List">Friends List</a>
-                    <a class="dropdown-item" asp-area="" asp-controller="Friend" asp-action="Requests">Requests</a>
-                </div>
+            <li>
+                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Friends</a>
+                <ul class="collapse list-unstyled" id="homeSubmenu">
+                    <li>
+                        <a asp-area="" asp-controller="Friend" asp-action="List">Friends List</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Friend" asp-action="Requests">Requests</a>
+                    </li>
+
+                </ul>
             </li>
             <li class="nav-item">
                 <a class="nav-link text-dark" asp-area="" asp-controller="Post" asp-action="Index">Blog</a>
