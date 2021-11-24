@@ -2,27 +2,21 @@
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Persistence.Seeds
 {
     public static class DefaultUsers
     {
-        private static Random _random = new Random();
-
-        public static List<ApplicationUser> IdentityBasicUserList()
+        public static List<ApplicationUser> GetUsers()
         {
 
             return new List<ApplicationUser>()
             {
-
                 new ApplicationUser
                 {
                     Id = Guid.Parse("c6dd1e20-cce1-4299-be0c-862a2b681039"),
                     UserName = "kirill.rylkov.2001@gmail.com",
-                    Email = "kirill.rylkov.2001@gmail.comm",
+                    Email = "kirill.rylkov.2001@gmail.com",
                     FirstName = "Kirill",
                     LastName = "Rylkov",
                     EmailConfirmed = true,

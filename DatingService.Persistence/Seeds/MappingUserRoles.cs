@@ -1,15 +1,12 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Persistence.Seeds
 {
-    public static class MappingUserRole
+    public static class MappingUserRoles
     {
-        public static List<IdentityUserRole<Guid>> IdentityUserRoleList()
+        public static List<IdentityUserRole<Guid>> GetUserRoles()
         {
             return new List<IdentityUserRole<Guid>>()
             {

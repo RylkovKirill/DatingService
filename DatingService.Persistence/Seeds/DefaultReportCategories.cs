@@ -1,15 +1,12 @@
 ﻿using DatingService.Domain.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DatingService.Persistence.Seeds
 {
-    public static class DefaultReportCategory
+    public static class DefaultReportCategories
     {
-        public static List<ReportCategory> ReportCategoryList()
+        public static List<ReportCategory> GetReportCategories()
         {
             return new List<ReportCategory>()
             {
@@ -44,8 +41,8 @@ namespace DatingService.Persistence.Seeds
                 new ReportCategory {
                     Id = Guid.Parse("7eca2608-2bf8-482b-a630-8e7eb2bc8724"),
                     Name = "Спам или ложная информация",
-                },
-        };
+                }
+            };
         }
     }
 }

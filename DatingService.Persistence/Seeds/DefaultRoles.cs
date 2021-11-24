@@ -9,7 +9,7 @@ namespace DatingService.Persistence.Seeds
 {
     public static class DefaultRoles
     {
-        public static List<IdentityRole<Guid>> IdentityRoleList()
+        public static List<IdentityRole<Guid>> GetRoles()
         {
             return new List<IdentityRole<Guid>>()
             {

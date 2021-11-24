@@ -6,7 +6,7 @@ namespace DatingService.Persistence.Seeds
 {
     public static class DefaultGenders
     {
-        public static List<Gender> IdentityGenderList()
+        public static List<Gender> GetGenders()
         {
             return new List<Gender>()
             {
