@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingService.Domain.Auth;
+using DatingService.Service.Interfaces;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DatingService.Areas.Identity.Pages.Account.Manage
 {
@@ -15,12 +17,16 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
 
+        private readonly IGenderService _genderService;
+
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IGenderService genderService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _genderService = genderService;
         }
 
         public string Username { get; set; }
@@ -36,23 +42,26 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             [Required]
             [StringLength(64, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             [DataType(DataType.Text)]
-            [Display(Name = "First name")]
+            [Display(Name = "First Name")]
             public string FirstName { get; set; }
 
             [Required]
             [StringLength(64, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             [DataType(DataType.Text)]
-            [Display(Name = "Last name")]
+            [Display(Name = "Last Name")]
             public string LastName { get; set; }
 
             [Required]
             [DataType(DataType.Date)]
-            [Display(Name = "Date of birth")]
+            [Display(Name = "Date Of Nirth")]
             public DateTime DateOfBirth { get; set; }
 
             [Phone]
-            [Display(Name = "Phone number")]
+            [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Gender")]
+            public Guid? GenderId { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -68,6 +77,7 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                 LastName = user.LastName,
                 DateOfBirth = user.DateOfBirth,
                 PhoneNumber = phoneNumber,
+                GenderId = user.GenderId
             };
         }
 
@@ -80,6 +90,9 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             }
 
             await LoadAsync(user);
+
+            ViewData["Genders"] = new SelectList(_genderService.All(), "Id", "Name");
+
             return Page();
         }
 
@@ -107,6 +120,13 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            user.FirstName = Input.FirstName;
+            user.LastName = Input.LastName;
+            user.DateOfBirth = Input.DateOfBirth;
+            user.GenderId = Input.GenderId;
+
+            await _userManager.UpdateAsync(user);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

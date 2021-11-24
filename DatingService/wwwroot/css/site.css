@@ -290,7 +290,7 @@ a[data-toggle="collapse"] {
     transform: translateY(-50%);
 }
 
-ul ul a {
+#sidebar ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
     background: #6d7fcc;
@@ -338,4 +338,8 @@ a.article:hover {
     #sidebarCollapse span {
         display: none;
     }
+}
+
+.nav-link {
+    font-size: 14pt;
 }
