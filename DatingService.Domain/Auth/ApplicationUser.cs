@@ -33,6 +33,5 @@ namespace DatingService.Domain.Auth
 
         public ICollection<Report> SentReports { get; set; }
         public ICollection<Report> ReceivedReports { get; set; }
-
     }
 }
