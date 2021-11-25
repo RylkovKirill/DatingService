@@ -26,10 +26,10 @@
                     </div>
 
                     <div class="p-1">
-                        <a type="button" class="btn btn-outline-primary m-1" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@true">
+                        <a type="button" class="btn btn-outline-primary m-1" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@true">
                             <i class="fas fa-user-check"></i> Принять
                         </a>
-                        <a type="button" class="btn btn-outline-danger m-1" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
+                        <a type="button" class="btn btn-outline-danger m-1" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
                             <i class="fas fa-user-times"></i> Отклонить
                         </a>
                     </div>
@@ -57,7 +57,7 @@
                     </div>
 
                     <div class="p-1">
-                        <a type="button" class="btn btn-outline-danger" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
+                        <a type="button" class="btn btn-outline-danger" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
                             <i class="fas fa-times"></i> Отменить
                         </a>
                     </div>

@@ -1,5 +1,6 @@
 ﻿
-@model FriendsViewModel
+@model MatchListViewModel
+
 @inject UserManager<ApplicationUser> _userManager
 @inject IChatService _chatService
 @functions{
@@ -20,40 +21,73 @@
     }
 
 }
-<head>
-    <title>@ViewData["Title"] - Пользователи</title>
-</head>
-<body>
-    <div>
-        Друзей онлайн : <span id="onlineUsersCount"></span>
-    </div>
-    <div>
-        <page-link page-model="Model.PageViewModel" page-action="Friends"></page-link>
-    </div>
-    <table class="table" id="userList">
-        <thead>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Friends)
-            {
-                var path = item.AvatarPath;
-                @if (path == null)
-                {
-                    path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
-                }
-                <tr>
-                    <td><img class="rounded-circle" style="height:5rem; width:5rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true"></td>
-                    <td>Ofline</td>
-                    <td>@item.FullName</td>
-                    <td>
-                        <a type="button" class="btn btn-primary" asp-controller="Friend" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@GetChatId(item.Id).Result">Написать сообщение</a>
-                        <a type="button" class="btn btn-primary" asp-controller="UserRelationship" asp-action="ChangeRequestStatus" asp-route-requestId="@Model.Requests.ElementAt(Model.Friends.IndexOf(item)).Id" asp-route-confirmed="@false">Удалить из друзей</a>
-                        <a type="button" class="btn btn-danger" asp-controller="Friend" asp-action="CreateReport" asp-route-userId="@item.Id">Report</a>
-                    </td>
-                </tr>
 
+@{
+    ViewData["Title"] = "Matches";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<div class="my-4">
+    <form id="filterMatchesForm" method="get" class="d-flex">
+        <div class="input-group h-100">
+            <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        @foreach (var item in Model.Matches)
+        {
+            var path = item.AvatarPath;
+            @if (path == null)
+            {
+                path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
             }
-        </tbody>
-    </table>
-</body>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+                <div class="single_advisor_profile wow fadeInUp" data-wow-delay="0.2s" style="visibility: visible; animation-delay: 0.2s; animation-name: fadeInUp;">
+                    <div class="advisor_thumb">
+                        <img src="~/Files/Images/Avatars/@path" style="height: 16rem;" alt="">
+
+                        <div class="social-info">
+                            <a asp-controller="Match" asp-action="Details" asp-route-id="@item.Id">
+                                <i class="fas fa-info"></i>
+                            </a>
+                            <a asp-controller="Chat" asp-action="Details" asp-route-id="@GetChatId(item.Id).Result">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                            <a asp-controller="Match" asp-action="RemoveMatch" asp-route-id="@item.Id" asp-route-confirmed="@false">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                            <a asp-controller="Match" asp-action="CreateReport" asp-route-userId="@item.Id">
+                                <i class="fas fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="single_advisor_details_info">
+                        <h5>@item.FullName</h5>
+                        <p class="designation">@item.DateOfBirth</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<page-link model="@Model.PageViewModel" action="List" action-filter="@(Model.Filter)"></page-link>
+
+<script>
+    function submitFilterForm() {
+        const filterForm = document.getElementById("filterMatchesForm");
+        filterForm.submit();
+    }
+</script>

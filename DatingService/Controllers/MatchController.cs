@@ -42,23 +42,29 @@ namespace DatingService.Controllers
             _reportCategoryService = reportCategoryService;
         }
 
-        public async Task<IActionResult> ListAsync(int page = 1)
+        public async Task<IActionResult> ListAsync(int page = 1, string filter = null)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
             var friends = _requestService.GetUserFriends(user).ToList();
+
+            if (filter != null)
+            {
+                friends = friends.Where(p => p.FullName.ToUpper().Contains(filter.ToUpper())).ToList();
+            }
+
             var count = friends.Count();
             var items = friends.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
             PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
-            List<Request> requests = new List<Request>();
-            foreach (var friend in items)
+
+            var friendsViewModel = new MatchListViewModel()
             {
-                requests.Add(_requestService.Get(user, friend));
-            }
-            var friendsViewModel = new FriendsViewModel()
-            {
-                Friends = items,
-                Requests = requests,
+                Matches = items,
                 PageViewModel = pageViewModel,
             };
             return View(friendsViewModel);
@@ -118,7 +124,7 @@ namespace DatingService.Controllers
             return RedirectToAction("Users");
         }
 
-        public IActionResult ChangeRequestStatus(Guid requestId, bool confirmed)
+        public IActionResult ChangeRequest(Guid requestId, bool confirmed)
         {
             var request = _requestService.Get(requestId);
             if (confirmed == true)
@@ -162,6 +168,7 @@ namespace DatingService.Controllers
 
             return View(report);
         }
+
         [HttpPost]
         public async Task<IActionResult> CreateReport(Report report)
         {

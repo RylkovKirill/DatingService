@@ -14,7 +14,7 @@
 <h1 class="mb-4">@ViewData["Title"]</h1>
 
 <div class="my-4">
-    <form id="filterForm" method="get" class="d-flex">
+    <form id="filterPostsForm" method="get" class="d-flex">
         <div class="input-group h-100">
             <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
             <div class="input-group-append">
@@ -38,24 +38,24 @@
         {
             path = "no-title-image.jpeg";
         }
-    <div class="card shadow my-4">
+        <div class="card shadow my-4">
 
-        <img src="~/Files/Images/Posts/@path" alt="@item.Title Image" class="card-img-top" style="">
-        <div class="card-body">
-            <h5 class="card-title">@item.Title</h5>
+            <img src="~/Files/Images/Posts/@path" alt="@item.Title Image" class="card-img-top" style="">
+            <div class="card-body">
+                <h5 class="card-title">@item.Title</h5>
+            </div>
+            <div class="card-footer text-right">
+                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary icon-wrapper">
+                    <i class="fas fa-info"></i>
+                </a>
+                <a asp-area="" asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning icon-wrapper">
+                    <i class="fas fa-edit"></i>
+                </a>
+                <a asp-area="" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id" asp-route-imagePath="@item.Image?.Path" class="btn btn-outline-danger icon-wrapper">
+                    <i class="fas fa-trash"></i>
+                </a>
+            </div>
         </div>
-        <div class="card-footer text-right">
-            <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary icon-wrapper">
-                <i class="fas fa-info"></i>
-            </a>
-            <a asp-area="" asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning icon-wrapper">
-                <i class="fas fa-edit"></i>
-            </a>
-            <a asp-area="" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id" asp-route-imagePath="@item.Image?.Path" class="btn btn-outline-danger icon-wrapper">
-                <i class="fas fa-trash"></i>
-            </a>
-        </div>
-    </div>
     }
 </div>
 
@@ -63,7 +63,7 @@
 
 <script>
     function submitFilterForm() {
-        const filterForm = document.getElementById("filterForm");
+        const filterForm = document.getElementById("filterPostsForm");
         filterForm.submit();
     }
 </script>
