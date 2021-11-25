@@ -1,12 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using DatingService.Domain.Auth;
+using System;
+
 
 namespace DatingService.Domain.Entities
 {
-    public class Order
+    public class Order : BaseEntity<Guid>
     {
+        public decimal Price { get; set; }
+
+        public Guid UserId { get; set; }
+        public ApplicationUser User { get; set; }
     }
 }

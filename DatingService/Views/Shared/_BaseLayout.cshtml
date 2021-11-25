@@ -20,7 +20,6 @@
     <script src="~/js/hammer.min.js"></script>
     <script src="~/js/carousel.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
-    @await RenderSectionAsync("Scripts", required: false)
+    <partial name="_ValidationScriptsPartial" />
 </body>
 </html>

@@ -23,6 +23,7 @@ namespace DatingService.Controllers
     {
         private const int PageSize = 5;
 
+        private readonly IOrderService _orderService;
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
         private readonly IImageService _imageService;
@@ -31,14 +32,14 @@ namespace DatingService.Controllers
         private readonly IWebHostEnvironment _environment;
         private readonly UserManager<ApplicationUser> _userManager;
 
-
         public PostController(IPostService postService,
             ICommentService commentService,
             UserManager<ApplicationUser> userManager,
             IOptions<PostOptions> postOptions,
             IFileService fileService,
             IWebHostEnvironment environment,
-            IImageService imageService)
+            IImageService imageService,
+            IOrderService orderService)
         {
             _postService = postService;
             _commentService = commentService;
@@ -47,6 +48,7 @@ namespace DatingService.Controllers
             _fileService = fileService;
             _environment = environment;
             _imageService = imageService;
+            _orderService = orderService;
         }
 
         public async Task<IActionResult> ListAsync(int page = 1, string filter = null)
@@ -61,7 +63,7 @@ namespace DatingService.Controllers
 
             if (filter != null)
             {
-                posts = posts.Where(p=>p.Title.ToUpper().Contains(filter.ToUpper()));
+                posts = posts.Where(p => p.Title.ToUpper().Contains(filter.ToUpper()));
             }
 
             var count = await posts.CountAsync();
@@ -101,8 +103,20 @@ namespace DatingService.Controllers
             return View(post);
         }
 
-        public IActionResult Create()
+        public async Task<IActionResult> CreateAsync()
         {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var postCount = _postService.GetAll(user).Count();
+            if(postCount == user.PostCount)
+            {
+                return RedirectToAction("Index", "Pay");
+            }
+
             return View();
         }
 
@@ -111,6 +125,11 @@ namespace DatingService.Controllers
         public async Task<IActionResult> Create(PostViewModel model, IFormFile file)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
+            if(user == null)
+            {
+                return NotFound();
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -135,101 +154,98 @@ namespace DatingService.Controllers
                 }
 
                 _postService.Add(post);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("List");
             }
 
             return View(model);
         }
 
-        //// GET: Blog/Edit/5
-        //public async Task<IActionResult> Edit(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public IActionResult Edit(Guid id)
+        {
+            var post = _postService.Get(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
 
-        //    var post = await _context.Posts.FindAsync(id);
-        //    if (post == null)
-        //    {
-        //        return NotFound();
-        //    }
-        //    ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Name", post.ImageId);
-        //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", post.UserId);
-        //    return View(post);
-        //}
+            if (post.ImageId != null)
+            {
+                post.Image = _imageService.Get(post.Id);
+            }
 
-        //// POST: Blog/Edit/5
-        //// To protect from overposting attacks, enable the specific properties you want to bind to.
-        //// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Edit(Guid id, [Bind("Title,Content,IsPublished,ImageId,UserId,Id,DateCreated,DateUpdated")] Post post)
-        //{
-        //    if (id != post.Id)
-        //    {
-        //        return NotFound();
-        //    }
+            var model = new PostViewModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                Content = post.Content,
+                ImagePath = post.Image?.Path
+            };
 
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Update(post);
-        //            await _context.SaveChangesAsync();
-        //        }
-        //        catch (DbUpdateConcurrencyException)
-        //        {
-        //            if (!PostExists(post.Id))
-        //            {
-        //                return NotFound();
-        //            }
-        //            else
-        //            {
-        //                throw;
-        //            }
-        //        }
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    ViewData["ImageId"] = new SelectList(_context.Images, "Id", "Name", post.ImageId);
-        //    ViewData["UserId"] = new SelectList(_context.Users, "Id", "FirstName", post.UserId);
-        //    return View(post);
-        //}
+            return View(model);
+        }
 
-        //// GET: Blog/Delete/5
-        //public async Task<IActionResult> Delete(Guid? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(PostViewModel model, IFormFile file)
+        {
+            var user = await _userManager.GetUserAsync(HttpContext.User);
 
-        //    var post = await _context.Posts
-        //        .Include(p => p.Image)
-        //        .Include(p => p.User)
-        //        .FirstOrDefaultAsync(m => m.Id == id);
-        //    if (post == null)
-        //    {
-        //        return NotFound();
-        //    }
+            if (ModelState.IsValid)
+            {
+                var post = _postService.Get(model.Id);
+                if (post == null)
+                {
+                    return NotFound();
+                }
 
-        //    return View(post);
-        //}
+                if (file != null)
+                {
+                    var image = post.ImageId == null ? new Image() : _imageService.Get(post.ImageId.Value);
+                    var fileName = user.Id.ToString() + "-" + post.DateCreated.ToString("dd-MM-yyyy-hh-mm-ss") + Path.GetExtension(file.FileName);
+                    var path = Path.Combine(_environment.WebRootPath, _postOptions.Path, fileName);
+                    _fileService.Save(file, path);
+                    image.Name = user.UserName;
+                    image.Path = fileName;
+                    image.PostId = post.Id;
+                    post.Image = image;
+                }
 
-        //// POST: Blog/Delete/5
-        //[HttpPost, ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> DeleteConfirmed(Guid id)
-        //{
-        //    var post = await _context.Posts.FindAsync(id);
-        //    _context.Posts.Remove(post);
-        //    await _context.SaveChangesAsync();
-        //    return RedirectToAction(nameof(Index));
-        //}
+                post.Title = model.Title;
+                post.Content = model.Content;
+                post.DateUpdated = DateTime.Now;
 
-        //private bool PostExists(Guid id)
-        //{
-        //    return _context.Posts.Any(e => e.Id == id);
-        //}
+                _postService.Update(post);
+                return RedirectToAction("List");
+            }
+
+            return View(model);
+        }
+
+        public IActionResult Delete(Guid id)
+        {
+            var post = _postService.Get(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            return View(post);
+        }
+
+        [ValidateAntiForgeryToken]
+        public IActionResult DeleteConfirmed(Guid id)
+        {
+            var post = _postService.Get(id);
+            if (post == null)
+            {
+                return NotFound();
+            }
+
+            _postService.Remove(id);
+
+            return RedirectToAction("List");
+        }
+
     }
 }

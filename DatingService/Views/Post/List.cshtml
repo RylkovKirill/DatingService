@@ -39,21 +39,27 @@
             path = "no-title-image.jpeg";
         }
         <div class="card shadow my-4">
-
             <img src="~/Files/Images/Posts/@path" alt="@item.Title Image" class="card-img-top" style="">
+            
             <div class="card-body">
                 <h5 class="card-title">@item.Title</h5>
             </div>
-            <div class="card-footer text-right">
-                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary icon-wrapper">
+
+            <div class="card-footer row justify-content-end text-right">
+                <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary mx-1 icon-wrapper">
                     <i class="fas fa-info"></i>
                 </a>
-                <a asp-area="" asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning icon-wrapper">
+                
+                <a asp-area="" asp-controller="Post" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-outline-warning mx-1 icon-wrapper">
                     <i class="fas fa-edit"></i>
                 </a>
-                <a asp-area="" asp-controller="Post" asp-action="Delete" asp-route-id="@item.Id" asp-route-imagePath="@item.Image?.Path" class="btn btn-outline-danger icon-wrapper">
-                    <i class="fas fa-trash"></i>
-                </a>
+                
+                <form asp-action="DeleteConfirmed">
+                    <input type="hidden" name="id" value="@item.Id" />
+                    <button type="submit" class="btn btn-outline-danger mx-1 icon-wrapper">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </form>
             </div>
         </div>
     }

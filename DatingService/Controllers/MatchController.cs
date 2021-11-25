@@ -24,7 +24,7 @@ namespace DatingService.Controllers
         private readonly IReportService _reportService;
         private readonly IReportCategoryService _reportCategoryService;
         private readonly IGenderService _genderService;
-        private int pageSize = 10;
+        private int PageSize = 4;
 
         public MatchController(UserManager<ApplicationUser> userManager,
                                 IRequestService requestService,
@@ -61,9 +61,9 @@ namespace DatingService.Controllers
             }
 
             var count = friends.Count();
-            var items = friends.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var items = friends.Skip((page - 1) * PageSize).Take(PageSize).ToList();
 
-            PageViewModel pageViewModel = new PageViewModel(count, page, pageSize);
+            PageViewModel pageViewModel = new PageViewModel(count, page, PageSize);
 
             var friendsViewModel = new MatchListViewModel()
             {
@@ -96,9 +96,9 @@ namespace DatingService.Controllers
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var users = _userManager.Users.Where(u => u != user).Include(u => u.Gender).ToList();
             var count = users.Count();
-            var items = users.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var items = users.Skip((page - 1) * PageSize).Take(PageSize).ToList();
 
-            var pageViewModel = new PageViewModel(count, page, pageSize);
+            var pageViewModel = new PageViewModel(count, page, PageSize);
             var usersViewModel = new UsersViewModel()
             {
                 Users = items,

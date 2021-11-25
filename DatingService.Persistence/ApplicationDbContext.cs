@@ -12,19 +12,15 @@ namespace DatingService.Persistence
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
         public DbSet<Gender> Genders { get; set; }
-
         public DbSet<Post> Posts { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Comment> Comments { get; set; }
-
         public DbSet<Chat> Chats { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Request> Requests { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -37,6 +33,7 @@ namespace DatingService.Persistence
             builder.ApplyConfiguration(new MessageConfig());
             builder.ApplyConfiguration(new RequestConfig());
             builder.ApplyConfiguration(new ReportConfig());
+            builder.ApplyConfiguration(new OrderConfig());
 
             builder.Seed();
 
