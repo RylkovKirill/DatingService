@@ -1,0 +1,69 @@
+﻿@model RequestViewModel
+<head>
+    <title>@ViewData["Title"] - Заявки</title>
+</head>
+<body>
+
+    <div class="row align-items-start  m-2">
+        <div class="col-md-6 shadow px-4 py-2 mb-4 mr-4">
+            <b>Inbox</b>
+
+            <div class="p-2 m-1">
+                @foreach (var item in Model.IncomingRequests)
+                {
+                    var path = item.Sender.AvatarPath;
+                    @if (path == null)
+                    {
+                        path = "no-profile-image-m.svg";
+                    }
+                    <hr />
+                    <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
+                        <div class="p-1">
+                            <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
+                            <a asp-controller="Match" asp-action="Details" asp-route-id="@item.SenderId" class="m-0 align-self-center text-info" style="text-decoration: underline;">@item.Sender.FullName</a>
+                        </div>
+
+                        <div class="p-1">
+                            <a type="button" class="btn btn-outline-primary m-1" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@true">
+                                <i class="fas fa-user-check"></i> Принять
+                            </a>
+                            <a type="button" class="btn btn-outline-danger m-1" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
+                                <i class="fas fa-user-times"></i> Отклонить
+                            </a>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+        <div class="col-md-4 shadow px-4 py-2">
+            <b>Sent</b>
+
+            <div class="p-2 m-1">
+                @foreach (var item in Model.OutgoingRequests)
+                {
+                    var path = item.Receiver.AvatarPath;
+                    @if (path == null)
+                    {
+                        path = "no-profile-image-m.svg";
+                    }
+                    <hr />
+                    <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
+                        <div class="p-1">
+                            <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
+                            <a asp-controller="Match" asp-action="Details" asp-route-id="@item.ReceiverId" class="m-0 align-self-center text-info" style="text-decoration: underline;">@item.Receiver.FullName</a>
+                        </div>
+
+                        <div class="p-1">
+                            <a type="button" class="btn btn-outline-danger" asp-controller="Match" asp-action="ChangeRequestStatus" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
+                                <i class="fas fa-times"></i> Отменить</a>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+
+</body>

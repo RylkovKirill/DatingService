@@ -2,6 +2,7 @@
 using DatingService.Domain.Entities;
 using DatingService.Domain.Enums;
 using DatingService.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,18 +37,24 @@ namespace DatingService.Service.Services
 
         public IQueryable<Request> GetAllByUser(ApplicationUser user)
         {
-            return _repository.GetAll().Where(r => (r.Sender.Equals(user) && r.RequestStatus == RequestStatus.Considered) || (r.Receiver.Equals(user) && r.RequestStatus == RequestStatus.Considered));
+            return _repository.GetAll()
+                .Where(r => (r.Sender.Equals(user) && r.RequestStatus == RequestStatus.Considered) || (r.Receiver.Equals(user) && r.RequestStatus == RequestStatus.Considered))
+                .Include(r => r.Receiver).Include(r => r.Sender);
         }
 
         public IQueryable<Request> GetAllOutgoingByUser(ApplicationUser user)
         {
-            return _repository.GetAll().Where(r => r.Sender.Equals(user) && r.RequestStatus == RequestStatus.Considered);
+            return _repository.GetAll()
+                .Where(r => r.Sender.Equals(user) && r.RequestStatus == RequestStatus.Considered)
+                .Include(r => r.Receiver).Include(r => r.Sender); ;
 
         }
 
         public IQueryable<Request> GetAllIncomingByUser(ApplicationUser user)
         {
-            return _repository.GetAll().Where(r => r.Receiver.Equals(user) && r.RequestStatus == RequestStatus.Considered);
+            return _repository.GetAll()
+                .Where(r => r.Receiver.Equals(user) && r.RequestStatus == RequestStatus.Considered)
+                .Include(r => r.Receiver).Include(r => r.Sender);
 
         }
 

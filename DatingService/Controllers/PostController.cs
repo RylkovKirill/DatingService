@@ -46,7 +46,7 @@ namespace DatingService.Controllers
             _imageService = imageService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> List()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null)

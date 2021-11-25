@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace DatingService.Controllers
 {
-    public class FriendController : Controller
+    public class MatchController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IRequestService _requestService;
@@ -25,7 +25,7 @@ namespace DatingService.Controllers
         private readonly IReportCategoryService _reportCategoryService;
         private int pageSize = 10;
 
-        public FriendController(UserManager<ApplicationUser> userManager,
+        public MatchController(UserManager<ApplicationUser> userManager,
                                 IRequestService requestService,
                                 IChatService chatService,
                                 IMessageService messageService,

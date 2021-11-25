@@ -46,7 +46,7 @@ namespace DatingService.Controllers
                         x = items.Latitude.Value,
                         y = items.Longitude.Value,
                         balloonCloseButton = true,
-                        balloonContent = $"<a href='Friend/Details/{items.Id}'>{items.Email}</a>",
+                        balloonContent = $"<a href='Match/Details/{items.Id}'>{items.Email}</a>",
                         hideIconOnBalloonOpen = false,
                         preset = "islands#yellowStretchyIcon"
                     });

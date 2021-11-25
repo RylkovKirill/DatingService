@@ -22,10 +22,10 @@
                 <a href="#MatchesSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users"></i> Matches</a>
                 <ul class="collapse list-unstyled" id="MatchesSubmenu">
                     <li>
-                        <a asp-area="" asp-controller="Friend" asp-action="List"><i class="fas fa-user-friends"></i> List</a>
+                        <a asp-area="" asp-controller="Match" asp-action="List"><i class="fas fa-user-friends"></i> List</a>
                     </li>
                     <li>
-                        <a asp-area="" asp-controller="Friend" asp-action="Requests"><i class="fas fa-exchange-alt"></i> Requests</a>
+                        <a asp-area="" asp-controller="Match" asp-action="Requests"><i class="fas fa-exchange-alt"></i> Requests</a>
                     </li>
                     <li>
                         <a asp-area="" asp-controller="Map" asp-action="Index"><i class="fas fa-map-marked-alt"></i> Map</a>
@@ -33,7 +33,15 @@
                 </ul>
             </li>
             <li class="nav-item">
-                <a class="nav-link" asp-area="" asp-controller="Post" asp-action="Index"><i class="fas fa-clipboard-list"></i> Posts</a>
+                <a href="#PostsSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-clipboard-list"></i> Posts</a>
+                <ul class="collapse list-unstyled" id="PostsSubmenu">
+                    <li>
+                        <a asp-area="" asp-controller="Post" asp-action="List"><i class="fas fa-list"></i> List</a>
+                    </li>
+                    <li>
+                        <a asp-area="" asp-controller="Post" asp-action="Create"><i class="fas fa-plus"></i> Create</a>
+                    </li>
+                </ul>
             </li>
         </ul>
 
