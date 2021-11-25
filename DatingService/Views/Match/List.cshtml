@@ -1,8 +1,8 @@
-﻿
-@model MatchListViewModel
+﻿@model MatchListViewModel
 
 @inject UserManager<ApplicationUser> _userManager
 @inject IChatService _chatService
+
 @functions{
     public async Task<Guid> GetChatId(Guid userId)
     {
@@ -19,7 +19,6 @@
         }
         return chat.Id;
     }
-
 }
 
 @{
@@ -41,7 +40,6 @@
     </form>
 </div>
 
-
 <div class="container">
     <div class="row">
         @foreach (var item in Model.Matches)
@@ -59,23 +57,23 @@
 
                         <div class="social-info">
                             <a asp-controller="Match" asp-action="Details" asp-route-id="@item.Id">
-                                <i class="fas fa-info"></i>
+                                <i class="fas fa-info" style="font-size: 1rem;"></i>
                             </a>
                             <a asp-controller="Chat" asp-action="Details" asp-route-id="@GetChatId(item.Id).Result">
-                                <i class="fas fa-edit"></i>
+                                <i class="fas fa-comments" style="font-size: 1rem;"></i>
                             </a>
                             <a asp-controller="Match" asp-action="RemoveMatch" asp-route-id="@item.Id" asp-route-confirmed="@false">
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-trash" style="font-size: 1rem;"></i>
                             </a>
                             <a asp-controller="Match" asp-action="CreateReport" asp-route-userId="@item.Id">
-                                <i class="fas fa-trash"></i>
+                                <i class="fas fa-lock" style="font-size: 1rem;"></i>
                             </a>
                         </div>
                     </div>
 
                     <div class="single_advisor_details_info">
-                        <h5>@item.FullName</h5>
-                        <p class="designation">@item.DateOfBirth</p>
+                        <p style="font-size: 1.5rem;">@item.FullName</p>
+                        <p class="designation">@item.DateOfBirth.ToShortDateString()</p>
                     </div>
                 </div>
             </div>

@@ -27,10 +27,10 @@
 
                     <div class="p-1">
                         <a type="button" class="btn btn-outline-primary m-1" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@true">
-                            <i class="fas fa-user-check"></i> Принять
+                            <i class="fas fa-user-check"></i> Accept
                         </a>
                         <a type="button" class="btn btn-outline-danger m-1" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
-                            <i class="fas fa-user-times"></i> Отклонить
+                            <i class="fas fa-user-times"></i> Reject
                         </a>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
 
                     <div class="p-1">
                         <a type="button" class="btn btn-outline-danger" asp-controller="Match" asp-action="ChangeRequest" asp-route-requestId="@item.Id" asp-route-confirmed="@false">
-                            <i class="fas fa-times"></i> Отменить
+                            <i class="fas fa-times"></i> Cancel
                         </a>
                     </div>
                 </div>

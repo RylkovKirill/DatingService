@@ -23,6 +23,7 @@ namespace DatingService.Controllers
         private readonly IPostService _postService;
         private readonly IReportService _reportService;
         private readonly IReportCategoryService _reportCategoryService;
+        private readonly IGenderService _genderService;
         private int pageSize = 10;
 
         public MatchController(UserManager<ApplicationUser> userManager,
@@ -31,7 +32,8 @@ namespace DatingService.Controllers
                                 IMessageService messageService,
                                 IPostService postService,
                                 IReportService reportService,
-                                 IReportCategoryService reportCategoryService)
+                                 IReportCategoryService reportCategoryService,
+                                 IGenderService genderService)
         {
             _userManager = userManager;
             _requestService = requestService;
@@ -40,6 +42,7 @@ namespace DatingService.Controllers
             _postService = postService;
             _reportService = reportService;
             _reportCategoryService = reportCategoryService;
+            _genderService = genderService;
         }
 
         public async Task<IActionResult> ListAsync(int page = 1, string filter = null)
@@ -77,6 +80,12 @@ namespace DatingService.Controllers
             {
                 return NotFound();
             }
+
+            if (user.GenderId != null)
+            {
+                user.Gender = _genderService.Get(user.GenderId.Value);
+            }
+
             user.Posts = await _postService.GetAll(user).ToListAsync();
             return View(user);
         }
