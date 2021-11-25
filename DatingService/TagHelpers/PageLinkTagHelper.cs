@@ -23,53 +23,60 @@ namespace DatingService.TagHelpers
         [ViewContext]
         [HtmlAttributeNotBound]
         public ViewContext ViewContext { get; set; }
-        public PageViewModel PageModel { get; set; }
-        public string PageAction { get; set; }
-        public string SearchQuery { get; set; }
-        public string CategoryId { get; set; }
+        public PageViewModel Model { get; set; }
+        public string Action { get; set; }
+
+        [HtmlAttributeName(DictionaryAttributePrefix = "action-")]
+        public Dictionary<string, object> ActionValues { get; set; } = new();
 
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
             IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
             output.TagName = "div";
 
-            TagBuilder tag = new TagBuilder("ul");
+            TagBuilder tag = new ("ul");
             tag.AddCssClass("pagination");
 
-            TagBuilder currentItem = CreateTag(PageModel.PageNumber, SearchQuery, CategoryId, urlHelper);
+            TagBuilder currentItem = CreateTag(urlHelper, Model.PageNumber);
 
-            if (PageModel.HasPreviousPage)
+            if (Model.HasPreviousPage)
             {
-                TagBuilder prevItem = CreateTag(PageModel.PageNumber - 1, SearchQuery, CategoryId, urlHelper);
+                TagBuilder prevItem = CreateTag(urlHelper, Model.PageNumber - 1);
                 tag.InnerHtml.AppendHtml(prevItem);
             }
 
             tag.InnerHtml.AppendHtml(currentItem);
 
-            if (PageModel.HasNextPage)
+            if (Model.HasNextPage)
             {
-                TagBuilder nextItem = CreateTag(PageModel.PageNumber + 1, SearchQuery, CategoryId, urlHelper);
+                TagBuilder nextItem = CreateTag(urlHelper, Model.PageNumber + 1);
                 tag.InnerHtml.AppendHtml(nextItem);
             }
             output.Content.AppendHtml(tag);
         }
 
-        TagBuilder CreateTag(int pageNumber, string searchQuery, string categoryId, IUrlHelper urlHelper)
+
+        private TagBuilder CreateTag(IUrlHelper urlHelper, int value, string view = null)
         {
-            TagBuilder item = new TagBuilder("li");
-            TagBuilder link = new TagBuilder("a");
-            if (pageNumber == this.PageModel.PageNumber)
+            var item = new TagBuilder("li");
+            var link = new TagBuilder("a");
+
+            if (value == Model.PageNumber)
             {
                 item.AddCssClass("active");
             }
             else
             {
-                link.Attributes["href"] = urlHelper.Action(PageAction, new { name = searchQuery, page = pageNumber, id = categoryId });
+                ActionValues["page"] = value;
+                link.Attributes["href"] = urlHelper.Action(Action, ActionValues);
             }
+
             item.AddCssClass("page-item");
             link.AddCssClass("page-link");
-            link.InnerHtml.Append(pageNumber.ToString());
+
+            link.InnerHtml.Append(view ?? value.ToString());
             item.InnerHtml.AppendHtml(link);
+
             return item;
         }
     }

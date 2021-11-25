@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
 using DatingService.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace DatingService.Service.Services
 
         public IQueryable<Post> GetAll(ApplicationUser user)
         {
-            return _repository.GetAll().Where(p => p.User.Equals(user));
+            return _repository.GetAll().Where(p => p.User.Equals(user)).Include(p => p.Image);
         }
 
         public IQueryable<Post> GetAll(string searchQuery)

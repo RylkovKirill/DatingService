@@ -15,11 +15,14 @@ using DatingService.Domain.Options;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.Extensions.Options;
+using DatingService.Infrastructure.ViewModels;
 
 namespace DatingService.Controllers
 {
     public class PostController : Controller
     {
+        private const int PageSize = 5;
+
         private readonly IPostService _postService;
         private readonly ICommentService _commentService;
         private readonly IImageService _imageService;
@@ -32,7 +35,7 @@ namespace DatingService.Controllers
         public PostController(IPostService postService,
             ICommentService commentService,
             UserManager<ApplicationUser> userManager,
-                        IOptions<PostOptions> postOptions,
+            IOptions<PostOptions> postOptions,
             IFileService fileService,
             IWebHostEnvironment environment,
             IImageService imageService)
@@ -46,7 +49,7 @@ namespace DatingService.Controllers
             _imageService = imageService;
         }
 
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> ListAsync(int page = 1, string filter = null)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             if (user == null)
@@ -54,7 +57,25 @@ namespace DatingService.Controllers
                 return NotFound();
             }
 
-            return View(_postService.GetAll(user));
+            var posts = _postService.GetAll(user);
+
+            if (filter != null)
+            {
+                posts = posts.Where(p=>p.Title.ToUpper().Contains(filter.ToUpper()));
+            }
+
+            var count = await posts.CountAsync();
+            var items = await posts.Skip((page - 1) * PageSize).Take(PageSize).ToListAsync();
+
+            PageViewModel pageViewModel = new PageViewModel(count, page, PageSize);
+            PostListViewModel viewModel = new PostListViewModel
+            {
+                Filter = filter,
+                PageViewModel = pageViewModel,
+                Posts = items
+            };
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> DetailsAsync(Guid id)
@@ -80,21 +101,26 @@ namespace DatingService.Controllers
             return View(post);
         }
 
-        // GET: Blog/Create
         public IActionResult Create()
         {
-            return View(new Post());
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Post post, IFormFile file)
+        public async Task<IActionResult> Create(PostViewModel model, IFormFile file)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
 
             if (ModelState.IsValid)
             {
-                post.UserId = user.Id;
+                var post = new Post
+                {
+                    Id = Guid.NewGuid(),
+                    UserId = user.Id,
+                    Title = model.Title,
+                    Content = model.Content
+                };
 
                 if (file != null)
                 {
@@ -107,11 +133,12 @@ namespace DatingService.Controllers
                     image.PostId = post.Id;
                     post.Image = image;
                 }
+
                 _postService.Add(post);
                 return RedirectToAction(nameof(Index));
             }
 
-            return View(post);
+            return View(model);
         }
 
         //// GET: Blog/Edit/5

@@ -1,34 +1,35 @@
-﻿@model Post
+﻿@model PostViewModel
 
-<head>
-    <title>@ViewData["Title"] - Создать пост</title>
-</head>
+@{
+    ViewData["Title"] = "Create Post";
+}
 
-<body>
-    <form asp-action="Create" enctype="multipart/form-data">
-        <div class="form-group">
-            <label asp-for="Title"></label>
-            <input asp-for="Title" class="form-control" />
-            <span asp-validation-for="Title"></span>
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<form asp-action="Create" enctype="multipart/form-data">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title"></span>
+    </div>
+    <div>
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control"></textarea>
+        <span asp-validation-for="Content"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ImagePath"></label>
+        <div class="custom-file">
+            <input type="file" accept=".png, .jpg, .jpeg" name="file" class="custom-file-input" id="inputGroup">
+            <label class="custom-file-label" for="inputGroup">Choose file</label>
         </div>
-        <div>
-            <label asp-for="Content"></label>
-            <textarea asp-for="Content" class="form-control"></textarea>
-            <span asp-validation-for="Content"></span>
-        </div>
-        <div class="form-group">
-            <label asp-for="Image"></label>
-            <input type="file" name="file" id="file" class="form-control-file">
-            <div>
-                <span class="card-img"><img src="~/Files/Images/Posts/@Model.Image?.Path" /></span>
-            </div>
-        </div>
-        <div class="form-group">
-            <button id="submitButton" type="submit" class="btn btn-primary">Сохранить</button>
-        </div>
-    </form>
-    <script src="~/lib/ckeditor5/ckeditor.js"></script>
-    <script>
+    </div>
+    <div class="form-group">
+        <button id="submitButton" type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+</form>
+<script src="~/lib/ckeditor5/ckeditor.js"></script>
+<script>
         ClassicEditor
             .create(document.querySelector('#Content'), {
                 uploadUrl: '@Html.IdFor(x => x.Content)'
@@ -39,5 +40,4 @@
             .catch(err => {
                 console.error(err.stack);
             });
-    </script>
-</body>
+</script>

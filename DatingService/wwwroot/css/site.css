@@ -34,7 +34,6 @@ a {
 html, body {
     margin: 0;
     height: 100%;
-    overflow: hidden;
 }
 
 html {
@@ -69,7 +68,10 @@ html {
   min-height: 100%;
 }
 
+
+
 body {
+
   margin-bottom: 60px;
 }
 .footer {
@@ -341,4 +343,8 @@ a.article:hover {
 
 .nav-link {
     font-size: 14pt;
+}
+
+.icon-wrapper {
+    width: 3rem;
 }
