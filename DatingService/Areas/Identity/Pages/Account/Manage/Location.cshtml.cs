@@ -27,6 +27,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
+            public bool AnyLocation { get; set; }
+
             [Display(Name = "Latitude")]
             public double? Latitude { get; set; }
 
@@ -39,7 +41,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             Input = new InputModel
             {
                 Latitude = user.Latitude,
-                Longitude = user.Longitude
+                Longitude = user.Longitude,
+                AnyLocation = user.AnyLocation
             };
         }
 

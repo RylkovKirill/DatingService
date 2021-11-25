@@ -9,10 +9,10 @@ using Braintree;
 
 namespace DatingService.Controllers
 {
-    public class PayController : Controller
+    public class OrderController : Controller
     {
         private readonly IBraintreeService _braintreeService;
-        public PayController(IBraintreeService braintreeService)
+        public OrderController(IBraintreeService braintreeService)
         {
             _braintreeService = braintreeService;
         }
