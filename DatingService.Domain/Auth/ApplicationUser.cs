@@ -13,13 +13,12 @@ namespace DatingService.Domain.Auth
         public int PostCount { get; set; }
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
+        public string AvatarPath { get; set; }
 
         public string FullName => $"{FirstName} {LastName}";
 
-        public Guid? AvatarId { get; set; }
         public Guid? GenderId { get; set; }
 
-        public Avatar Avatar { get; set; }
         public Gender Gender { get; set; }
 
         public ICollection<Post> Posts { get; set; }

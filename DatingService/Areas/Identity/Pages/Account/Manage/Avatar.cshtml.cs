@@ -18,20 +18,17 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
         private readonly AvatarOptions _avatarOptions;
         private readonly IFileService _fileService;
         private readonly IWebHostEnvironment _environment;
-        private readonly IAvatarRepository _avatarRepository;
 
         public AvatarModel(
             UserManager<ApplicationUser> userManager,
             IFileService fileService,
             IOptions<AvatarOptions> avatarOptions,
-            IWebHostEnvironment environment,
-            IAvatarRepository avatarRepository)
+            IWebHostEnvironment environment)
         {
             _userManager = userManager;
             _avatarOptions = avatarOptions.Value;
             _fileService = fileService;
             _environment = environment;
-            _avatarRepository = avatarRepository;
         }
 
         [TempData]
@@ -48,10 +45,9 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
-            if (user.AvatarId != null)
+            if (user.AvatarPath != null)
             {
-                var avatar = _avatarRepository.GetByUserId(user.Id);
-                AvatarPath = Path.Combine(_avatarOptions.Path, avatar.Path);
+                AvatarPath = Path.Combine(_avatarOptions.Path, user.AvatarPath);
             }
 
             return Page();
@@ -74,17 +70,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             var path = Path.Combine(_environment.WebRootPath, _avatarOptions.Path, fileName);
             _fileService.Save(file, path);
 
-            var avatar = _avatarRepository.GetByUserId(user.Id);
-            if (avatar == null)
-            {
-                avatar = new Avatar();
-            }
 
-            avatar.Name = user.UserName;
-            avatar.Path = fileName;
-            avatar.UserId = user.Id;
-
-            user.Avatar = avatar;
+            user.AvatarPath = fileName;
 
             var updateAvatarResult = await _userManager.UpdateAsync(user);
             if (!updateAvatarResult.Succeeded)

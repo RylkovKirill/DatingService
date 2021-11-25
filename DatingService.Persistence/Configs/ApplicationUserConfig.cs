@@ -10,10 +10,10 @@ namespace DatingService.Persistence.Configs
         {
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(64);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(64);
+            builder.Property(u => u.AvatarPath).HasMaxLength(64);
             builder.Property(u => u.PostCount).IsRequired().HasDefaultValue(10);
             builder.Property(u => u.DateOfBirth).IsRequired();
 
-            builder.HasOne(u => u.Avatar).WithOne(a => a.User).HasForeignKey<ApplicationUser>(u => u.AvatarId).OnDelete(DeleteBehavior.Cascade);
             builder.HasOne(u => u.Gender).WithMany(g => g.Users).HasForeignKey(u => u.GenderId);
         }
     }

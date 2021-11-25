@@ -1,21 +1,27 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Infrastructure.ViewModels;
+using DatingService.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace DatingService.Controllers
 {
+    [Authorize]
     public class MapController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IRequestService _requestService;
 
-        public MapController(UserManager<ApplicationUser> userManager)
+        public MapController(
+            UserManager<ApplicationUser> userManager,
+            IRequestService requestService)
         {
             _userManager = userManager;
+            _requestService = requestService;
         }
 
         public IActionResult Index()
@@ -25,21 +31,22 @@ namespace DatingService.Controllers
         }
 
         [HttpGet]
-        public List<PlacemarkViewModel> GetMarks()
+        public async Task<List<PlacemarkViewModel>> GetMarks()
         {
-            var users = _userManager.Users.Where(p => (p.Latitude != null && p.Longitude != null)).ToList();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var users = _requestService.GetUserFriends(user).Where(p => (p.Latitude != null && p.Longitude != null)).ToList();
 
-            List<PlacemarkViewModel> markers = new List<PlacemarkViewModel>();
+            List<PlacemarkViewModel> markers = new();
 
-            foreach (var user in users)
+            foreach (var items in users)
             {
                 markers.Add(
                     new PlacemarkViewModel
                     {
-                        x = user.Latitude.Value,
-                        y = user.Longitude.Value,
+                        x = items.Latitude.Value,
+                        y = items.Longitude.Value,
                         balloonCloseButton = true,
-                        balloonContent = $"<div>" + user.Email + "</div>",
+                        balloonContent = $"<a href='Friend/Details/{items.Id}'>{items.Email}</a>",
                         hideIconOnBalloonOpen = false,
                         preset = "islands#yellowStretchyIcon"
                     });

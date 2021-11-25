@@ -7,7 +7,7 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
-        var path = UserManager.FindByNameAsync(User.Identity.Name).Result.Avatar?.Path;
+        var path = UserManager.FindByNameAsync(User.Identity.Name).Result.AvatarPath;
         @if (path == null)
         {
             path = "no-profile-image-m.svg";

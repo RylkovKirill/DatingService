@@ -3,7 +3,7 @@
 
 <div>
     @{
-        var path = Model.Avatar?.Path != null ? Model.Avatar?.Path : Model.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
+        var path = Model.AvatarPath != null ? Model.AvatarPath : Model.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
     }
     <img class="rounded-circle" style="height:5rem; width:5rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
 </div>

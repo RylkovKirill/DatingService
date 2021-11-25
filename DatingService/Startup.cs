@@ -53,12 +53,11 @@ namespace DatingService
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();
-            services.AddScoped(typeof(Service.IRepository<>), typeof(Repository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IRequestService, RequestService>();
             services.AddScoped<IImageService, ImageService>();
-            services.AddScoped<IAvatarRepository, AvatarRepository>();
             services.AddTransient<IPostService, PostService>();
             services.AddTransient<IReportCategoryService, ReportCategoryService>();
             services.AddTransient<IReportService, ReportService>();

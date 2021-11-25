@@ -43,8 +43,9 @@ namespace DatingService.Persistence.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
-                    b.Property<Guid?>("AvatarId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("AvatarPath")
+                        .HasMaxLength(64)
+                        .HasColumnType("nvarchar(64)");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -119,10 +120,6 @@ namespace DatingService.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AvatarId")
-                        .IsUnique()
-                        .HasFilter("[AvatarId] IS NOT NULL");
-
                     b.HasIndex("GenderId");
 
                     b.HasIndex("NormalizedEmail")
@@ -140,9 +137,9 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("c6dd1e20-cce1-4299-be0c-862a2b681039"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "1560d324-817f-4cbb-830f-2ca34f3b4c6a",
+                            ConcurrencyStamp = "88b50490-9962-4cf2-b6a4-0709d0399be2",
                             DateOfBirth = new DateTime(2001, 2, 27, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "kirill.rylkov.2001@gmail.comm",
+                            Email = "kirill.rylkov.2001@gmail.com",
                             EmailConfirmed = true,
                             FirstName = "Kirill",
                             GenderId = new Guid("f71bcbe8-2f30-4f63-be7d-a90f46f39178"),
@@ -150,10 +147,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "KIRILL.RYLKOV.2001@GMAIL.COM",
                             NormalizedUserName = "KIRILL.RYLKOV.2001@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAENpT3z0wj34PnfPjjvm3OD/TSc4G3ER4c4+jQpdc/YvjJcLVWL5aBzx2UHWZnef/BA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEBJveURNE8dQFC/agkOoCYFSGID0iulIuRVclKTZB57Fxlw5tNGKl2f6fAyoKd5QZA==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "9b3c0277-b21c-4a28-928e-2c00053c597e",
+                            SecurityStamp = "fc0a9613-4e14-42fb-9731-e1680f8d94c5",
                             TwoFactorEnabled = false,
                             UserName = "kirill.rylkov.2001@gmail.com"
                         },
@@ -161,7 +158,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("b72abb26-30ee-4fbd-843e-c1c9712f7f2a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c9a1396b-73ca-4685-aeec-143233bb7dc6",
+                            ConcurrencyStamp = "b5ac2679-c87d-49fc-a44b-326ff4d96fe3",
                             DateOfBirth = new DateTime(1985, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "MaximSkvortsov@gmail.com",
                             EmailConfirmed = true,
@@ -171,10 +168,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MAXIMSKVORTSOV@GMAIL.COM",
                             NormalizedUserName = "MAXIMSKVORTSOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIpSKxMoo9zP/IekJlj3TwuwQN56MEv+lhumtniAfa1kfKWV/w/+tLaxmEES3zkcdQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKekMNmsAvS3LOCTqQdazcfEQ66/YBmcVNq++TwG7/wS+l+yhbisXrfOBXhDDJMG7g==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "c72c1e27-4042-4182-ade3-f754009a3d7f",
+                            SecurityStamp = "c59a047c-e2ea-4cdd-9e3b-7e6db2acd9fa",
                             TwoFactorEnabled = false,
                             UserName = "MaximSkvortsov@gmail.com"
                         },
@@ -182,7 +179,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("19678e73-2240-43c1-bc08-726405e9810f"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f0196f17-029a-4c24-a042-521e62adea81",
+                            ConcurrencyStamp = "ab0f32e0-0226-49e9-988d-e394052a5b5a",
                             DateOfBirth = new DateTime(1970, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "TimofeyFedorov@gmail.com",
                             EmailConfirmed = true,
@@ -192,10 +189,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "TIMOFEYFEDOROV@GMAIL.COM",
                             NormalizedUserName = "TIMOFEYFEDOROV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEqToBLpmERRJGKb6gWYUnRCh3iM8Q+RiGLzZUeoUJ62kEXdyYQFps8cA0m98qUCUw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAEQPDZiK4GA2+RZ9NA6Gx44wn/F40b1XwITQluiF4Dsah8t4kxet3AR3UmVA6ardQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "f9e4aa83-5a32-480d-a5ae-3c2da81f1ce2",
+                            SecurityStamp = "cf486d14-d503-4d4c-a471-cd7284ed1c68",
                             TwoFactorEnabled = false,
                             UserName = "TimofeyFedorov@gmail.com"
                         },
@@ -203,7 +200,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("959fad98-c404-4b2e-a4b5-2da34b051182"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "c43b7099-28fe-4e9a-a9f8-14b165801158",
+                            ConcurrencyStamp = "663e4d7c-2357-4649-be63-ec6b240db660",
                             DateOfBirth = new DateTime(1964, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "NikitaSidorov@gmail.com",
                             EmailConfirmed = true,
@@ -213,10 +210,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "NIKITASIDOROV@GMAIL.COM",
                             NormalizedUserName = "NIKITASIDOROV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEEEAqE1XyA8l5i/MSl3xucfnmOlgSBMoMUEpBl7Jy5wERtf6b0PpuIPfBiNKb0orvA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELw793ywF8duddfXHqxKsdQGFQoJaBwcdcfeLjPhDKiFJQjwUGCmzE+Mtasc/uZ9xw==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "b85747f0-7d7d-4245-acad-7b74b9aac8db",
+                            SecurityStamp = "57ff7b0c-3da6-47d2-beb8-392c21ae187c",
                             TwoFactorEnabled = false,
                             UserName = "NikitaSidorov@gmail.com"
                         },
@@ -224,7 +221,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("a2c8f466-4460-46d9-a3e1-849542257eda"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "807db56e-1052-4f32-8cf1-bfa0aa48f042",
+                            ConcurrencyStamp = "a869e68e-654e-428c-9aa1-d087f63ae280",
                             DateOfBirth = new DateTime(1986, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AlexeyShapavalov@gmail.com",
                             EmailConfirmed = true,
@@ -234,10 +231,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALEXEYSHAPAVALOV@GMAIL.COM",
                             NormalizedUserName = "ALEXEYSHAPAVALOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAEu62VcEpTNY9IlzoAxtiprbsOUvHimg9pdAFxaDvIvNiXpLxh8pWLhbBq+WIVykg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEAuo7x8tx2CgMl2bViKMO+8ObTJbqzylOntdQhHTXM/LUSXq92cBUl4nGUuttDKOzg==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "90a610a1-2387-45eb-a49a-fa8ce88d96cc",
+                            SecurityStamp = "da1aa84c-e1ab-4758-b8e6-6b2d5fc68149",
                             TwoFactorEnabled = false,
                             UserName = "AlexeyShapavalov@gmail.com"
                         },
@@ -245,7 +242,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("15bce5d6-b3c2-431b-ac4b-7d87d86de00e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "98e6dbc6-148c-47b3-a2d4-ee6abe7a39a5",
+                            ConcurrencyStamp = "ee0949d5-b0d9-4f02-953d-a55aab39d29e",
                             DateOfBirth = new DateTime(1954, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "GeorgeKlimov@gmail.com",
                             EmailConfirmed = true,
@@ -255,10 +252,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "GEORGEKLIMOV@GMAIL.COM",
                             NormalizedUserName = "GEORGEKLIMOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEItCwXP+34Wlf1gWc5QPz3wo6+zJvI+KCJKEgxYSmHD/SvWClSmzEn9E9T5sSN1Sxg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJI9A6g6FjegN6/+XsUGjFB2SmGL3h3Mgck2fpVMm2NlNzGqbbJAJgcAvvHt0ZqGGA==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "870c10d4-9b61-461f-8742-c609b5429acd",
+                            SecurityStamp = "b78fb836-e37a-4e2e-83c2-d3e7c5eaf120",
                             TwoFactorEnabled = false,
                             UserName = "GeorgeKlimov@gmail.com"
                         },
@@ -266,7 +263,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("186fdbe7-3b56-47bf-9e4b-3ec743375e8e"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4c96d668-b30c-4453-9af9-38fc2aaf461e",
+                            ConcurrencyStamp = "51212b42-cdb9-42ba-9eb1-d8c74199da10",
                             DateOfBirth = new DateTime(1980, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AlexanderBalashov@gmail.com",
                             EmailConfirmed = true,
@@ -276,10 +273,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALEXANDERBALASHOV@GMAIL.COM",
                             NormalizedUserName = "ALEXANDERBALASHOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEKlgbRfk5v4x6MXMqAvLRvcOybKygDYRv5AvVkln1FkJZrz6tEHWfnLO8zU/rkUUUA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECipSyeFILb/rlNbgWNbTSawRVzxuAyF/X2BssP/hcT/ZVV0PcStHbgw4eBEGJh2PQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "81b17e0c-91ac-43ef-b923-4c172fcbfe8e",
+                            SecurityStamp = "9caeeda3-93cb-4222-81ca-f27430893f78",
                             TwoFactorEnabled = false,
                             UserName = "AlexanderBalashov@gmail.com"
                         },
@@ -287,7 +284,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("424801eb-4028-47de-b02e-b2260e4adbaf"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "792cb35d-14f0-49c5-9928-71f51c44a876",
+                            ConcurrencyStamp = "4e8d608c-50c1-4f64-ba46-87ef1b698ccb",
                             DateOfBirth = new DateTime(2005, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "DmitriiGusev@gmail.com",
                             EmailConfirmed = true,
@@ -297,10 +294,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DMITRIIGUSEV@GMAIL.COM",
                             NormalizedUserName = "DMITRIIGUSEV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL9lfwy5Ao4KqumYqwZXnkeLv8OWksFS/73oxATDBZBKYg6/dXjTLXX1mg/B7hqNMQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEJsrQS1EiTFMxgXhBlpn3l+Gkuv2mD14qABxATnB7Ah4qXl1t05bIWYIkB1R2JIhZw==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "0db0200a-c774-4711-bf86-a448839604a8",
+                            SecurityStamp = "d4d42878-d515-4ade-a5f1-32b24ae73a3c",
                             TwoFactorEnabled = false,
                             UserName = "DmitriiGusev@gmail.com"
                         },
@@ -308,7 +305,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("ea66d92d-2dba-48dc-a240-5d20b653223b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cda9de53-070b-4bba-8c55-24a2ca5ec59b",
+                            ConcurrencyStamp = "42136e49-939d-45ac-a951-3668d49866a7",
                             DateOfBirth = new DateTime(2010, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "ArtemOvchinnikov@gmail.com",
                             EmailConfirmed = true,
@@ -318,10 +315,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ARTEMOVCHINNIKOV@GMAIL.COM",
                             NormalizedUserName = "ARTEMOVCHINNIKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEL4nTUKgSiUO+4ljqgcv5/AoXgUrCg0yjvZfGrbcXepEVoNdFkIBjyleL53bIxd0UA==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEYqrKkMIOQg8x61B7ZTITDta7jAoZr/hVA+9rXmrTvbC4+4SjSdud9Jq6+AsMolIQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "385e2b40-c6c3-4a7d-8daa-ec0812ba52ac",
+                            SecurityStamp = "43b8b9f3-74f8-4e7b-bd75-60ad45f43131",
                             TwoFactorEnabled = false,
                             UserName = "ArtemOvchinnikov@gmail.com"
                         },
@@ -329,7 +326,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("9041f759-c64b-4320-b85b-2332fff4ed85"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "b85473fc-d9c4-44e7-959c-f0d2827f1859",
+                            ConcurrencyStamp = "f5e7076b-0c48-4d84-8b72-6fe3935d7b46",
                             DateOfBirth = new DateTime(2002, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "LeonidTarasov@gmail.com",
                             EmailConfirmed = true,
@@ -339,10 +336,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "LEONIDTARASOV@GMAIL.COM",
                             NormalizedUserName = "LEONIDTARASOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAhJA47aeOS2OnWOM1R1qJlWCd4e8HG+803kCg5VJ1MAvRJJ4LhWYl2M/WCoSv+sXQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKM6jjPcKTiGaJgNScmbLofNDCyYXaRupfZU2YrmTR9G5Npcf+5q4h3JJFBFE9z45Q==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "ce12bdfa-dd4e-494c-83de-7fd476048258",
+                            SecurityStamp = "7eaa8beb-cecb-40c0-b9bb-76383ba22483",
                             TwoFactorEnabled = false,
                             UserName = "LeonidTarasov@gmail.com"
                         },
@@ -350,7 +347,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("d2d6dc46-025c-4034-80c8-8bb7e1d54098"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7154b59e-fcb3-414c-aa04-9ba96ee33081",
+                            ConcurrencyStamp = "4e559bef-bb91-4171-87b4-5e92aa6ad06a",
                             DateOfBirth = new DateTime(2007, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "MarkMarkov@gmail.com",
                             EmailConfirmed = true,
@@ -360,10 +357,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MARKMARKOV@GMAIL.COM",
                             NormalizedUserName = "MARKMARKOV@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAED5OjWKmjmH01B5lGDI2LbnPWqYTOxowHmIMZDBuBlgP7mvqDok/JkVNBsZo+1F2aQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEMhXAwa3Avccx4iaMFBynTI86wsoBlTorjt2xsHGerjYlfykMFYFuEV3JOq3yQiolQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "a1405de6-dcc4-4a0c-9934-95bcaae6efbe",
+                            SecurityStamp = "160b8b15-9322-46be-b6f9-6e9da8b4caab",
                             TwoFactorEnabled = false,
                             UserName = "MarkMarkov@gmail.com"
                         },
@@ -371,7 +368,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("9410107f-8e37-45a7-8d3a-bcabb2abda45"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "822360f2-822a-4433-b862-5e4fc14fa2a4",
+                            ConcurrencyStamp = "5577bbc6-88cc-4257-8bb6-d24c05e5b623",
                             DateOfBirth = new DateTime(1964, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "PolinaFilatova@gmail.com",
                             EmailConfirmed = true,
@@ -381,10 +378,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "POLINAFILATOVA@GMAIL.COM",
                             NormalizedUserName = "POLINAFILATOVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEDEVxT9KkDaw3Fbocrn3tqUcDZj2nZ0P7cemQ4Km6X/t2y9E9X4J66C9x7680Cvz4w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEHnLyIJ6jr1CIO/mYaQEsen3lBWA0HhMhdlZV53wVMvvSXyieP/R1AcJSvp0l2uVkw==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "3feff3e5-9fb7-4097-a401-831cb93c4f1b",
+                            SecurityStamp = "c3d6432a-2624-42bc-9362-cb6200635653",
                             TwoFactorEnabled = false,
                             UserName = "PolinaFilatova@gmail.com"
                         },
@@ -392,7 +389,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("bdb4c580-01ee-41c4-93f9-6d64a4778370"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7a69de9f-9ba6-4d1f-b28e-897ad69bad52",
+                            ConcurrencyStamp = "e1a589e1-b154-43a2-91da-a7a49bbf2c9a",
                             DateOfBirth = new DateTime(1984, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AnnaPopova@gmail.com",
                             EmailConfirmed = true,
@@ -402,10 +399,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ANNAPOPOVA@GMAIL.COM",
                             NormalizedUserName = "ANNAPOPOVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEN3gDjv1oLtehHvopHm/Uz/q/5Hw0CKOXT6Rt3rWo1icj2lTWuWB6F7AMRyMxu6mXw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEGFUjH1dPel3YTBEL/j11gK+n5TakJdz3kV7EzOgHyKPH0eOWonaHbXzrA2omVG0/A==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "360402af-c8e9-4fc7-aee1-0da9991592ad",
+                            SecurityStamp = "c27d761d-01b4-47cd-9baa-4667f10166f5",
                             TwoFactorEnabled = false,
                             UserName = "AnnaPopova@gmail.com"
                         },
@@ -413,7 +410,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("abc953f6-d6ff-464b-9539-c95ee111f006"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "36fe1d1f-fdd8-42d0-9512-456963bbe456",
+                            ConcurrencyStamp = "7401c6ee-4476-4867-a3fe-c34b13511206",
                             DateOfBirth = new DateTime(1997, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AnnaSolovyeva@gmail.com",
                             EmailConfirmed = true,
@@ -423,10 +420,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ANNASOLOVYEVA@GMAIL.COM",
                             NormalizedUserName = "ANNASOLOVYEVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIOD5GJghsWpT2XpaJvLAktp17HofV/9xkxPuqlZ6VgDjj54CYnJCodhXw6hs8lLjw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEIy/2BCnqWYaeiCAFQIi0Nj32sroiVAVqDA8sKTYfpWzt93A1zwzNsSW+H4pifY92A==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "bfb9a24e-e1dc-4e07-98a8-480ef957e20f",
+                            SecurityStamp = "78e00561-246b-4c85-957f-184a78d6bafd",
                             TwoFactorEnabled = false,
                             UserName = "AnnaSolovyeva@gmail.com"
                         },
@@ -434,7 +431,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("7d8780f7-15b4-4b56-91e1-6d6e16012477"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7bb5c17c-0d3a-4156-9a03-4fcbf7ec353a",
+                            ConcurrencyStamp = "4d3d108e-6053-47de-a097-96f9e28fa0c4",
                             DateOfBirth = new DateTime(1965, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AnnaKarenina@gmail.com",
                             EmailConfirmed = true,
@@ -444,10 +441,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ANNAKARENINA@GMAIL.COM",
                             NormalizedUserName = "ANNAKARENINA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEK7jpCs1d5Gar+DB5J0E/4y2f9BThSL9ha8DJZ7J3I/iM7b4Zk+d3intLW8Rkeo+/A==",
+                            PasswordHash = "AQAAAAEAACcQAAAAELflKZwbqIuedj8F4J+qAHIqYUe9tPik8B8TpDmZR+sPiD+SFfqo0AxgcO2znPHm0A==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "c8ba63f4-0a5b-48c1-8f50-e5ba798c2e75",
+                            SecurityStamp = "cab56144-37cc-4e79-8948-0d80a9f978fa",
                             TwoFactorEnabled = false,
                             UserName = "AnnaKarenina@gmail.com"
                         },
@@ -455,7 +452,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("ffb5bbe2-debf-4f3f-805e-32167b700e4a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "d63f4f78-e715-4ab3-9818-1bdd25f74e7b",
+                            ConcurrencyStamp = "d619097b-87c5-4e99-b351-ea2c511056c8",
                             DateOfBirth = new DateTime(1975, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "PolinaGrishina@gmail.com",
                             EmailConfirmed = true,
@@ -465,10 +462,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "POLINAGRISHINA@GMAIL.COM",
                             NormalizedUserName = "POLINAGRISHINA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEHudsRwMnKcfx7g8oqtj+iCyN4qg3Gu13y9uXjwNAzHwdy1vcxo2WPVfbWGpwzsalQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKqv6frQ8JuYG16+stMFV/Idd2rg7PrZV978uN8ZqK0STeGoO/exju47/fQhzn5w/Q==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "fee1182e-7455-43ed-a1a3-1eaf618ead3e",
+                            SecurityStamp = "bb01aa93-9112-4720-b818-1a1cbfee3d0b",
                             TwoFactorEnabled = false,
                             UserName = "PolinaGrishina@gmail.com"
                         },
@@ -476,7 +473,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("1caabeb4-fa16-46c9-8ef0-e8009955d916"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "08122719-9880-42a6-aaae-db7f40c9363a",
+                            ConcurrencyStamp = "f13d809f-6bd7-4625-b882-def4e4555cc1",
                             DateOfBirth = new DateTime(2000, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "DaryaNikitina@gmail.com",
                             EmailConfirmed = true,
@@ -486,10 +483,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "DARYANIKITINA@GMAIL.COM",
                             NormalizedUserName = "DARYANIKITINA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEOirO85KzlF0DCavKj8PUV1BLA2nt7tuICntrNaYD7FIkX+HRq0bhzOiV1AcR5CbGg==",
+                            PasswordHash = "AQAAAAEAACcQAAAAECGjatImBJt05hx93f031G0pTCN7BYi+qAZ83m8Df1upZFwWpwmnmoQAStWMvK/7EA==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "74ae0a2e-13f5-4cd7-ab21-7b3bc7b3ae8a",
+                            SecurityStamp = "a65ec25b-f55e-4822-beaa-c4670537bfcf",
                             TwoFactorEnabled = false,
                             UserName = "DaryaNikitina@gmail.com"
                         },
@@ -497,7 +494,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("a3e0cceb-a4b9-4877-b3a0-b7991d1a45f2"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "7abe89a3-8cf6-4547-95d8-ba778b775834",
+                            ConcurrencyStamp = "2daeb4fa-8e29-402f-916c-4c47d98c2278",
                             DateOfBirth = new DateTime(1991, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "EvaAndreevaa@gmail.com",
                             EmailConfirmed = true,
@@ -507,10 +504,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "EVAANDREEVA@GMAIL.COM",
                             NormalizedUserName = "EVAANDREEVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEAvDQ8mn2wyynLlYnECsclsmCvJGRCOuUbxH2VjEO57OYGwxjt947rGHCnGD+Q+D4w==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEEdwv/BUw78GjqTW82ZEH3gkRpLRFOWvndhka9almmpW4Er2OOXj9So6PKkC9/NhBw==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "ccbd0ae4-0a06-4f82-9120-c882d87d75b3",
+                            SecurityStamp = "78897ce8-385b-4b85-8420-47f004b3f5cc",
                             TwoFactorEnabled = false,
                             UserName = "EvaAndreeva@gmail.com"
                         },
@@ -518,7 +515,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("13765215-c5c6-4dfe-a8e5-5b51300e8f69"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "cad6fc99-6d2c-4973-ae03-cdbde98dcf40",
+                            ConcurrencyStamp = "b099600b-c748-46be-b1d4-ec8a5e48fe92",
                             DateOfBirth = new DateTime(1984, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "MilanaErmakova@gmail.com",
                             EmailConfirmed = true,
@@ -528,10 +525,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "MILANAERMAKOVA@GMAIL.COM",
                             NormalizedUserName = "MILANAERMAKOVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEIlAv2Sp0asY9RNS/Cts4rF1i7R8/TFG0ocEsvtw3uWckfy07h+LVCeC4oet6bj/lw==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEP9pqhQFLqq1FKy7a5pg8s0R7BpOlculEc8LDlAF/b3OMrZTYNphmXtPOuJoBgmtiA==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "3c5c3f31-15a2-4930-a471-0c94ace8e4be",
+                            SecurityStamp = "bbc7aad7-431c-438e-9863-9191faa8afbc",
                             TwoFactorEnabled = false,
                             UserName = "MilanaErmakova@gmail.com"
                         },
@@ -539,7 +536,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("be6f2919-9dca-4b54-a788-02cef50c6b1b"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "a97f0a1b-12ac-45b1-b5b7-41e3b9676b5f",
+                            ConcurrencyStamp = "d698be1c-c0ca-4107-8a2d-84e65aa90838",
                             DateOfBirth = new DateTime(1961, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "AlisaGorbacheva@gmail.com",
                             EmailConfirmed = true,
@@ -549,10 +546,10 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "ALISAGORBACHEVA@GMAIL.COM",
                             NormalizedUserName = "ALISAGORBACHEVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEI6/knZ/sfaewq/JUWV/zZs5ns6tw8RgA3BxkPqfhEnyIXegvptl3oXwsFdGutSL3Q==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEG2oReSYgvMxU+mMfiUm1EHAo47ZH526cBDqfudvKjkMOi57/PKXs6/1xtrKin5+nQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "515c95ff-80c6-480d-a74e-c87a9c28b710",
+                            SecurityStamp = "f069212e-010e-4c8f-8d5b-54f87e025598",
                             TwoFactorEnabled = false,
                             UserName = "AlisaGorbacheva@gmail.com"
                         },
@@ -560,7 +557,7 @@ namespace DatingService.Persistence.Migrations
                         {
                             Id = new Guid("b587585c-344b-4e35-9df0-90723c5114ba"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "265c6d18-94e2-4b04-a898-a0e1221ed28c",
+                            ConcurrencyStamp = "150fb857-2a42-4f98-8948-25261d91cdc0",
                             DateOfBirth = new DateTime(1999, 12, 31, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "SofiyaIvanova@gmail.com",
                             EmailConfirmed = true,
@@ -570,46 +567,13 @@ namespace DatingService.Persistence.Migrations
                             LockoutEnabled = false,
                             NormalizedEmail = "SOFIYAIVANOVA@GMAIL.COM",
                             NormalizedUserName = "SOFIYAIVANOVA@GMAIL.COM",
-                            PasswordHash = "AQAAAAEAACcQAAAAEJSehmxTbtsHnFCtBZ8UhuR8Zr69E8RckpzBj8DpAyUMvIrQPGb7P5oVmVGhhTh0vQ==",
+                            PasswordHash = "AQAAAAEAACcQAAAAEKN0hnU6VWimEF0yCQLwTo41g8dgrH4wS+zLsSA79otDN5/yh/I1vkiJVE4mExdUlQ==",
                             PhoneNumberConfirmed = false,
                             PostCount = 0,
-                            SecurityStamp = "4d4415ba-9931-42f7-b903-9f3efc8d2e67",
+                            SecurityStamp = "b824c2e3-0faa-4029-ab0e-dc109b76b379",
                             TwoFactorEnabled = false,
                             UserName = "SofiyaIvanova@gmail.com"
                         });
-                });
-
-            modelBuilder.Entity("DatingService.Domain.Auth.Avatar", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DateUpdated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("nvarchar(64)");
-
-                    b.Property<string>("Path")
-                        .IsRequired()
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Path")
-                        .IsUnique();
-
-                    b.ToTable("Avatars");
                 });
 
             modelBuilder.Entity("DatingService.Domain.Entities.Chat", b =>
@@ -689,15 +653,15 @@ namespace DatingService.Persistence.Migrations
                         new
                         {
                             Id = new Guid("f71bcbe8-2f30-4f63-be7d-a90f46f39178"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 404, DateTimeKind.Utc).AddTicks(2432),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 404, DateTimeKind.Utc).AddTicks(2445),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 106, DateTimeKind.Utc).AddTicks(6956),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 106, DateTimeKind.Utc).AddTicks(6970),
                             Name = "Man"
                         },
                         new
                         {
                             Id = new Guid("b50075d8-0379-4b95-b0c2-50bba4509dab"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 404, DateTimeKind.Utc).AddTicks(3455),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 404, DateTimeKind.Utc).AddTicks(3459),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 106, DateTimeKind.Utc).AddTicks(8093),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 106, DateTimeKind.Utc).AddTicks(8095),
                             Name = "Woman"
                         });
                 });
@@ -876,57 +840,57 @@ namespace DatingService.Persistence.Migrations
                         new
                         {
                             Id = new Guid("6c8b430f-99bf-460d-903e-198728353a72"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7160),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7170),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(7693),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(7707),
                             Name = "Контент сексуального характера"
                         },
                         new
                         {
                             Id = new Guid("0d50b5d6-2274-4f74-a478-7671242e1348"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7640),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7643),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8868),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8874),
                             Name = "Жестокие или отталкивающие сцены"
                         },
                         new
                         {
                             Id = new Guid("83ba1239-4ef7-44a7-ae91-c5c9d0e6c100"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7655),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7656),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8897),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8898),
                             Name = "Оскорбления или проявления нетерпимости"
                         },
                         new
                         {
                             Id = new Guid("06568472-51b4-4292-b7e0-a220b789c885"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7661),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7662),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8903),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8904),
                             Name = "Вредные или опасные действия"
                         },
                         new
                         {
                             Id = new Guid("520eeb61-256a-4edd-9476-5fbe69cc3f20"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7665),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7666),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8908),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8909),
                             Name = "Жестокое обращение с детьми"
                         },
                         new
                         {
                             Id = new Guid("516fff94-dfd1-4c94-bebd-9498048eac3d"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7671),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7672),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8918),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8919),
                             Name = "Нарушение моих прав"
                         },
                         new
                         {
                             Id = new Guid("bacc901a-c8fd-4f8c-b4f7-30e8a5b0d502"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7675),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7676),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8922),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8923),
                             Name = "Пропаганда терроризма"
                         },
                         new
                         {
                             Id = new Guid("7eca2608-2bf8-482b-a630-8e7eb2bc8724"),
-                            DateCreated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7679),
-                            DateUpdated = new DateTime(2021, 11, 22, 11, 11, 51, 614, DateTimeKind.Utc).AddTicks(7680),
+                            DateCreated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8927),
+                            DateUpdated = new DateTime(2021, 11, 24, 23, 37, 59, 312, DateTimeKind.Utc).AddTicks(8928),
                             Name = "Спам или ложная информация"
                         });
                 });
@@ -992,13 +956,13 @@ namespace DatingService.Persistence.Migrations
                         new
                         {
                             Id = new Guid("67397b47-b0e9-4e15-8b82-57c0884af92c"),
-                            ConcurrencyStamp = "b2e275d4-89e9-4e34-9c4a-667696f4d712",
+                            ConcurrencyStamp = "bdb28b9b-72f1-44af-a630-593480dcfcc4",
                             Name = "Admin"
                         },
                         new
                         {
                             Id = new Guid("d821eb23-2337-4e31-a53d-fcec01900507"),
-                            ConcurrencyStamp = "f626c9bb-d2d2-41b5-ab79-4646b1bc9e76",
+                            ConcurrencyStamp = "c9da1ccd-9d8b-461e-9e83-5d7ec4a1e6de",
                             Name = "User"
                         });
                 });
@@ -1132,16 +1096,9 @@ namespace DatingService.Persistence.Migrations
 
             modelBuilder.Entity("DatingService.Domain.Auth.ApplicationUser", b =>
                 {
-                    b.HasOne("DatingService.Domain.Auth.Avatar", "Avatar")
-                        .WithOne("User")
-                        .HasForeignKey("DatingService.Domain.Auth.ApplicationUser", "AvatarId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("DatingService.Domain.Entities.Gender", "Gender")
                         .WithMany("Users")
                         .HasForeignKey("GenderId");
-
-                    b.Navigation("Avatar");
 
                     b.Navigation("Gender");
                 });
@@ -1316,11 +1273,6 @@ namespace DatingService.Persistence.Migrations
                     b.Navigation("SentReports");
 
                     b.Navigation("SentRequests");
-                });
-
-            modelBuilder.Entity("DatingService.Domain.Auth.Avatar", b =>
-                {
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("DatingService.Domain.Entities.Chat", b =>

@@ -9,7 +9,7 @@
         <input id="senderId" hidden value="@ViewBag.senderId" />
         @foreach (var item in Model)
         {
-            var path = item.Avatar?.Path;
+            var path = item.AvatarPath;
             @if (path == null)
             {
                 path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";

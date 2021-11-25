@@ -11,7 +11,6 @@ namespace DatingService.Persistence
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser, IdentityRole<Guid>, Guid>
     {
-        public DbSet<Avatar> Avatars { get; set; }
         public DbSet<Gender> Genders { get; set; }
 
         public DbSet<Post> Posts { get; set; }
@@ -30,7 +29,6 @@ namespace DatingService.Persistence
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.ApplyConfiguration(new ApplicationUserConfig());
-            builder.ApplyConfiguration(new AvatarConfig());
             builder.ApplyConfiguration(new GenderConfig());
             builder.ApplyConfiguration(new PostConfig());
             builder.ApplyConfiguration(new ImageConfig());
