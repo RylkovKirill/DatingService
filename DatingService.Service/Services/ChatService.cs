@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
 using DatingService.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -35,7 +36,7 @@ namespace DatingService.Service.Services
 
         public IQueryable<Chat> GetAll(ApplicationUser user)
         {
-            return _repository.GetAll().Where(c => c.Users.Contains(user)).OrderByDescending(c => c.DateUpdated);
+            return _repository.GetAll().Include(m => m.Messages).Include(c => c.Users).Where(c => c.Users.Contains(user)).OrderByDescending(c => c.DateUpdated);
         }
 
 

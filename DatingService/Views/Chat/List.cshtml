@@ -2,26 +2,22 @@
 @model ChatListViewModel
 
 
-@*<table class="table" id="userList">
-        <thead>
-        </thead>
-        <tbody>
-            @foreach (var item in Model.Chats)
-            {
-                <tr>
-                    <td>
-                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@item.Id">Написать сообщение</a>
-                    </td>
-                </tr>
-
-            }
-        </tbody>
-    </table>*@
-
-
 <div class="row align-items-start  m-2">
-    <div class="col-md-6 shadow px-4 py-2 mb-4 mr-4">
-        <h2>Inbox</h2>
+    <div class="col-md-3 shadow px-2 py-2 mb-4 mr-4">
+        <h2 class="mb-4">Messages</h2>
+
+        <div class="my-2">
+            <form id="filterMatchesForm" method="get" class="d-flex">
+                <div class="input-group h-100">
+                    <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
         <div class="p-2 m-1">
             @foreach (var item in Model.Chats)
@@ -32,25 +28,25 @@
                     path = "no-profile-image-m.svg";
                 }
                 <hr />
-                <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
+                <div class="row p-1 m-1 align-items-center justify-content-start">
                     <div class="p-1">
                         <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
-                        </div>
-                    <p>@item.DateUpdated</p>
-
-
-                    <div class="p-1">
-                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@item.Id" class="stretched-link">Написать сообщение</a>
                     </div>
+                    <a class="" asp-controller="Chat" asp-action="List" asp-route-id="@item.Id">Написать сообщение</a>
                 </div>
             }
         </div>
+        <page-link model="@Model.PageViewModel" action="List" action-filter="@(Model.Filter)"></page-link>
+
+    </div>
+    <div class="col-md w-100 h-100 shadow p-0">
+        <partial name="Details" model="Model.SelectChat" />
     </div>
 </div>
 
-<div>
-    <page-link model="Model.PageViewModel" action="List"></page-link>
-</div>
+@*<div>
+        <page-link model="Model.PageViewModel" action="List"></page-link>
+    </div>*@
 
 @*<style>
         .btn {

@@ -11,7 +11,7 @@ namespace DatingService.Controllers
 {
     public class ChatController : Controller
     {
-        private const int ChatCount = 10;
+        private const int ChatCount = 4;
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IChatService _chatService;
@@ -27,15 +27,17 @@ namespace DatingService.Controllers
             _messageService = messageService;
         }
 
-        public async Task<IActionResult> ListAsync(int page = 1)
+        public async Task<IActionResult> ListAsync(Guid? id, int page = 1, string filter = null)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var chats = _chatService.GetAll(user);
+            var chats = filter == null ? _chatService.GetAll(user) : _chatService.GetAll(user).Where(c => c.Users.Any(u => u.FullName.ToUpper().Contains(filter.ToUpper())));
+            var items = chats.Skip((page - 1) * ChatCount).Take(ChatCount).ToList();
 
             var viewModel = new ChatListViewModel()
             {
-                Chats = chats.Skip((page - 1) * ChatCount).Take(ChatCount).ToList(),
-                PageViewModel = new PageViewModel(chats.Count(), page, ChatCount)
+                Chats = items,
+                PageViewModel = new PageViewModel(chats.Count(), page, ChatCount),
+                SelectChat = id == null ? items.First() : items.Where(c => c.Id == id).First()
             };
 
             return View(viewModel);

@@ -9,7 +9,11 @@ namespace DatingService.Infrastructure.ViewModels
 {
     public class ChatListViewModel
     {
+        public string Filter { get; set; }
+        public Chat SelectChat { get; set; }
+
         public List<Chat> Chats { get; set; }
+
         public PageViewModel PageViewModel { get; set; }
     }
 }
