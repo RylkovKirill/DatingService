@@ -115,7 +115,6 @@ namespace DatingService
                 endpoints.MapRazorPages();
                 endpoints.MapHub<CommentsHub>("/comments");
                 endpoints.MapHub<MessagesHub>("/messages");
-                endpoints.MapHub<UsersHub>("/users");
             });
         }
     }

@@ -35,7 +35,7 @@ namespace DatingService.Service.Services
 
         public IQueryable<Chat> GetAll(ApplicationUser user)
         {
-            return _repository.GetAll().Where(c => c.Users.Contains(user));
+            return _repository.GetAll().Where(c => c.Users.Contains(user)).OrderByDescending(c => c.DateUpdated);
         }
 
 

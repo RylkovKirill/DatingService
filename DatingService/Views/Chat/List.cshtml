@@ -1,17 +1,8 @@
 ﻿@addTagHelper *, DatingService
 @model ChatListViewModel
 
-<head>
-    <title>@ViewData["Title"] - Пользователи</title>
-</head>
-<body>
-    <div>
-        Друзей онлайн : <span id="onlineUsersCount"></span>
-    </div>
-    <div>
-        <page-link page-model="Model.PageViewModel" page-action="List"></page-link>
-    </div>
-    <table class="table" id="userList">
+
+@*<table class="table" id="userList">
         <thead>
         </thead>
         <tbody>
@@ -25,8 +16,42 @@
 
             }
         </tbody>
-    </table>
-</body>
+    </table>*@
+
+
+<div class="row align-items-start  m-2">
+    <div class="col-md-6 shadow px-4 py-2 mb-4 mr-4">
+        <h2>Inbox</h2>
+
+        <div class="p-2 m-1">
+            @foreach (var item in Model.Chats)
+            {
+                string path = null;
+                @if (path == null)
+                {
+                    path = "no-profile-image-m.svg";
+                }
+                <hr />
+                <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
+                    <div class="p-1">
+                        <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
+                        </div>
+                    <p>@item.DateUpdated</p>
+
+
+                    <div class="p-1">
+                        <a type="button" class="btn btn-primary" asp-controller="Chat" asp-action="Details" asp-route-id="@item.Id" class="stretched-link">Написать сообщение</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+<div>
+    <page-link model="Model.PageViewModel" action="List"></page-link>
+</div>
+
 @*<style>
         .btn {
             background-color: transparent; /* Blue background */
