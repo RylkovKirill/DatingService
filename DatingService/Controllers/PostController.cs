@@ -114,7 +114,7 @@ namespace DatingService.Controllers
             var postCount = _postService.GetAll(user).Count();
             if(postCount == user.PostCount)
             {
-                return RedirectToAction("Index", "Order");
+                return RedirectToAction("SetPostsCount", "Order");
             }
 
             return View();

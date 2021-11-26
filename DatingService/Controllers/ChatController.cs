@@ -30,14 +30,14 @@ namespace DatingService.Controllers
         public async Task<IActionResult> ListAsync(Guid? id, int page = 1, string filter = null)
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-            var chats = filter == null ? _chatService.GetAll(user) : _chatService.GetAll(user).Where(c => c.Users.Any(u => u.FullName.ToUpper().Contains(filter.ToUpper())));
+            var chats = filter == null ? _chatService.GetAll(user) : _chatService.GetAll(user).ToList().Where(c => c.Users.Any(u => u != user && u.FullName.ToUpper().Contains(filter.ToUpper())));
             var items = chats.Skip((page - 1) * ChatCount).Take(ChatCount).ToList();
 
             var viewModel = new ChatListViewModel()
             {
                 Chats = items,
                 PageViewModel = new PageViewModel(chats.Count(), page, ChatCount),
-                SelectChat = id == null ? items.First() : items.Where(c => c.Id == id).First()
+                SelectChat = items.Count == 0 ? null : id == null ? items.First() : items.Where(c => c.Id == id).First()
             };
 
             return View(viewModel);

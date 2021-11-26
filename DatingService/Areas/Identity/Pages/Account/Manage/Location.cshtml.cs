@@ -30,9 +30,11 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             public bool AnyLocation { get; set; }
 
             [Display(Name = "Latitude")]
+            [Range(-90, 90)]
             public double? Latitude { get; set; }
 
             [Display(Name = "Longitude")]
+            [Range(-180, 180)]
             public double? Longitude { get; set; }
         }
 

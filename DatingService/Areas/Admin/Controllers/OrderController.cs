@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace DatingService.Areas.Admin.Controllers
 {
+    [Area("Admin")]
     public class OrderController : Controller
     {
         public IActionResult Index()

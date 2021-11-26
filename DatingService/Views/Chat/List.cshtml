@@ -1,13 +1,28 @@
 ﻿@addTagHelper *, DatingService
 @model ChatListViewModel
 
+@inject UserManager<ApplicationUser> UserManager
+
+@functions {
+    public string GetInagePath(Chat chat)
+    {
+        var user = UserManager.FindByNameAsync(User.Identity.Name).Result;
+        var match = chat.Users.Where(u => u != user).First();
+        var path = match.AvatarPath;
+        if (path == null)
+        {
+            path = "no-profile-image-m.svg";
+        }
+        return path;
+    }
+}
 
 <div class="row align-items-start  m-2">
     <div class="col-md-3 shadow px-2 py-2 mb-4 mr-4">
         <h2 class="mb-4">Messages</h2>
 
         <div class="my-2">
-            <form id="filterMatchesForm" method="get" class="d-flex">
+            <form id="filterChatsForm" method="get" class="d-flex">
                 <div class="input-group h-100">
                     <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
                     <div class="input-group-append">
@@ -30,7 +45,7 @@
                 <hr />
                 <div class="row p-1 m-1 align-items-center justify-content-start">
                     <div class="p-1">
-                        <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">
+                        <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@GetInagePath(item)" data-holder-rendered="true">
                     </div>
                     <a class="" asp-controller="Chat" asp-action="List" asp-route-id="@item.Id">Написать сообщение</a>
                 </div>
@@ -39,27 +54,10 @@
         <page-link model="@Model.PageViewModel" action="List" action-filter="@(Model.Filter)"></page-link>
 
     </div>
-    <div class="col-md w-100 h-100 shadow p-0">
-        <partial name="Details" model="Model.SelectChat" />
+    <div class="col-md shadow p-2">
+        @if (Model.SelectChat != null)
+        {
+            <partial name="Details" model="Model.SelectChat" />
+        }
     </div>
 </div>
-
-@*<div>
-        <page-link model="Model.PageViewModel" action="List"></page-link>
-    </div>*@
-
-@*<style>
-        .btn {
-            background-color: transparent; /* Blue background */
-            border: none; /* Remove borders */
-            color: royalblue; /* White text */
-            padding: 12px 16px; /* Some padding */
-            font-size: 16px; /* Set a font size */
-            cursor: pointer; /* Mouse pointer on hover */
-        }
-            /* Darker background on mouse-over */
-            .btn:hover {
-                background-color: transparent;
-                color: blue;
-            }
-    </style>*@
