@@ -5,7 +5,7 @@
         this.dislikeButton = dislike;
         this.likeButton = like;
         this.senderInput = document.getElementById("senderId");
-        var senderId = this.senderInput.value;
+        this.senderId = this.senderInput.value;
         console.log(senderId);
 
         // handle getures
@@ -139,32 +139,8 @@
 
             if (successful) {
                 // throw card in the chosen direction
-
-                console.log(this.topCard);
-                console.log(receiverId);
-                console.log(receiverId[receiverId.length - 1].value);
-
-                console.log(this.board);
-                console.log(senderId);
-                const item = {
-                    ReceiverId: receiverId[receiverId.length - 1].value,
-                    SenderId: senderId.value
-                };
-                console.log(item);
-                console.log(senderId);
-                const uri = 'api/api';
-                fetch(uri, {
-                    method: 'POST',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(item)
-                }).then(response => response.json())
-                    .catch(error => console.error(error));
-            
                 this.topCard.style.transform = `translateX(${posX}px) translateY(${posY}px) rotate(${deg}deg)`;
-                if (posX > 0) this.swipeRight();
+                if (posX > 0) this.swipeRight(senderId, receiverId);
                 else this.swipeLeft();
 
                 // wait transition end
@@ -185,8 +161,25 @@
     swipeLeft() {
         console.log("Свайп влево");
     }
-    swipeRight() {
+    swipeRight(senderId) {
+        console.log(senderId);
         console.log("Свайп вправо");
+        const item = {
+            ReceiverId: receiverId[receiverId.length - 1].value,
+            SenderId: senderId.value
+        };
+        console.log(item);
+        console.log(senderId);
+        const uri = 'api/api';
+        fetch(uri, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        }).then(response => response.json())
+            .catch(error => console.error(error));
     }
 
     push() {
@@ -210,6 +203,7 @@ function forcedSwipeLeft() {
     cards = board.querySelectorAll('.rec-card');
     console.log("left");
     console.log(cards);
+    carousel.swipeLeft();
 
     // get top card
     topCard = cards[cards.length - 1];
@@ -230,6 +224,7 @@ function forcedSwipeRight() {
     cards = board.querySelectorAll('.rec-card');
     console.log("left");
     console.log(cards);
+    carousel.swipeRight(senderId);
     
 
     // get top card
