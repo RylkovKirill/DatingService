@@ -3,6 +3,7 @@ using DatingService.Domain.Entities;
 using DatingService.Domain.Enums;
 using DatingService.Infrastructure.ViewModels;
 using DatingService.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,7 @@ using System.Threading.Tasks;
 
 namespace DatingService.Controllers
 {
+    [Authorize]
     public class MatchController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

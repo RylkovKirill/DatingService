@@ -7,9 +7,11 @@ using Braintree;
 using Microsoft.AspNetCore.Identity;
 using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DatingService.Controllers
 {
+    [Authorize]
     public class OrderController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

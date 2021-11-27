@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Infrastructure.ViewModels;
 using DatingService.Service.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DatingService.Controllers
 {
+    [Authorize]
     public class ChatController : Controller
     {
         private const int ChatCount = 4;

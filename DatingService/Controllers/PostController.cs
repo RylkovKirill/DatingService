@@ -16,9 +16,11 @@ using Microsoft.AspNetCore.Hosting;
 using System.IO;
 using Microsoft.Extensions.Options;
 using DatingService.Infrastructure.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DatingService.Controllers
 {
+    [Authorize]
     public class PostController : Controller
     {
         private const int PageSize = 5;
