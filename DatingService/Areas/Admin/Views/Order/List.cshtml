@@ -1,0 +1,48 @@
+﻿@model OrderListViewModel
+
+@{
+    ViewData["Title"] = "Orders";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<div class="my-4">
+    <form id="filterOrdersForm" method="get" class="d-flex">
+        <div class="input-group h-100">
+            <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered shadow">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>User</th>
+            <th>Price</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Orders)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                <td>
+                    <a asp-controller="User" asp-action="Details" asp-route-id="@item.UserId" class="text-info" style="text-decoration: underline;">@item.User.FullName</a>
+                </td>
+                <td>$@item.Price</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="text-info" style="text-decoration: underline;">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<page-link model="@Model.PageViewModel" action="List" action-filter="@(Model.Filter)"></page-link>

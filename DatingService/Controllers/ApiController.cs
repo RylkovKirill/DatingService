@@ -17,6 +17,7 @@ namespace DatingService.Controllers
     public class ApiController : ControllerBase
     {
         private readonly IRequestService _requestService;
+
         public ApiController(IRequestService requestService)
         {
             _requestService = requestService;

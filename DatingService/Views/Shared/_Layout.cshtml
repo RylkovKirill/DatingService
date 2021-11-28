@@ -44,12 +44,19 @@
                 </ul>
             </li>
         </ul>
-
         @if (User.IsInRole("Admin"))
         {
             <ul class="components">
-                <li>
-                    <a asp-area="Admin" asp-controller="User" asp-action="List"><i class="fas fa-users-cog"></i> Admin</a>
+                <li class="nav-item">
+                    <a href="#AdminSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="fas fa-users-cog"></i> Admin</a>
+                    <ul class="collapse list-unstyled" id="AdminSubmenu">
+                        <li>
+                            <a asp-area="Admin" asp-controller="User" asp-action="List"><i class="fas fa-users"></i> Users</a>
+                        </li>
+                        <li>
+                            <a asp-area="Admin" asp-controller="Order" asp-action="List"><i class="fas fa-coins"></i> Orders</a>
+                        </li>
+                    </ul>
                 </li>
             </ul>
         }
@@ -69,7 +76,7 @@
         </nav>
 
         <main role="main" class="main">
-                @RenderBody()
+            @RenderBody()
 
         </main>
 

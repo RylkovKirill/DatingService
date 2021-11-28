@@ -13,7 +13,7 @@ namespace DatingService.Controllers
     [Authorize]
     public class ChatController : Controller
     {
-        private const int ChatCount = 4;
+        private const int PageSize = 4;
 
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly IChatService _chatService;
@@ -33,13 +33,21 @@ namespace DatingService.Controllers
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);
             var chats = filter == null ? _chatService.GetAll(user) : _chatService.GetAll(user).ToList().Where(c => c.Users.Any(u => u != user && u.FullName.ToUpper().Contains(filter.ToUpper())));
-            var items = chats.Skip((page - 1) * ChatCount).Take(ChatCount).ToList();
 
+            var count = chats.Count();
+            var items = chats.Skip((page - 1) * PageSize).Take(PageSize).ToList();
+
+            var pageViewModel = new PageViewModel(count, page, PageSize);
+
+            var selectChat = items.Count == 0 ? null : id == null ? items.First() : chats.Where(c => c.Id == id).First();
+            selectChat.DateUpdated = DateTime.Now;
+            _chatService.Update(selectChat);
             var viewModel = new ChatListViewModel()
             {
                 Chats = items,
-                PageViewModel = new PageViewModel(chats.Count(), page, ChatCount),
-                SelectChat = items.Count == 0 ? null : id == null ? items.First() : items.Where(c => c.Id == id).First()
+                PageViewModel = pageViewModel,
+                SelectChat = selectChat,
+                Filter = filter
             };
 
             return View(viewModel);

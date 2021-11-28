@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
 using DatingService.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,17 +21,22 @@ namespace DatingService.Service.Services
 
         public Order Get(Guid id)
         {
-            return _repository.Get(id);
+            return _repository.GetAll()
+                .Include(o => o.User)
+                .Where(o => o.Id == id).First();
         }
 
         public IQueryable<Order> GetAll()
         {
-            return _repository.GetAll();
+            return _repository.GetAll()
+                .Include(o => o.User);
         }
 
         public IQueryable<Order> GetAll(ApplicationUser user)
         {
-            return _repository.GetAll().Where(c => c.UserId == user.Id);
+            return _repository.GetAll()
+                .Include(o => o.User)
+                .Where(c => c.UserId == user.Id);
         }
 
 

@@ -1,0 +1,28 @@
+﻿@model Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="col-md-6 text-center mr-4">
+    <h3 class="text-left">@ViewData["Title"]</h3>
+    <div class="card shadow mb-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-5">Date</div>
+                <div class="col-sm-6 text-secondary">@Model.DateCreated</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5">User</div>
+                <div class="col-sm-6 text-secondary">@Model.User.FullName</div>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-5">Price</div>
+                <div class="col-sm-6 text-secondary">@Model.Price</div>
+            </div>
+            <hr>
+        </div>
+    </div>
+</div>

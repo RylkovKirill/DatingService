@@ -1,132 +1,105 @@
-﻿@model DatingService.Domain.Auth.ApplicationUser
+﻿@model ApplicationUser
 
-<div>
-    <h4>ApplicationUser</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.FirstName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LastName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DateOfBirth)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DateOfBirth)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Latitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Latitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Longitude)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Longitude)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Gender)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Gender.Name)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedUserName)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedUserName)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.NormalizedEmail)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.NormalizedEmail)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.EmailConfirmed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.EmailConfirmed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PasswordHash)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PasswordHash)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.SecurityStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.SecurityStamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.ConcurrencyStamp)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.ConcurrencyStamp)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumber)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.PhoneNumberConfirmed)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.PhoneNumberConfirmed)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.TwoFactorEnabled)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.TwoFactorEnabled)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LockoutEnd)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LockoutEnd)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.LockoutEnabled)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LockoutEnabled)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.AccessFailedCount)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.AccessFailedCount)
-        </dd>
-    </dl>
+@{
+    ViewData["Title"] = "Requests";
+}
+
+@functions {
+    public string GetAvatarPath(ApplicationUser user)
+    {
+        var path = user.AvatarPath;
+        if (path == null)
+        {
+            path = user.Gender?.Name == "Man" ? "no-profile-image-m.svg" : "no-profile-image-f.svg";
+        }
+        return path;
+    }
+}
+
+<div class="row align-items-start  m-2">
+    <div class="col-md-6 text-center mr-4">
+        <div class="card shadow mb-4 px-2 py-4">
+            <img class="rounded-circle mx-auto card-img-top" style="min-height: 2rem; max-height: 10rem; min-width: 2rem; max-width: 10rem " src="~/Files/Images/Avatars/@GetAvatarPath(Model)" data-holder-rendered="true">
+            <h2>@Model.FullName</h2>
+        </div>
+        <h3 class="text-left">Info</h3>
+        <div class="mb-4 text-left">
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5">First Name</div>
+                        <div class="col-sm-6 text-secondary">@Model.FirstName</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-5">Last Name</div>
+                        <div class="col-sm-6 text-secondary">@Model.LastName</div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-5">Date Of Birth</div>
+                        <div class="col-sm-6 text-secondary">@Model.DateOfBirth.ToShortDateString()</div>
+                    </div>
+                    <hr>
+                    @if (Model.Gender != null)
+                    {
+                        <div class="row">
+                            <div class="col-sm-5">Gender</div>
+                            <div class="col-sm-6 text-secondary">@Model.Gender.Name</div>
+                        </div>
+                    }
+                    <hr>
+                </div>
+            </div>
+            <h3 class="text-left">Contacts</h3>
+            <div class="card shadow mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-5">Email</div>
+                        <div class="col-sm-6 text-secondary">@Model.Email</div>
+                    </div>
+                    <hr>
+                    @if (Model.PhoneNumber != null)
+                    {
+                        <div class="row">
+                            <div class="col-sm-5">Phone Number</div>
+                            <div class="col-sm-6 text-secondary">@Model.PhoneNumber</div>
+                        </div>
+                        <hr>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-md-5  px-4 py-2">
+        <h2>Posts</h2>
+        <div>
+            @foreach (var item in Model.Posts)
+            {
+                var postPath = "";
+                @if (item.Image?.Path != null)
+                {
+                    postPath = item.Image?.Path;
+                }
+                else
+                {
+                    postPath = "no-title-image.jpeg";
+                }
+                <div class="card shadow my-4">
+
+                    <img src="~/Files/Images/Posts/@postPath" alt="@item.Title Image" class="card-img-top" style="">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Title</h5>
+                    </div>
+                    <div class="card-footer text-right">
+                        <a asp-area="" asp-controller="Post" asp-action="Details" asp-route-id="@item.Id" class="card-link stretched-link" style="text-decoration: underline">Details</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
-</div>
+
+<link rel="stylesheet" href="~/css/matchDeatails.css" />

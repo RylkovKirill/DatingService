@@ -92,24 +92,6 @@ namespace DatingService.Controllers
             return View(user);
         }
 
-        public async Task<IActionResult> UsersAsync(int page = 1)
-        {
-
-            var user = await _userManager.GetUserAsync(HttpContext.User);
-            var users = _userManager.Users.Where(u => u != user).Include(u => u.Gender).ToList();
-            var count = users.Count();
-            var items = users.Skip((page - 1) * PageSize).Take(PageSize).ToList();
-
-            var pageViewModel = new PageViewModel(count, page, PageSize);
-            var usersViewModel = new UsersViewModel()
-            {
-                Users = items,
-                Friends = _requestService.GetUserFriends(user).ToList(),
-                PageViewModel = pageViewModel,
-            };
-            return View(usersViewModel);
-        }
-
         public async Task<IActionResult> RequestsAsync()
         {
             var user = await _userManager.GetUserAsync(HttpContext.User);

@@ -19,13 +19,18 @@ namespace DatingService.Areas.Admin.Controllers
         private readonly IEmailSender _emailSender;
         private readonly IReportService _reportService;
 
+        private readonly IPostService _postService;
+
+
         public UserController(UserManager<ApplicationUser> userManager,
                               IEmailSender emailSender,
-                              IReportService reportService)
+                              IReportService reportService,
+                              IPostService postService)
         {
             _userManager = userManager;
             _emailSender = emailSender;
             _reportService = reportService;
+            _postService = postService;
         }
 
         [Route("[area]")]
@@ -50,6 +55,8 @@ namespace DatingService.Areas.Admin.Controllers
             {
                 return NotFound();
             }
+
+            user.Posts = await _postService.GetAll(user).ToListAsync();
 
             return View(user);
         }
