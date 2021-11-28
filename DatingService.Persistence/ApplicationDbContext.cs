@@ -19,6 +19,8 @@ namespace DatingService.Persistence
         public DbSet<Message> Messages { get; set; }
         public DbSet<Request> Requests { get; set; }
         public DbSet<Order> Orders { get; set; }
+        public DbSet<ReportCategory> ReportCategory { get; set; }
+        public DbSet<Report> Reports { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
