@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="DatingService.Infrastructure.ViewModels.CardsViewModel" Collapsed="true">
+    <Position X="9.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAABAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\CardsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.ChatListViewModel" Collapsed="true">
+    <Position X="11" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAgAAAABAAAACAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\ChatListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.MatchListViewModel" Collapsed="true">
+    <Position X="12.75" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAACAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\MatchListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.OrderViewModel" Collapsed="true">
+    <Position X="14.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAQAgAEAAAAAAAAAAAAAAAAAAAAAAAAAACAA=</HashCode>
+      <FileName>ViewModels\OrderViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.PageViewModel" Collapsed="true">
+    <Position X="9.25" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAgAAAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PageViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.PlacemarkViewModel" Collapsed="true">
+    <Position X="11" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAEAAAAAAAAAAAAAAAAAAAACAAAAAQBgACAAAAA=</HashCode>
+      <FileName>ViewModels\PlacemarkViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.PostListViewModel" Collapsed="true">
+    <Position X="12.75" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAABAAACAAAABAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PostListViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.PostViewModel" Collapsed="true">
+    <Position X="14.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACAAAAAgAAAEAAAAAAAIAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\PostViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.RequestViewModel" Collapsed="true">
+    <Position X="9.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgBAA=</HashCode>
+      <FileName>ViewModels\RequestViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DatingService.Infrastructure.ViewModels.UsersViewModel" Collapsed="true">
+    <Position X="11" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAABAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ViewModels\UsersViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

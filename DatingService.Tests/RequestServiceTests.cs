@@ -1,4 +1,5 @@
-﻿using DatingService.Domain.Entities;
+﻿using DatingService.Domain.Auth;
+using DatingService.Domain.Entities;
 using DatingService.Domain.Enums;
 using DatingService.Persistence;
 using DatingService.Service;
@@ -195,6 +196,7 @@ namespace DatingService.Tests
             Assert.NotNull(requests);
             Assert.Contains(user2, requests.Result);
         }
+        
 
 
     }
