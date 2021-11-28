@@ -1,6 +1,26 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model UserListViewModel
 
-<table class="table table-bordered">
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1 class="mb-4">@ViewData["Title"]</h1>
+
+<div class="my-4">
+    <form id="filterOrdersForm" method="get" class="d-flex">
+        <div class="input-group h-100">
+            <input type="text" asp-for="Filter" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table class="table table-bordered shadow">
     <thead>
         <tr>
             <th>Full Name</th>
@@ -10,36 +30,62 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model)
+        @foreach (var item in Model.Users)
         {
             <tr>
                 <td>@Html.DisplayFor(modelItem => item.FullName)</td>
                 <td>@Html.DisplayFor(modelItem => item.Email)</td>
                 <td>@Html.DisplayFor(modelItem => item.EmailConfirmed)</td>
                 <td>
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary icon-wrapper">
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-outline-primary icon-wrapper">
                         <i class="fas fa-info"></i>
                     </a>
-                    <a asp-action="SendMessage" asp-route-id="@item.Id" class="btn btn-primary icon-wrapper">
+                    <a asp-action="SendMessage" asp-route-id="@item.Id" class="btn btn-outline-primary icon-wrapper">
                         <i class="fas fa-envelope-open"></i>
                     </a>
-                    <a asp-action="UserRoles" asp-route-id="@item.Id" class="btn btn-warning icon-wrapper">
+                    <a asp-action="UserRoles" asp-route-id="@item.Id" class="btn btn-outline-warning icon-wrapper">
                         <i class="fas fa-user-tag"></i>
                     </a>
-                    <a asp-action="Lock" asp-route-id="@item.Id" class="btn btn-danger icon-wrapper">
+                    <a asp-action="Lock" asp-route-id="@item.Id" class="btn btn-outline-danger icon-wrapper">
                         <i class="fas fa-user-lock"></i>
                     </a>
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger icon-wrapper">
+                    <button class="btn btn-outline-danger icon-wrapper" onclick="deleteUser('@item.Id')">
                         <i class="fas fa-trash"></i>
-                    </a>
+                    </button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
 
+<page-link model="@Model.PageViewModel" action="List" action-filter="@(Model.Filter)"></page-link>
+
 <style>
     .icon-wrapper {
         width: 3rem;
     }
 </style>
+
+<partial name="DeletePartial" />
+
+<script>
+    function deleteUser(id) {
+        document.getElementById("entityId").value = id;
+        const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+        modal.show();
+    }
+
+    async function confirm() {
+        const id = document.getElementById("entityId").value;
+        const response = await fetch(`/Admin/User/Delete/${id}`, {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            }
+        });
+        if (response.ok === true) {
+            window.location.href = `/Admin/User/List`;
+        }
+    }
+</script>

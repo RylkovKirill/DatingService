@@ -16,6 +16,8 @@ namespace DatingService.Areas.Admin.Controllers
     [Area("Admin")]
     public class UserController : Controller
     {
+        public const int PageSize = 10;
+
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IEmailSender _emailSender;
@@ -37,14 +39,22 @@ namespace DatingService.Areas.Admin.Controllers
             _postService = postService;
         }
 
-        [Route("[area]")]
-        [Route("[area]/Users")]
-        [Route("[area]/Users/[action]")]
-        public IActionResult List()
+        public async Task<IActionResult> ListAsync(int page = 1, string filter = null)
         {
-            var users = _userManager.Users;
+            var orders = filter == null ? _userManager.Users : _userManager.Users.Where(p => p.FirstName.ToUpper().Contains(filter.ToUpper()));
 
-            return View(users);
+            var count = await orders.CountAsync();
+            var items = await orders.Skip((page - 1) * PageSize).Take(PageSize).ToListAsync();
+
+            var pageViewModel = new PageViewModel(count, page, PageSize);
+            var viewModel = new UserListViewModel
+            {
+                Filter = filter,
+                PageViewModel = pageViewModel,
+                Users = items
+            };
+
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Details(Guid? id)
@@ -65,32 +75,6 @@ namespace DatingService.Areas.Admin.Controllers
             return View(user);
         }
 
-        // GET: Admin/User/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.FindByIdAsync(id.Value.ToString());
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            return View(user);
-        }
-
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var user = await _userManager.FindByIdAsync(id.ToString());
-            await _userManager.DeleteAsync(user);
-            return RedirectToAction(nameof(List));
-        }
-
         [HttpGet]
         public IActionResult SendMessage()
         {
@@ -105,7 +89,7 @@ namespace DatingService.Areas.Admin.Controllers
             {
                 var user = await _userManager.FindByIdAsync(Id.ToString());
                 await _emailSender.SendAsync(user.FullName, user.Email, subject, htmlMessage);
-                return RedirectToAction(nameof(List));
+                return RedirectToAction("List");
             }
             return View();
         }
@@ -176,6 +160,20 @@ namespace DatingService.Areas.Admin.Controllers
             }
 
             await _userManager.RemoveFromRoleAsync(user, role.Name);
+
+            return Ok();
+        }
+
+        [HttpPost("[area]/[controller]/Delete/{id:guid}")]
+        public async Task<IActionResult> DeleteAsync(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.DeleteAsync(user);
 
             return Ok();
         }
