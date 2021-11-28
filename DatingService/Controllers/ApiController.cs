@@ -28,16 +28,13 @@ namespace DatingService.Controllers
         {
             return "das" + id;
         }
+
         [HttpPost]
         public async Task<ActionResult<Request>> Post(Request request)
         {
             
             _requestService.Add(request);
             return Ok(request);
-        }
-
-        
+        }  
     }
-    
-    
 }

@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
 <body>
-
+    @await RenderSectionAsync("Scripts", required: false)
     @RenderBody()
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

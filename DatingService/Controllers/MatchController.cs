@@ -103,18 +103,28 @@ namespace DatingService.Controllers
             return View(requestsViewModel);
         }
 
-        public async Task<IActionResult> AddToFriendsAsync(string userId)
+        public async Task<IActionResult> RemoveMatch(string Id)
         {
-            if (!_requestService.IsRequestExistence(await _userManager.GetUserAsync(HttpContext.User), await _userManager.FindByIdAsync(userId)))
+            var firstUser = await _userManager.GetUserAsync(HttpContext.User);
+            if (firstUser == null)
             {
-                var request = new Request()
-                {
-                    ReceiverId = Guid.Parse(userId),
-                    Sender = await _userManager.GetUserAsync(HttpContext.User),
-                };
-                _requestService.Update(request);
+                return NotFound();
             }
-            return RedirectToAction("Users");
+
+            var secondUser = await _userManager.FindByIdAsync(Id);
+            if (secondUser == null)
+            {
+                return NotFound();
+            }
+
+            var request = _requestService.Get(firstUser, secondUser);
+            if (request == null)
+            {
+                return NotFound();
+            }
+
+            _requestService.Remove(request.Id);
+            return RedirectToAction("List");
         }
 
         public IActionResult ChangeRequest(Guid requestId, bool confirmed)
@@ -130,23 +140,6 @@ namespace DatingService.Controllers
                 _requestService.Remove(request.Id);
             }
             return RedirectToAction("Requests");
-        }
-
-        public async Task<IActionResult> ChatAsync(string userId)
-        {
-            var user1 = await _userManager.GetUserAsync(HttpContext.User);
-            var user2 = _userManager.FindByIdAsync(userId).Result;
-            var chat = _chatService.Get(user1, user2);
-            if (chat == default)
-            {
-                chat = new Chat()
-                {
-                    Users = new List<ApplicationUser> { user1, user2 }
-                };
-                _chatService.Update(chat);
-            }
-            chat.Messages = _messageService.GetAll(chat).ToList();
-            return View(chat);
         }
 
         [HttpGet]

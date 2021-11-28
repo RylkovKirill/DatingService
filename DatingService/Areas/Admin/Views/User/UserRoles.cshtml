@@ -1,0 +1,76 @@
+﻿@model UserRolesViewModel
+
+@{
+    ViewData["Title"] = "User Roles";
+    var potentialRoles = new SelectList(Model.PotentialRoles, "Id", "Name");
+}
+
+<h1>
+    @ViewData["Title"]
+</h1>
+
+
+<div class="row align-items-start mx-2">
+    <div class="col-md-6 shadow mr-4 mb-4 p-4">
+        <table class="table table-bordered p-4">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var role in Model.Roles)
+                {
+                    <tr>
+                        <td style="vertical-align: middle">@role</td>
+                        <td class="text-center col-1">
+                            <button class="btn btn-outline-danger m-1" onclick="deleteRole('@role')">
+                                <i class="fas fa-trash" style="width: 2rem"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    @if (Model.PotentialRoles.Count() > 0)
+    {
+        <div class="col-md-4 shadow p-4">
+            <form asp-action="AddRole" asp-route-id="@Model.Id" class="d-flex p-2">
+                <select asp-for="@Model.RoleId" asp-items="potentialRoles" class="form-control mx-1"></select>
+                <input type="submit" class="btn btn-primary" value="Add" />
+            </form>
+        </div>
+    }
+
+</div>
+
+<a asp-action="List" class="btn btn-outline-dark">Back to List</a>
+
+<input type="hidden" id="userId" value="@Model.Id" />
+<partial name="DeletePartial" />
+
+<script>
+    function deleteRole(id) {
+        document.getElementById("entityId").value = id;
+        const modal = new bootstrap.Modal(document.getElementById("deleteModal"));
+        modal.show();
+    }
+
+    async function confirm() {
+        const id = document.getElementById("userId").value;
+        const roleName = document.getElementById("entityId").value;
+        const response = await fetch(`/Admin/User/RemoveRole/${id}`, {
+            method: "Post",
+            headers: {
+                'Accept': 'application/json; charset=utf-8',
+                'Content-Type': 'application/json;charset=UTF-8'
+            },
+            body: JSON.stringify(roleName)
+        });
+        if (response.ok === true) {
+            window.location.href = `/Admin/User/UserRoles/${id}`;
+        }
+    }
+</script>

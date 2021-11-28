@@ -9,6 +9,7 @@ using DatingService.Domain.Auth;
 using Microsoft.AspNetCore.Identity;
 using DatingService.Service.Interfaces;
 using System.Net.Mail;
+using DatingService.Infrastructure.ViewModels;
 
 namespace DatingService.Areas.Admin.Controllers
 {
@@ -16,6 +17,7 @@ namespace DatingService.Areas.Admin.Controllers
     public class UserController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly IReportService _reportService;
 
@@ -23,11 +25,13 @@ namespace DatingService.Areas.Admin.Controllers
 
 
         public UserController(UserManager<ApplicationUser> userManager,
+                              RoleManager<IdentityRole<Guid>> roleManager,
                               IEmailSender emailSender,
                               IReportService reportService,
                               IPostService postService)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _emailSender = emailSender;
             _reportService = reportService;
             _postService = postService;
@@ -58,58 +62,6 @@ namespace DatingService.Areas.Admin.Controllers
 
             user.Posts = await _postService.GetAll(user).ToListAsync();
 
-            return View(user);
-        }
-
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var user = await _userManager.FindByIdAsync(id.Value.ToString());
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            //ViewData["AvatarId"] = new SelectList(_context.Avatars, "Id", "Name", applicationUser.AvatarId);
-            //ViewData["GenderId"] = new SelectList(_context.Genders, "Id", "Name", applicationUser.GenderId);
-
-            return View(user);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("FirstName,LastName,DateOfBirth,Latitude,Longitude,AvatarId,GenderId,Id,UserName,NormalizedUserName,Email,NormalizedEmail,EmailConfirmed,PasswordHash,SecurityStamp,ConcurrencyStamp,PhoneNumber,PhoneNumberConfirmed,TwoFactorEnabled,LockoutEnd,LockoutEnabled,AccessFailedCount")] ApplicationUser user)
-        {
-            if (id != user.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    await _userManager.UpdateAsync(user);
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!ApplicationUserExists(user.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            //ViewData["AvatarId"] = new SelectList(_context.Avatars, "Id", "Name", applicationUser.AvatarId);
-            //ViewData["GenderId"] = new SelectList(_context.Genders, "Id", "Name", applicationUser.GenderId);
             return View(user);
         }
 
@@ -169,6 +121,63 @@ namespace DatingService.Areas.Admin.Controllers
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.SentReports = await _reportService.GetAll(user).ToListAsync();
             return View(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> UserRoles(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var vewModel = new UserRolesViewModel
+            {
+                Id = user.Id,
+                Roles = userRoles.ToList(),
+                PotentialRoles = _roleManager.Roles.Where(r => !userRoles.ToList().Contains(r.Name)).ToList()
+            };
+            return View(vewModel);
+        }
+
+        public async Task<IActionResult> AddRoleAsync(Guid id, Guid roleId)
+        {
+            var role = await _roleManager.FindByIdAsync(roleId.ToString());
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.AddToRoleAsync(user, role.Name);
+
+            return RedirectToAction(nameof(UserRoles), new { id });
+        }
+
+        [HttpPost("[area]/[controller]/RemoveRole/{id:guid}")]
+        public async Task<IActionResult> RemoveRoleAsync(Guid id, [FromBody] string roleName)
+        {
+            var role = await _roleManager.FindByNameAsync(roleName);
+            if (role == null)
+            {
+                return NotFound();
+            }
+
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, role.Name);
+
+            return Ok();
         }
     }
 }
