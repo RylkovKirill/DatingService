@@ -22,7 +22,6 @@ namespace DatingService.Areas.Admin.Controllers
         private readonly RoleManager<IdentityRole<Guid>> _roleManager;
         private readonly IEmailSender _emailSender;
         private readonly IReportService _reportService;
-
         private readonly IPostService _postService;
 
 
@@ -94,17 +93,56 @@ namespace DatingService.Areas.Admin.Controllers
             return View();
         }
 
-        private bool ApplicationUserExists(Guid id)
-        {
-            return _userManager.Users.Any(e => e.Id == id);
-        }
-
         [HttpGet]
-        public async Task<IActionResult> Lock(Guid id)
+        public async Task<IActionResult> UserReports(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
             user.SentReports = await _reportService.GetAll(user).ToListAsync();
             return View(user);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ReportDetails(Guid id, Guid userId)
+        {
+            var user = await _userManager.FindByIdAsync(userId.ToString());
+            var report = _reportService.GetAll(user).Where(r => r.Id == id).FirstOrDefault();
+            if (report == null)
+            {
+                return NotFound();
+            }
+
+            return View(report);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Lock(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.LockoutEnd = DateTime.Now.AddYears(200);
+            user.LockoutEnabled = true;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("List");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Unlock(Guid id)
+        {
+            var user = await _userManager.FindByIdAsync(id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            user.LockoutEnabled = false;
+            await _userManager.UpdateAsync(user);
+
+            return RedirectToAction("List");
         }
 
         [HttpGet]

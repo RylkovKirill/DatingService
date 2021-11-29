@@ -38,18 +38,23 @@ namespace DatingService
                     Configuration.GetConnectionString("DefaultConnection")));
             services.AddDatabaseDeveloperPageExceptionFilter();
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+            {
+                options.SignIn.RequireConfirmedAccount = true;
+                options.Lockout.AllowedForNewUsers = true;
+                options.Lockout.MaxFailedAccessAttempts = 5;
+            })
                 .AddRoles<IdentityRole<Guid>>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddControllersWithViews();
 
             services.AddAuthentication()
-                    /* .AddGoogle(options =>
-                     {
-                         IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-                         options.ClientId = googleAuthNSection["ClientId"];
-                         options.ClientSecret = googleAuthNSection["ClientSecret"];
-                     })*/;
+                       /* .AddGoogle(options =>
+                        {
+                            IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
+                            options.ClientId = googleAuthNSection["ClientId"];
+                            options.ClientSecret = googleAuthNSection["ClientSecret"];
+                        })*/;
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();

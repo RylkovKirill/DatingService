@@ -1,6 +1,5 @@
 ﻿@model UserListViewModel
 
-
 @{
     ViewData["Title"] = "Users";
 }
@@ -46,7 +45,7 @@
                     <a asp-action="UserRoles" asp-route-id="@item.Id" class="btn btn-outline-warning icon-wrapper">
                         <i class="fas fa-user-tag"></i>
                     </a>
-                    <a asp-action="Lock" asp-route-id="@item.Id" class="btn btn-outline-danger icon-wrapper">
+                    <a asp-action="UserReports" asp-route-id="@item.Id" class="btn btn-outline-danger icon-wrapper">
                         <i class="fas fa-user-lock"></i>
                     </a>
                     <button class="btn btn-outline-danger icon-wrapper" onclick="deleteUser('@item.Id')">

@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "DS";
+    Layout = "~/Views/Shared/_BaseLayout.cshtml";
+}
+
+<div class="wrapper">
+    <div class="w-100">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <ul class="nav navbar-nav ml-auto">
+                    <partial name="_LoginPartial" />
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="main">
+            @RenderBody()
+        </main>
+
+    </div>
+</div>
+
+@await RenderSectionAsync("Scripts", required: false)

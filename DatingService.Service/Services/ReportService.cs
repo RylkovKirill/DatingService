@@ -1,6 +1,7 @@
 ﻿using DatingService.Domain.Auth;
 using DatingService.Domain.Entities;
 using DatingService.Service.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,11 @@ namespace DatingService.Service.Services
 
         public IQueryable<Report> GetAll(ApplicationUser user)
         {
-            return _repository.GetAll().Where(r => r.ReceiverId == user.Id);
+            return _repository.GetAll()
+                              .Include(r => r.Category)
+                              .Include(r => r.Sender)
+                              .Include(r => r.Receiver)
+                              .Where(r => r.ReceiverId == user.Id);
         }
 
         public void Add(Report report)

@@ -1,0 +1,50 @@
+﻿@model ApplicationUser
+
+<div class="d-flex align-items-center">
+    <h1 class="mr-2 ">@Model.FullName Reports</h1>
+    @if (!Model.LockoutEnabled)
+    {
+        <form asp-action="Lock">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-outline-danger mx-1 icon-wrapper">
+                <i class="fas fa-lock"></i>
+            </button>
+        </form>
+    }
+    else
+    {
+        <form asp-action="Unlock">
+            <input type="hidden" name="id" value="@Model.Id" />
+            <button type="submit" class="btn btn-outline-danger mx-1 icon-wrapper">
+                <i class="fas fa-unlock"></i>
+            </button>
+        </form>
+    }
+</div>
+<table class="table table-bordered shadow">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Category</th>
+            <th>User</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.ReceivedReports)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.DateCreated)</td>
+                <td>@Html.DisplayFor(modelItem => item.Category.Name)</td>
+                <td>@Html.DisplayFor(modelItem => item.Sender.FullName)</td>
+                <td>
+                    <a asp-action="ReportDetails" asp-route-id="@item.Id" asp-route-userId="@Model.Id" class="text-info" style="text-decoration: underline;">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div>
+    <a class="btn btn-outline-info" asp-action="List">Back to List</a>
+</div>
