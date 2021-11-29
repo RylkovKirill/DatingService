@@ -40,8 +40,12 @@ namespace DatingService.Controllers
             var pageViewModel = new PageViewModel(count, page, PageSize);
 
             var selectChat = items.Count == 0 ? null : id == null ? items.First() : chats.Where(c => c.Id == id).First();
-            selectChat.DateUpdated = DateTime.Now;
-            _chatService.Update(selectChat);
+            if (selectChat != null)
+            {
+                selectChat.DateUpdated = DateTime.Now;
+                _chatService.Update(selectChat);
+            }
+
             var viewModel = new ChatListViewModel()
             {
                 Chats = items,

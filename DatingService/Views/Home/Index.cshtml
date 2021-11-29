@@ -10,27 +10,29 @@
         @foreach (var item in Model)
         {
             var path = item.AvatarPath;
-            @if (path == null)
+        @if (path == null)
             {
                 path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
             }
-            <article class="rec-card">
-                <article class="rec-card-inner">
-                    <article class="rec-card-front">
-                        <img src="~/Files/Images/Avatars/@path" class="rec-img" />
-                        <h3 class="rec-card-text">@item.FullName</h3>
-                        <input id="receiverId" hidden value="@item.Id" />
-                    </article>
-                    <article class="rec-card-back">
-                        @*<h1>@item.Description</h1>*@
-                    </article>
+        <article class="rec-card">
+            <article class="rec-card-inner">
+                <article class="rec-card-front">
+                    <img src="~/Files/Images/Avatars/@path" class="rec-img" />
+                    <h3 class="rec-card-text">@item.FullName</h3>
+                    <input id="receiverId" hidden value="@item.Id" />
+                </article>
+                <article class="rec-card-back">
+                    <h2>@item.FirstName</h2>
+                    <h2>@item.LastName</h2>
+                    <h2>@item.DateOfBirth</h2>
                 </article>
             </article>
+        </article>
         }
     </section>
     <section class="rec-button-holder d-flex">
         <a id="dislikeButton">
-            <i class="far fa-thumbs-down fa-4x mx-4" ></i>
+            <i class="far fa-thumbs-down fa-4x mx-4"></i>
         </a>
         <a id="likeButton">
             <i class="far fa-thumbs-up fa-4x mx-4"></i>
