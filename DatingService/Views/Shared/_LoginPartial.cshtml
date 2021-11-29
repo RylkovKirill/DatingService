@@ -10,7 +10,7 @@
         var path = UserManager.FindByNameAsync(User.Identity.Name).Result.AvatarPath;
         @if (path == null)
         {
-            path = "no-profile-image-m.svg";
+            path = UserManager.FindByNameAsync(User.Identity.Name).Result.GenderId == Guid.Parse("b50075d8-0379-4b95-b0c2-50bba4509dab") ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
         }
         <li class="nav-item">
             <img class="rounded-circle" style="height:3rem; width:3rem" src="~/Files/Images/Avatars/@path" data-holder-rendered="true">

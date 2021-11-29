@@ -16,7 +16,7 @@
                 var path = item.Sender.AvatarPath;
                 @if (path == null)
                 {
-                    path = "no-profile-image-m.svg";
+                    path = item.Sender.GenderId == Guid.Parse("b50075d8-0379-4b95-b0c2-50bba4509dab") ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
                 }
                 <hr />
                 <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
@@ -47,7 +47,7 @@
                 var path = item.Receiver.AvatarPath;
                 @if (path == null)
                 {
-                    path = "no-profile-image-m.svg";
+                    path = item.Receiver.GenderId == Guid.Parse("b50075d8-0379-4b95-b0c2-50bba4509dab") ? "no-profile-image-f.svg" : "no-profile-image-m.svg"; ;
                 }
                 <hr />
                 <div class="row px-2 py-4 m-2 align-items-center justify-content-between">
