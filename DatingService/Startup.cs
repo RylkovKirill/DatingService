@@ -43,18 +43,17 @@ namespace DatingService
                 options.SignIn.RequireConfirmedAccount = true;
                 options.Lockout.AllowedForNewUsers = true;
                 options.Lockout.MaxFailedAccessAttempts = 5;
-            })
-                .AddRoles<IdentityRole<Guid>>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
-            services.AddControllersWithViews();
+            }).AddRoles<IdentityRole<Guid>>()
+              .AddEntityFrameworkStores<ApplicationDbContext>();
 
+            services.AddControllersWithViews();
             services.AddAuthentication()
-                       /* .AddGoogle(options =>
+                       .AddGoogle(options =>
                         {
                             IConfigurationSection googleAuthNSection = Configuration.GetSection("Authentication:Google");
-                            options.ClientId = googleAuthNSection["ClientId"];
-                            options.ClientSecret = googleAuthNSection["ClientSecret"];
-                        })*/;
+                            options.ClientId = "839535942443-pe0pp04bo6se855ovnmfec955nf89irh.apps.googleusercontent.com";
+                            options.ClientSecret = "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";
+                        });
 
             services.AddSingleton<IFileService, FileService>();
             services.AddTransient<IEmailSender, EmailSender>();

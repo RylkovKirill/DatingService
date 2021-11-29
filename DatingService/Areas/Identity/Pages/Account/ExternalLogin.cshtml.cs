@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using DatingService.Domain.Auth;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using DatingService.Service.Interfaces;
 
 namespace DatingService.Areas.Identity.Pages.Account
 {
@@ -52,6 +52,23 @@ namespace DatingService.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [StringLength(64, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [DataType(DataType.Text)]
+            [Display(Name = "First name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(64, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [DataType(DataType.Text)]
+            [Display(Name = "Last name")]
+            public string LastName { get; set; }
+
+            [Required]
+            [DataType(DataType.Date)]
+            [Display(Name = "Date of birth")]
+            public DateTime DateOfBirth { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -73,7 +90,7 @@ namespace DatingService.Areas.Identity.Pages.Account
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
-                return RedirectToPage("./Login", new {ReturnUrl = returnUrl });
+                return RedirectToPage("./Login", new { ReturnUrl = returnUrl });
             }
             var info = await _signInManager.GetExternalLoginInfoAsync();
             if (info == null)
@@ -83,7 +100,7 @@ namespace DatingService.Areas.Identity.Pages.Account
             }
 
             // Sign in the user with this external login provider if the user already has a login.
-            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor : true);
+            var result = await _signInManager.ExternalLoginSignInAsync(info.LoginProvider, info.ProviderKey, isPersistent: false, bypassTwoFactor: true);
             if (result.Succeeded)
             {
                 _logger.LogInformation("{Name} logged in with {LoginProvider} provider.", info.Principal.Identity.Name, info.LoginProvider);
@@ -122,7 +139,14 @@ namespace DatingService.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    FirstName = Input.FirstName,
+                    LastName = Input.LastName,
+                    DateOfBirth = Input.DateOfBirth
+                };
 
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
@@ -136,15 +160,14 @@ namespace DatingService.Areas.Identity.Pages.Account
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                         code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                         var callbackUrl = Url.Page(
-                            "/Account/ConfirmEmail",
-                            pageHandler: null,
-                            values: new { area = "Identity", userId = userId, code = code },
-                            protocol: Request.Scheme);
+                      "/Account/ConfirmEmail",
+                      pageHandler: null,
+                      values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
+                      protocol: Request.Scheme);
 
-                        await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                            $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                        await _emailSender.SendAsync($"{Input.FirstName} {Input.LastName}", Input.Email, "Confirm your email",
+                            $"Please confirm your account by <a href='{callbackUrl}'>clicking here</a>.");
 
-                        // If account confirmation is required, we need to show the link if we don't have a real email sender
                         if (_userManager.Options.SignIn.RequireConfirmedAccount)
                         {
                             return RedirectToPage("./RegisterConfirmation", new { Email = Input.Email });
