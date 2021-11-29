@@ -2,8 +2,8 @@
 
 const commentItems = ['<div  class="box box_left"><p class="card-text">',
     '<div  class="box box_right"><p class="card-text p-0 m-0">',
-    '</p><div class="card text-white bg-info w-100"><div class="card-body"><h5 class="card-title">',
-    '</h5><p class="card-text text-right"><small class="text">',
+    '</p><div class="card text-white bg-info w-100"><div class="card-body"><h5 class="card-title text-light">',
+    '</h5><p class="card-text text-light text-right"><small class="text">',
     '</small></p></div></div></div>'];
 
 var messageConnection = new signalR.HubConnectionBuilder().withUrl("/messages").build();

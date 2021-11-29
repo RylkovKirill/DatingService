@@ -11,8 +11,8 @@
                         <p class="card-text p-0 m-0">@userManager.GetUserNameAsync(userManager.FindByIdAsync(message.UserId.ToString()).Result).Result</p>
                         <div class="card text-white bg-info w-100">
                             <div class="card-body">
-                                <h5 class="card-title">@message.Content</h5>
-                                <p class="card-text text-right"><small class="text">@message.DateCreated</small></p>
+                                <h5 class="card-title text-light">@message.Content</h5>
+                                <p class="card-text text-light text-right"><small class="text">@message.DateCreated</small></p>
                             </div>
                         </div>
                     </div>
