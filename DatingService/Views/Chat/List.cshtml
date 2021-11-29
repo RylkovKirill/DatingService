@@ -11,7 +11,7 @@
         var path = match.AvatarPath;
         if (path == null)
         {
-            path = "no-profile-image-m.svg";
+            path = match.GenderId == Guid.Parse("b50075d8-0379-4b95-b0c2-50bba4509dab") ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
         }
         return path;
     }

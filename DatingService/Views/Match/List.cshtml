@@ -47,7 +47,7 @@
             var path = item.AvatarPath;
             @if (path == null)
             {
-                path = item.Gender?.Name == "Woman" ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
+                path = item.GenderId == Guid.Parse("b50075d8-0379-4b95-b0c2-50bba4509dab") ? "no-profile-image-f.svg" : "no-profile-image-m.svg";
             }
 
             <div class="col-12 col-sm-6 col-lg-3">
