@@ -1,75 +1,75 @@
 ﻿@model Chat
 @inject UserManager<ApplicationUser> userManager
 
-    <div class="h-100">
-        <div id="comments">
-            @if (Model.Messages != null)
+<div class="h-100">
+    <div id="comments">
+        @if (Model.Messages != null)
+        {
+            @foreach (var message in Model.Messages)
             {
-                @foreach (var message in Model.Messages)
-                {
-                    <div class="box @(message.UserId == userManager.FindByNameAsync(User.Identity.Name).Result.Id ? "box_right" : "box_left")">
-                        <p class="card-text p-0 m-0">@userManager.GetUserNameAsync(userManager.FindByIdAsync(message.UserId.ToString()).Result).Result</p>
-                        <div class="card text-white bg-info w-100">
-                            <div class="card-body">
-                                <h5 class="card-title text-light">@message.Content</h5>
-                                <p class="card-text text-light text-right"><small class="text">@message.DateCreated</small></p>
-                            </div>
+                <div class="box @(message.UserId == userManager.FindByNameAsync(User.Identity.Name).Result.Id ? "box_right" : "box_left")">
+                    <p class="card-text p-0 m-0">@userManager.GetUserNameAsync(userManager.FindByIdAsync(message.UserId.ToString()).Result).Result</p>
+                    <div class="card text-white bg-info w-100">
+                        <div class="card-body">
+                            <h5 class="card-title text-light">@message.Content</h5>
+                            <p class="card-text text-light text-right"><small class="text">@message.DateCreated</small></p>
                         </div>
                     </div>
-                }
+                </div>
             }
-        </div>
-        <form>
-            <input type="hidden" asp-for="@Model.Id" class="form-control" id="chatId" />
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Message" rows="3" id="content"></textarea>
-            </div>
-            <div class="form-group">
-                <input class="btn btn-primary" type="submit" value="Send" id="send" />
-            </div>
-        </form>
+        }
     </div>
-    <style>
-        #comments {
-            text-align: left;
-            margin: 0 auto;
-            margin-bottom: 25px;
-            padding: 10px;
-            background: #fff;
-            height: 40rem;
-            width: 100%;
-            overflow: auto;
-        }
+    <form>
+        <input type="hidden" asp-for="@Model.Id" class="form-control" id="chatId" />
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Message" rows="3" id="content"></textarea>
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary" type="submit" value="Send" id="send" />
+        </div>
+    </form>
+</div>
+<style>
+    #comments {
+        text-align: left;
+        margin: 0 auto;
+        margin-bottom: 25px;
+        padding: 10px;
+        background: #fff;
+        height: 40rem;
+        width: 100%;
+        overflow: auto;
+    }
 
-        .box {
-            width: 50%;
-            padding: .8em;
-        }
+    .box {
+        width: 50%;
+        padding: .8em;
+    }
 
-        .box_left {
-            margin: 0 auto 0 0;
-        }
+    .box_left {
+        margin: 0 auto 0 0;
+    }
 
-        .box_center {
-            margin: 0 auto;
-        }
+    .box_center {
+        margin: 0 auto;
+    }
 
-        .box_right {
-            margin: 0 0 0 auto;
-        }
+    .box_right {
+        margin: 0 0 0 auto;
+    }
 
-        .box + .box {
-            margin-top: 0px;
-        }
-    </style>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
+    .box + .box {
+        margin-top: 0px;
+    }
+</style>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
     const currentUserName = '@User.Identity.Name';
     var curPos = $(document).scrollTop();
     var height = $("#comments").height();
     var scrollTime = (height - curPos) / 1.73;
     var objDiv = document.getElementById("comments");
     objDiv.scrollTop = objDiv.scrollHeight;
-    </script>
-    <script src="~/lib/microsoft-signalr/signalr.min.js"></script>
-    <script src="~/js/sendMessages.js"></script>
+</script>
+<script src="~/lib/microsoft-signalr/signalr.min.js"></script>
+<script src="~/js/sendMessages.js"></script>

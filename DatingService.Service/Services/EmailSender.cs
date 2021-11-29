@@ -1,11 +1,11 @@
 ﻿using DatingService.Domain.Options;
 using DatingService.Service.Interfaces;
-using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MimeKit;
 using System;
 using System.Threading.Tasks;
+using System.Net;
+using System.Net.Mail;
 
 namespace DatingService.Service.Services
 {
@@ -26,22 +26,25 @@ namespace DatingService.Service.Services
         {
             try
             {
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress(_emailOptions.Name, _emailOptions.Email));
-                message.To.Add(new MailboxAddress(name, email));
-                message.Subject = subject;
-                message.Body = new TextPart()
+                MailMessage message = new MailMessage
                 {
-                    Text = htmlMessage
+                    From = new MailAddress(_emailOptions.Email, _emailOptions.Name),
+                    Subject = subject,
+                    Body = htmlMessage
+                };
+                message.To.Add(email);
+
+                using SmtpClient smtpClient = new(_smtpOptions.Host)
+                {
+                    Credentials = new NetworkCredential(_emailOptions.Email, _emailOptions.Password),
+                    Port = _smtpOptions.Port,
+                    EnableSsl = _smtpOptions.UseSsl
                 };
 
-                using var client = new SmtpClient();
-                await client.ConnectAsync(_smtpOptions.Host, _smtpOptions.Port, _smtpOptions.UseSsl);
-                await client.AuthenticateAsync(_emailOptions.Email, _emailOptions.Password);
-                await client.SendAsync(message);
-                await client.DisconnectAsync(true);
+                await smtpClient.SendMailAsync(message);
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 _logger.LogError(e.Message);
             }
