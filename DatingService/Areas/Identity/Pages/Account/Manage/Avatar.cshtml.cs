@@ -34,6 +34,7 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
         [TempData]
         public string StatusMessage { get; set; }
 
+
         [BindProperty]
         public string AvatarPath { get; set; }
 
@@ -62,6 +63,11 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             }
 
             if (!ModelState.IsValid)
+            {
+                return Page();
+            }
+
+            if (file == null)
             {
                 return Page();
             }

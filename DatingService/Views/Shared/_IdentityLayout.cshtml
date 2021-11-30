@@ -15,10 +15,14 @@
         </nav>
 
         <main role="main" class="main">
+
             @RenderBody()
         </main>
 
     </div>
 </div>
+
+<style>
+</style>
 
 @await RenderSectionAsync("Scripts", required: false)
