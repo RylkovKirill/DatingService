@@ -4,7 +4,17 @@
     ViewData["Title"] = "Cards";
 }
 
-<main class="rec-main">
+
+<main class="rec-main" style="position: relative">
+    <div id="particles-js" class="w-100 h-100" style="z-index: -100;">
+    </div>
+
+    <script src="~/js/particles.js"></script>
+    <script>
+        particlesJS.load('particles-js', '../../js/particles.json', function () {
+            console.log('callback - particles.js config loaded');
+        });
+    </script>
     <section class="rec-card-board ">
         <input id="senderId" hidden value="@ViewBag.senderId" />
         @foreach (var item in Model)
@@ -37,8 +47,6 @@
         <a id="likeButton">
             <i class="far fa-thumbs-up fa-4x mx-4"></i>
         </a>
-
-
     </section>
 
 </main>

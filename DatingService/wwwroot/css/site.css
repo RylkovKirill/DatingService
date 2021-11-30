@@ -510,3 +510,12 @@ a.article:hover {
     }
 
 
+
+canvas {
+    display: block;
+    vertical-align: bottom;
+}
+
+#particles-js {
+    position: absolute;
+}
