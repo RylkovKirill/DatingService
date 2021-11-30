@@ -66,9 +66,9 @@
             }
         </nav>
     }
-    <div class="w-100">
+    <div class="w-100 ">
 
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
             <div class="container-fluid">
                 @if (SignInManager.IsSignedIn(User))
                 {
@@ -81,8 +81,19 @@
                 </ul>
             </div>
         </nav>
-
-        <main role="main" class="main">
+        <main role="main" class="main area">
+            <ul class="circles ">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
             @RenderBody()
         </main>
 
