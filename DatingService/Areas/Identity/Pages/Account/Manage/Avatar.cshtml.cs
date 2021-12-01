@@ -9,6 +9,7 @@ using DatingService.Domain.Options;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using System;
 
 namespace DatingService.Areas.Identity.Pages.Account.Manage
 {
@@ -72,7 +73,13 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var fileName = user.Id + Path.GetExtension(file.FileName);
+            var fileName = user.Id + "-" + DateTime.Now.ToString("dd-MM-yyyy-hh-mm-ss") + Path.GetExtension(file.FileName);
+
+            if (user.AvatarPath != null)
+            {
+                _fileService.Delete(Path.Combine(_environment.WebRootPath, _avatarOptions.Path, user.AvatarPath));
+            }
+
             var path = Path.Combine(_environment.WebRootPath, _avatarOptions.Path, fileName);
             _fileService.Save(file, path);
 

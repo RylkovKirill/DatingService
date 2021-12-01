@@ -53,7 +53,7 @@
                     <div class="p-1">
                         <img class="rounded-circle" style="height:4rem; width:4rem" src="~/Files/Images/Avatars/@GetImagePath(item)" data-holder-rendered="true">
                     </div>
-                    <a class="" asp-controller="Chat" asp-action="List" asp-route-id="@item.Id" asp-route-filter="@Model.Filter">@GetTitle(item)</a>
+                    <a class="text-light" asp-controller="Chat" asp-action="List" asp-route-id="@item.Id" asp-route-filter="@Model.Filter">@GetTitle(item)</a>
                 </div>
             }
         </div>
