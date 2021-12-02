@@ -14,6 +14,7 @@ namespace DatingService.Domain.Auth
         public double? Latitude { get; set; }
         public double? Longitude { get; set; }
         public string AvatarPath { get; set; }
+        public double? TelegramChatId { get; set; }
         public bool AnyLocation { get; set; } = false;
 
         public string FullName => $"{FirstName} {LastName}";

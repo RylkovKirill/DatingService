@@ -60,6 +60,9 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             [Display(Name = "Phone Number")]
             public string PhoneNumber { get; set; }
 
+            [Display(Name = "Telegram Chat Id")]
+            public double? TelegramChatId { get; set; }
+
             [Display(Name = "Gender")]
             public Guid? GenderId { get; set; }
         }
@@ -77,7 +80,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
                 LastName = user.LastName,
                 DateOfBirth = user.DateOfBirth,
                 PhoneNumber = phoneNumber,
-                GenderId = user.GenderId
+                GenderId = user.GenderId,
+                TelegramChatId = user.TelegramChatId,
             };
         }
 
@@ -125,6 +129,8 @@ namespace DatingService.Areas.Identity.Pages.Account.Manage
             user.LastName = Input.LastName;
             user.DateOfBirth = Input.DateOfBirth;
             user.GenderId = Input.GenderId;
+            user.TelegramChatId = Input.TelegramChatId;
+
 
             await _userManager.UpdateAsync(user);
 

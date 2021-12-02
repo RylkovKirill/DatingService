@@ -33,6 +33,11 @@
                 <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="Input.TelegramChatId"></label>
+                <input asp-for="Input.TelegramChatId" class="form-control" />
+                <span asp-validation-for="Input.TelegramChatId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="Input.GenderId"></label>
                 <select asp-for="Input.GenderId" asp-items="(IEnumerable<SelectListItem>)@ViewData["Genders"]" class="form-control"></select>
             </div>

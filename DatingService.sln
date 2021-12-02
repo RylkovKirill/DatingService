@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingService.Service", "Da
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "DatingService.Database", "DatingService.Database\DatingService.Database.sqlproj", "{69C37A83-751D-490A-B4A5-48A859EF7F06}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatingService.Tests", "DatingService.Tests\DatingService.Tests.csproj", "{0FC271DD-639A-4809-BE72-B30C2605250C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingService.Tests", "DatingService.Tests\DatingService.Tests.csproj", "{0FC271DD-639A-4809-BE72-B30C2605250C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatingService.TelegramBot", "DatingService.TelegramBot\DatingService.TelegramBot.csproj", "{EBB7A4CF-0E30-46A2-B24E-41506C127B61}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{0FC271DD-639A-4809-BE72-B30C2605250C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FC271DD-639A-4809-BE72-B30C2605250C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FC271DD-639A-4809-BE72-B30C2605250C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EBB7A4CF-0E30-46A2-B24E-41506C127B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EBB7A4CF-0E30-46A2-B24E-41506C127B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EBB7A4CF-0E30-46A2-B24E-41506C127B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EBB7A4CF-0E30-46A2-B24E-41506C127B61}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

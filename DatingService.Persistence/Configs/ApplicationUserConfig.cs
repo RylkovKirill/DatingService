@@ -8,6 +8,7 @@ namespace DatingService.Persistence.Configs
     {
         public void Configure(EntityTypeBuilder<ApplicationUser> builder)
         {
+            builder.HasIndex(u => u.TelegramChatId).IsUnique();
             builder.Property(u => u.FirstName).IsRequired().HasMaxLength(64);
             builder.Property(u => u.LastName).IsRequired().HasMaxLength(64);
             builder.Property(u => u.AvatarPath).HasMaxLength(64);
