@@ -6,7 +6,7 @@
     {
         <form asp-action="Lock">
             <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-outline-danger mx-1 icon-wrapper">
+            <button type="submit" class="btn btn-danger mx-1 icon-wrapper">
                 <i class="fas fa-lock"></i>
             </button>
         </form>
@@ -15,7 +15,7 @@
     {
         <form asp-action="Unlock">
             <input type="hidden" name="id" value="@Model.Id" />
-            <button type="submit" class="btn btn-outline-danger mx-1 icon-wrapper">
+            <button type="submit" class="btn btn-danger mx-1 icon-wrapper">
                 <i class="fas fa-unlock"></i>
             </button>
         </form>
@@ -46,5 +46,5 @@
 </table>
 
 <div>
-    <a class="btn btn-outline-info" asp-action="List">Back to List</a>
+    <a class="btn btn-info" asp-action="List">Back to List</a>
 </div>

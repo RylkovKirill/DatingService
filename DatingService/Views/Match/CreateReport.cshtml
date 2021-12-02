@@ -1,22 +1,23 @@
 ﻿@model Report
-@*<div class="text-right">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Пожаловаться</button>
-    </div>*@
 
-<form asp-action="CreateReport" method="post">
-    <div class="form-group">
-        <label class="mr-sm-2" asp-for="Category"></label>
-        <select class="mr-sm-2" asp-for="ReportCategoryId" asp-items="ViewBag.ReportCategories"></select>
+<div class="row justify-content-center align-items-start">
+    <div class="col-md-4 shadow m-2 p-4">
+        <form asp-action="CreateReport" method="post">
+            <div class="form-group">
+                <label asp-for="Category"></label>
+                <select asp-for="ReportCategoryId" asp-items="ViewBag.ReportCategories"></select>
+            </div>
+            <div class="form-group">
+                <input type="hidden" asp-for="ReceiverId" class="form-control" />
+            </div>
+            <div>
+                <label asp-for="Content"></label>
+                <textarea asp-for="Content" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Send</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <input type="hidden" asp-for="ReceiverId" class="form-control" />
-    </div>
-    <div class="form-group">
-        <label asp-for="Content"></label>
-        <input asp-for="Content" class="form-control" />
-        <span asp-validation-for="Content"></span>
-    </div>
-    <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Отправить</button>
-    </div>
-</form>
+</div>

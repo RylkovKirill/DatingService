@@ -129,7 +129,7 @@ namespace DatingService.TelegramBot.Services
             }
             else
             {
-                text = "ChatId not installed on your user. Use /GetChatId";
+                text = "ChatId not installed on your user. \n Use /GetChatId";
             }
 
             return await bot.SendTextMessageAsync(chatId: message.Chat.Id,
@@ -154,11 +154,10 @@ namespace DatingService.TelegramBot.Services
             }
             else
             {
-                text = "ChatId not installed on your user. Use /GetChatId";
+                text = "ChatId not installed on your user. \n Use /GetChatId";
             }
 
-            return await bot.SendTextMessageAsync(chatId: message.Chat.Id,
-                                                  text: text);
+            return await bot.SendTextMessageAsync(chatId: message.Chat.Id, text: text);
         }
 
         private async Task BotOnCallbackQueryReceived(CallbackQuery callbackQuery)

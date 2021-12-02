@@ -97,7 +97,11 @@ namespace DatingService.Areas.Admin.Controllers
         public async Task<IActionResult> UserReports(Guid id)
         {
             var user = await _userManager.FindByIdAsync(id.ToString());
-            user.SentReports = await _reportService.GetAll(user).ToListAsync();
+            if (user == null)
+            {
+                return NotFound();
+            }
+            user.ReceivedReports = await _reportService.GetAll(user).ToListAsync();
             return View(user);
         }
 
